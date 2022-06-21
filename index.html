@@ -23,7 +23,59 @@
 	</div>
 
 	<div class="container" id="mainDiv">
-		<!-- {% block content %} {% endblock %} -->
+		<input type="search" class="form-control" placeholder="Enter enemy name:" style="height: 32px; width: 95%; margin:auto; margin-bottom: 24px; box-shadow: 3px 3px 3px;">
+
+		<div class="filterWidget">
+			<h5>Filter</h5>
+			<hr/>
+			<div style="margin-bottom: 15px;">
+				<p style="display:inline; margin-right: 18px;">Enemy Level:</p>
+				<input type="checkbox" id='bnormal' name="bnormal" class='cboxButton' />
+				<label for='bnormal' style="font-size: 14px; margin-right: 6px;">Normal</label>
+				<input type="checkbox" id="belite" name="belite" class='cboxButton' />
+				<label for='belite' style="font-size: 14px; margin-right: 6px;">Elite</label>
+				<input type="checkbox" id="bboss" name="bboss" class='cboxButton' />
+				<label for='bboss' style="font-size: 14px;">Boss</label>
+			</div>
+			<div style="margin-bottom: 15px;">
+				<p style="display:inline; margin-right: 20px">Enemy Race:</p>
+				<input type="checkbox" id='binfcrea' name="binfcrea" class='cboxButton' />
+				<label for='binfcrea' style="font-size: 14px; margin-right: 6px;">Infected Creature</label>
+				<input type="checkbox" id='bdrone' name="bdrone" class='cboxButton' />
+				<label for='bdrone' style="font-size: 14px; margin-right: 6px;">Drone</label>
+				<input type="checkbox" id='bsarkaz' name="bsarkaz" class='cboxButton' />
+				<label for='bsarkaz' style="font-size: 14px; margin-right: 6px;">Sarkaz</label>
+				<input type="checkbox" id='bpossessed' name="bpossessed" class='cboxButton' />
+				<label for='bpossessed' style="font-size: 14px; margin-right: 6px;">Possessed</label>
+				<input type="checkbox" id='bseamon' name="bseamon" class='cboxButton' />
+				<label for='bseamon' style="font-size: 14px; margin-right: 6px;">Sea Monster</label>
+				<input type="checkbox" id='bartscrea' name="bartscrea" class='cboxButton' />
+				<label for='bartscrea' style="font-size: 14px; margin-right: 6px;">Arts Creation</label>
+			</div>
+			<div style="margin-bottom: 15px;">
+				<p style="display:inline; margin-right: 23px">Attack Type:</p>
+				<input type="checkbox" id='bmelee' name="bmelee" class='cboxButton' />
+				<label for='bmelee' style="font-size: 14px; margin-right: 6px;">Melee</label>
+				<input type="checkbox" id='branged' name="branged" class='cboxButton' />
+				<label for='branged' style="font-size: 14px; margin-right: 6px;">Ranged</label>
+				<input type="checkbox" id='bnoatk' name="bnoatk" class='cboxButton' />
+				<label for='bnoatk' style="font-size: 14px; margin-right: 6px;">Does Not Attack</label>
+			</div>
+			<div>
+				<p style="display:inline; margin-right: 8px">Damage Type:</p>
+				<input type="checkbox" id='bphys' name="bphys" class='cboxButton' />
+				<label for='bphys' style="font-size: 14px; margin-right: 6px;">Physical</label>
+				<input type="checkbox" id='barts' name="barts" class='cboxButton' />
+				<label for='barts' style="font-size: 14px; margin-right: 6px;">Arts</label>
+				<input type="checkbox" id='bheal' name="bheal" class='cboxButton' />
+				<label for='bheal' style="font-size: 14px; margin-right: 6px;">Healing</label>
+			</div>
+		</div>
+
+		<div style="width: 95%; margin: auto; margin-top: 30px;">
+		<span class="display-6" style="color: white; font-size: 30px;">Browse</span>
+		<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px;" />
+		</div>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
