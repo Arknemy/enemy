@@ -127,10 +127,12 @@ input.cboxButton:checked + label {
 }
 
 #infoBox {
-    width: 60%;
+    width: 65%;
     height: auto;
+    max-height: 90%;
     border-radius: 5px;
     padding: 20px;
     background-color: #f2eeed;
     box-shadow: 0px 0px 5px;
+    overflow-y: auto;
 }
