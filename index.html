@@ -229,8 +229,39 @@
 						<hr style="margin-bottom:5px; margin-top:5px;"/>
 						<p>${tempData.talent}</p>
 						<span class="display-6" style="font-size:25px;">Skills</span>
-						<hr style="margin-bottom:5px; margin-top:5px;"/>
-						<p>${tempData.skill}</p>`);
+						<hr style="margin-bottom:5px; margin-top:5px;"/>`)
+
+					if(tempData.skill == 'None') {
+						htmlText = htmlText.concat(`<p>None</p>`);
+					}
+					else {
+						htmlText = htmlText.concat(`
+							<table class="table table-sm table-bordered" style="text-align: center;">
+								<thead class="thead-light">
+									<tr style="background-color: #dbdbdb;">
+										<th scope="col">Name</th>
+										<th scope="col">Initial</th>
+										<th scope="col">Cost</th>
+										<th scope="col">Type</th>
+										<th scope="col">Effect</th>
+									</tr>
+								</thead>`);
+
+						for(var j = 0; j < tempData.skillnum; j++) {
+							htmlText = htmlText.concat(`
+								<tbody>
+									<tr>
+										<td>${tempData.skill[j].name}</td>
+										<td>${tempData.skill[j].initial}</td>
+										<td>${tempData.skill[j].cost}</td>
+										<td>${tempData.skill[j].type}</td>
+										<td>${tempData.skill[j].effect}</td>
+									</tr>
+								</tbody>`);
+						}
+
+						htmlText = htmlText.concat(`</table>`);
+					}
 
 					infoBox.innerHTML = htmlText;
 					while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
