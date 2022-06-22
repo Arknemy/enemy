@@ -283,49 +283,49 @@
 			for(var i = 0; i < filterArr.length; i++) {
 				if(filterArr[i] == 1) {
 					if(i == 0) {
-						if(data.level == 'Normal') { filtered = true; break; }
+						if(data.level != 'Normal') { filtered = false; break; }
 					}
 					if(i == 1) {
-						if(data.level == 'Elite') { filtered = true; break; }
+						if(data.level != 'Elite') { filtered = false; break; }
 					}
 					if(i == 2) {
-						if(data.level == 'Boss') { filtered = true; break; }
+						if(data.level != 'Boss') { filtered = false; break; }
 					}
 					if(i == 3) {
-						if(data.race == 'Infected Creature') { filtered = true; break; }
+						if(data.race != 'Infected Creature') { filtered = false; break; }
 					}
 					if(i == 4) {
-						if(data.race == 'Drone') { filtered = true; break; }
+						if(data.race != 'Drone') { filtered = false; break; }
 					}
 					if(i == 5) {
-						if(data.race == 'Sarkaz') { filtered = true; break; }
+						if(data.race != 'Sarkaz') { filtered = false; break; }
 					}
 					if(i == 6) {
-						if(data.race == 'Possessed') { filtered = true; break; }
+						if(data.race != 'Possessed') { filtered = false; break; }
 					}
 					if(i == 7) {
-						if(data.race == 'Sea Monster') { filtered = true; break; }
+						if(data.race != 'Sea Monster') { filtered = false; break; }
 					}
 					if(i == 8) {
-						if(data.race == 'Arts Creation') { filtered = true; break; }
+						if(data.race != 'Arts Creation') { filtered = false; break; }
 					}
 					if(i == 9) {
-						if(data.atktype.includes('Melee') == true) { filtered = true; break; }
+						if(data.atktype.includes('Melee') != true) { filtered = false; break; }
 					}
 					if(i == 10) {
-						if(data.atktype.includes('Ranged') == true) { filtered = true; break; }
+						if(data.atktype.includes('Ranged') != true) { filtered = false; break; }
 					}
 					if(i == 11) {				
-						if(data.atktype.includes('None') == true) { filtered = true; break; }
+						if(data.atktype.includes('None') != true) { filtered = false; break; }
 					}
 					if(i == 12) {
-						if(data.atkattri == 'Physical') { filtered = true; break; }
+						if(data.atkattri != 'Physical') { filtered = false; break; }
 					}
 					if(i == 13) {
-						if(data.atkattri =='Arts') { filtered = true; break; }
+						if(data.atkattri != 'Arts') { filtered = false; break; }
 					}
 					if(i == 14) {
-						if(data.atkattri =='Healing') { filtered = true; break; }
+						if(data.atkattri != 'Healing') { filtered = false; break; }
 					}
 				}
 			}
