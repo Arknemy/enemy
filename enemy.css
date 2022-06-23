@@ -44,6 +44,17 @@
     margin-bottom: 30px;
 }
 
+.enemyWidget_CN {
+    width: 95%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    justify-content: space-between;
+    grid-gap: 10px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
 .enemyCard {
     width: 80px;
     height: 80px;
@@ -86,6 +97,7 @@ button {
 
 input.cboxButton {
   display: none;
+  user-select: none;
 }
 
 input.cboxButton + label {
@@ -94,6 +106,7 @@ input.cboxButton + label {
   padding: 5px 8px;
   cursor: pointer;
   border-radius: 5px;
+  user-select: none;
 }
 
 input.cboxButton:not(:checked) + label:hover {
@@ -105,6 +118,7 @@ input.cboxButton:checked + label {
   /*box-shadow: 0px 0px 3px inset;*/
   background: #6c757d;
   color: white;
+  user-select: none;
 }
 
 #lightBox {
@@ -135,4 +149,42 @@ input.cboxButton:checked + label {
     background-color: #f2eeed;
     box-shadow: 0px 0px 5px;
     overflow-y: auto;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+  /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
