@@ -1,2 +1,2 @@
-# enemy
-https://arknemy.github.io/enemy/
+# Arknemy
+This is a site where you can look up Arknights enemy information.
