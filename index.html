@@ -78,6 +78,13 @@
 		</div>
 		
 		<div class="enemyWidget" id="enemyWidget"></div>
+
+		<div style="width: 95%; margin: auto; margin-top: 30px;">
+		<span class="display-6" style="color: white; font-size: 30px;">CN Exclusive</span>
+		<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px;" />
+		</div>
+
+		<div class="enemyWidget_CN" id="enemyWidget_CN"></div>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
@@ -85,7 +92,7 @@
 
 	<script type="text/javascript">
 	var eJson;
-	fetch('/enemy/enemy_alldata.json')
+	fetch('/static/data/enemy_alldata.json')
 		.then(response => response.json())
 		.then(data => {
 			eJson = data;
@@ -96,12 +103,14 @@
 		// normal elite boss inf drone sark poss seamons creat melee ranged doesn'tatk phys arts healing
 
 		for(var i = 0; i < eJson.length; i++) {
-			const targetDiv = document.getElementById("enemyWidget");
+			const enDiv = document.getElementById("enemyWidget");
+			const cnDiv = document.getElementById("enemyWidget_CN");
 			name = eJson[i].name;
 			source = eJson[i].address;
 			caption = eJson[i].index;
 			img = `<div class="enemyCard" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
-			targetDiv.insertAdjacentHTML('beforeend', img);
+			if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
+			else { cnDiv.insertAdjacentHTML('beforeend', img); }
 		}
 
 		enemyInput.oninput = handleSearch;
@@ -262,7 +271,7 @@
 
 						htmlText = htmlText.concat(`</table>`);
 					}
-
+									
 					infoBox.innerHTML = htmlText;
 					while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 					lightBox.appendChild(infoBox);
@@ -292,40 +301,40 @@
 						if(data.level != 'Boss') { filtered = false; break; }
 					}
 					if(i == 3) {
-						if(data.race != 'Infected Creature') { filtered = false; break; }
+						if(data.race != 'Infected Creature' && data.race != '感染生物') { filtered = false; break; }
 					}
 					if(i == 4) {
-						if(data.race != 'Drone') { filtered = false; break; }
+						if(data.race != 'Drone' && data.race != '无人机') { filtered = false; break; }
 					}
 					if(i == 5) {
-						if(data.race != 'Sarkaz') { filtered = false; break; }
+						if(data.race != 'Sarkaz' && data.race != '萨卡兹') { filtered = false; break; }
 					}
 					if(i == 6) {
-						if(data.race != 'Possessed') { filtered = false; break; }
+						if(data.race != 'Possessed' && data.race != '宿主') { filtered = false; break; }
 					}
 					if(i == 7) {
-						if(data.race != 'Sea Monster') { filtered = false; break; }
+						if(data.race != 'Sea Monster' && data.race != '海怪') { filtered = false; break; }
 					}
 					if(i == 8) {
-						if(data.race != 'Arts Creation') { filtered = false; break; }
+						if(data.race != 'Arts Creation' && data.race != '法术造物') { filtered = false; break; }
 					}
 					if(i == 9) {
-						if(data.atktype.includes('Melee') != true) { filtered = false; break; }
+						if(data.atktype.includes('Melee') != true && data.atktype.includes('近战') != true) { filtered = false; break; }
 					}
 					if(i == 10) {
-						if(data.atktype.includes('Ranged') != true) { filtered = false; break; }
+						if(data.atktype.includes('Ranged') != true && data.atktype.includes('远程') != true) { filtered = false; break; }
 					}
 					if(i == 11) {				
-						if(data.atktype.includes('None') != true) { filtered = false; break; }
+						if(data.atktype.includes('None') != true && data.atktype.includes('无') != true && data.atktype.includes('不攻击') != true) { filtered = false; break; }
 					}
 					if(i == 12) {
-						if(data.atkattri != 'Physical') { filtered = false; break; }
+						if(data.atkattri != 'Physical' && data.atkattri != '物理') { filtered = false; break; }
 					}
 					if(i == 13) {
-						if(data.atkattri != 'Arts') { filtered = false; break; }
+						if(data.atkattri != 'Arts' && data.atkattri != '法术') { filtered = false; break; }
 					}
 					if(i == 14) {
-						if(data.atkattri != 'Healing') { filtered = false; break; }
+						if(data.atkattri != 'Healing' && data.atkattri != '治疗') { filtered = false; break; }
 					}
 				}
 			}
@@ -343,6 +352,7 @@
 		function handleSearch(e) {
 			searchVal = e.target.value;
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		}
@@ -357,12 +367,14 @@
 
 			if(checkVal == true) {
 				for(var i = 0; i < eJson.length; i++) {
-					const targetDiv = document.getElementById("enemyWidget");
+					const enDiv = document.getElementById("enemyWidget");
+					const cnDiv = document.getElementById("enemyWidget_CN");
 					name = eJson[i].name;
 					source = eJson[i].address;
 					caption = eJson[i].index;
 					img = `<div class="enemyCard" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
-					targetDiv.insertAdjacentHTML('beforeend', img);
+					if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
+					else { cnDiv.insertAdjacentHTML('beforeend', img); }
 				}
 			}
 			else {
@@ -374,12 +386,14 @@
 				}
 
 				for(var i = 0; i < filteredList.length; i++) {
-					const targetDiv = document.getElementById("enemyWidget");
+					const enDiv = document.getElementById("enemyWidget");
+					const cnDiv = document.getElementById("enemyWidget_CN");
 					name = filteredList[i].name;
 					source = filteredList[i].address;
 					caption = filteredList[i].index;
 					img = `<div class="enemyCard" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
-					targetDiv.insertAdjacentHTML('beforeend', img);
+					if(filteredList[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
+					else { cnDiv.insertAdjacentHTML('beforeend', img); }
 				}
 			}
 		}
@@ -387,6 +401,7 @@
 		$("#bnormal").click(function() {
 			filterArr[0] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -394,6 +409,7 @@
 		$("#belite").click(function() {
 			filterArr[1] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -401,6 +417,7 @@
 		$("#bboss").click(function() {
 			filterArr[2] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -408,6 +425,7 @@
 		$("#binfcrea").click(function() {
 			filterArr[3] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -415,6 +433,7 @@
 		$("#bdrone").click(function() {
 			filterArr[4] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -422,6 +441,7 @@
 		$("#bsarkaz").click(function() {
 			filterArr[5] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -429,6 +449,7 @@
 		$("#bpossessed").click(function() {
 			filterArr[6] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -436,6 +457,7 @@
 		$("#bseamon").click(function() {
 			filterArr[7] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -443,6 +465,7 @@
 		$("#bartscrea").click(function() {
 			filterArr[8] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -450,6 +473,7 @@
 		$("#bmelee").click(function() {
 			filterArr[9] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -457,6 +481,7 @@
 		$("#branged").click(function() {
 			filterArr[10] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -464,6 +489,7 @@
 		$("#bnoatk").click(function() {
 			filterArr[11] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -471,6 +497,7 @@
 		$("#bphys").click(function() {
 			filterArr[12] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -478,6 +505,7 @@
 		$("#barts").click(function() {
 			filterArr[13] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
@@ -485,6 +513,7 @@
 		$("#bheal").click(function() {
 			filterArr[14] *= -1
 			deleteChildren(document.querySelector('#enemyWidget'));
+			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
 			addBoxToCard();
 		});
