@@ -65,19 +65,19 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				htmlText = htmlText.concat(`
 					<div style="display:flex; align-items:center; justify-content:left; gap:20px; margin-bottom: 18px;">
 						<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
-							<img src="/static/assets/hp.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+							<img src="/enemy/static/assets/hp.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
 							<h3 style="margin-top:18px;">${tempData.endure}</h3>
 						</div>
 						<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
-							<img src="/static/assets/atk.png" style="width: 21px; hheight: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+							<img src="/enemy/static/assets/atk.png" style="width: 21px; hheight: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
 							<h3 style="margin-top:18px;">${tempData.attack}</h3>
 						</div>
 						<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
-							<img src="/static/assets/defense.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+							<img src="/enemy/static/assets/defense.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
 							<h3 style="margin-top:18px;">${tempData.defence}</h3>
 						</div>
 						<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
-							<img src="/static/assets/resistance.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+							<img src="/enemy/static/assets/resistance.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
 							<h3 style="margin-top:18px;">${tempData.resistance}</h3>
 						</div>
 					</div>
