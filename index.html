@@ -30,26 +30,26 @@
 			<hr/>
 			<div style="margin-bottom: 15px;">
 				<p style="display:inline; margin-right: 18px;">Enemy Level:</p>
-				<input type="checkbox" id='bnormal' name="bnormal" class='cboxButton' />
+				<input type="radio" id='bnormal' name="levelbutton" class='cboxButton' />
 				<label for='bnormal' style="font-size: 14px; margin-right: 6px;">Normal</label>
-				<input type="checkbox" id="belite" name="belite" class='cboxButton' />
+				<input type="radio" id="belite" name="levelbutton" class='cboxButton' />
 				<label for='belite' style="font-size: 14px; margin-right: 6px;">Elite</label>
-				<input type="checkbox" id="bboss" name="bboss" class='cboxButton' />
+				<input type="radio" id="bboss" name="levelbutton" class='cboxButton' />
 				<label for='bboss' style="font-size: 14px;">Boss</label>
 			</div>
 			<div style="margin-bottom: 15px;">
 				<p style="display:inline; margin-right: 20px">Enemy Race:</p>
-				<input type="checkbox" id='binfcrea' name="binfcrea" class='cboxButton' />
+				<input type="radio" id='binfcrea' name="racebutton" class='cboxButton' />
 				<label for='binfcrea' style="font-size: 14px; margin-right: 6px;">Infected Creature</label>
-				<input type="checkbox" id='bdrone' name="bdrone" class='cboxButton' />
+				<input type="radio" id='bdrone' name="racebutton" class='cboxButton' />
 				<label for='bdrone' style="font-size: 14px; margin-right: 6px;">Drone</label>
-				<input type="checkbox" id='bsarkaz' name="bsarkaz" class='cboxButton' />
+				<input type="radio" id='bsarkaz' name="racebutton" class='cboxButton' />
 				<label for='bsarkaz' style="font-size: 14px; margin-right: 6px;">Sarkaz</label>
-				<input type="checkbox" id='bpossessed' name="bpossessed" class='cboxButton' />
+				<input type="radio" id='bpossessed' name="racebutton" class='cboxButton' />
 				<label for='bpossessed' style="font-size: 14px; margin-right: 6px;">Possessed</label>
-				<input type="checkbox" id='bseamon' name="bseamon" class='cboxButton' />
+				<input type="radio" id='bseamon' name="racebutton" class='cboxButton' />
 				<label for='bseamon' style="font-size: 14px; margin-right: 6px;">Sea Monster</label>
-				<input type="checkbox" id='bartscrea' name="bartscrea" class='cboxButton' />
+				<input type="radio" id='bartscrea' name="racebutton" class='cboxButton' />
 				<label for='bartscrea' style="font-size: 14px; margin-right: 6px;">Arts Creation</label>
 			</div>
 			<div style="margin-bottom: 15px;">
@@ -63,11 +63,11 @@
 			</div>
 			<div>
 				<p style="display:inline; margin-right: 8px">Damage Type:</p>
-				<input type="checkbox" id='bphys' name="bphys" class='cboxButton' />
+				<input type="radio" id='bphys' name="atktypebutton" class='cboxButton' />
 				<label for='bphys' style="font-size: 14px; margin-right: 6px;">Physical</label>
-				<input type="checkbox" id='barts' name="barts" class='cboxButton' />
+				<input type="radio" id='barts' name="atktypebutton" class='cboxButton' />
 				<label for='barts' style="font-size: 14px; margin-right: 6px;">Arts</label>
-				<input type="checkbox" id='bheal' name="bheal" class='cboxButton' />
+				<input type="radio" id='bheal' name="atktypebutton" class='cboxButton' />
 				<label for='bheal' style="font-size: 14px; margin-right: 6px;">Healing</label>
 			</div>
 		</div>
@@ -399,7 +399,13 @@
 		}
 		
 		$("#bnormal").click(function() {
-			filterArr[0] *= -1
+			filterArr[0] *= -1;
+			filterArr[1] = -1;
+			filterArr[2] = -1;
+			var elem = document.getElementById('bnormal');
+			if(filterArr[0] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -407,7 +413,13 @@
 		});
 
 		$("#belite").click(function() {
-			filterArr[1] *= -1
+			filterArr[0] = -1;
+			filterArr[1] *= -1;
+			filterArr[2] = -1;
+			var elem = document.getElementById('belite');
+			if(filterArr[1] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -415,7 +427,13 @@
 		});
 
 		$("#bboss").click(function() {
-			filterArr[2] *= -1
+			filterArr[0] = -1;
+			filterArr[1] = -1;
+			filterArr[2] *= -1;
+			var elem = document.getElementById('bboss');
+			if(filterArr[2] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -423,7 +441,16 @@
 		});
 
 		$("#binfcrea").click(function() {
-			filterArr[3] *= -1
+			filterArr[3] *= -1;
+			filterArr[4] = -1;
+			filterArr[5] = -1;
+			filterArr[6] = -1;
+			filterArr[7] = -1;
+			filterArr[8] = -1;
+			var elem = document.getElementById('binfcrea');
+			if(filterArr[3] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -431,7 +458,16 @@
 		});
 
 		$("#bdrone").click(function() {
-			filterArr[4] *= -1
+			filterArr[3] = -1;
+			filterArr[4] *= -1;
+			filterArr[5] = -1;
+			filterArr[6] = -1;
+			filterArr[7] = -1;
+			filterArr[8] = -1;
+			var elem = document.getElementById('bdrone');
+			if(filterArr[4] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -439,7 +475,16 @@
 		});
 
 		$("#bsarkaz").click(function() {
-			filterArr[5] *= -1
+			filterArr[3] = -1;
+			filterArr[4] = -1;
+			filterArr[5] *= -1;
+			filterArr[6] = -1;
+			filterArr[7] = -1;
+			filterArr[8] = -1;
+			var elem = document.getElementById('bsarkaz');
+			if(filterArr[5] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -447,7 +492,16 @@
 		});
 
 		$("#bpossessed").click(function() {
-			filterArr[6] *= -1
+			filterArr[3] = -1;
+			filterArr[4] = -1;
+			filterArr[5] = -1;
+			filterArr[6] *= -1;
+			filterArr[7] = -1;
+			filterArr[8] = -1;
+			var elem = document.getElementById('bpossessed');
+			if(filterArr[6] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -455,7 +509,16 @@
 		});
 
 		$("#bseamon").click(function() {
-			filterArr[7] *= -1
+			filterArr[3] = -1;
+			filterArr[4] = -1;
+			filterArr[5] = -1;
+			filterArr[6] = -1;
+			filterArr[7] *= -1;
+			filterArr[8] = -1;
+			var elem = document.getElementById('bseamon');
+			if(filterArr[7] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -463,7 +526,16 @@
 		});
 
 		$("#bartscrea").click(function() {
-			filterArr[8] *= -1
+			filterArr[3] = -1;
+			filterArr[4] = -1;
+			filterArr[5] = -1;
+			filterArr[6] = -1;
+			filterArr[7] = -1;
+			filterArr[8] *= -1;
+			var elem = document.getElementById('bartscrea');
+			if(filterArr[8] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -471,7 +543,12 @@
 		});
 
 		$("#bmelee").click(function() {
-			filterArr[9] *= -1
+			filterArr[9] *= -1;
+			filterArr[11] = -1;
+			var elem = document.getElementById('bnoatk');
+			if(filterArr[9] == 1) {
+				elem.checked = false;
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -479,7 +556,12 @@
 		});
 
 		$("#branged").click(function() {
-			filterArr[10] *= -1
+			filterArr[10] *= -1;
+			filterArr[11] = -1;
+			var elem = document.getElementById('bnoatk');
+			if(filterArr[10] == 1) {
+				elem.checked = false;
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -487,7 +569,15 @@
 		});
 
 		$("#bnoatk").click(function() {
-			filterArr[11] *= -1
+			filterArr[9] = -1;
+			filterArr[10] = -1;
+			filterArr[11] *= -1;
+			var elem1 = document.getElementById('bmelee');
+			var elem2 = document.getElementById('branged');
+			if(filterArr[11] == 1) {
+				elem1.checked = false;
+				elem2.checked = false;
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -495,7 +585,13 @@
 		});
 
 		$("#bphys").click(function() {
-			filterArr[12] *= -1
+			filterArr[12] *= -1;
+			filterArr[13] = -1;
+			filterArr[14] = -1;
+			var elem = document.getElementById('bphys');
+			if(filterArr[12] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -503,7 +599,13 @@
 		});
 
 		$("#barts").click(function() {
-			filterArr[13] *= -1
+			filterArr[12] = -1;
+			filterArr[13] *= -1;
+			filterArr[14] = -1;
+			var elem = document.getElementById('barts');
+			if(filterArr[13] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
@@ -511,7 +613,13 @@
 		});
 
 		$("#bheal").click(function() {
-			filterArr[14] *= -1
+			filterArr[12] = -1;
+			filterArr[13] = -1;
+			filterArr[14] *= -1;
+			var elem = document.getElementById('bheal');
+			if(filterArr[14] == -1) {
+				if (elem.type == "radio") { elem.checked = false; }
+			}
 			deleteChildren(document.querySelector('#enemyWidget'));
 			deleteChildren(document.querySelector('#enemyWidget_CN'));
 			filterChildren();
