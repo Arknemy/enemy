@@ -1,5 +1,5 @@
 var eJson;
-fetch('/static/data/enemy_alldata.json')
+fetch('/enemy/static/data/enemy_alldata.json')
 	.then(response => response.json())
 	.then(data => {
 		eJson = data;
