@@ -29,6 +29,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	lightBox.addEventListener('click', e => {
 		if(e.target != e.currentTarget) return;
 		lightBox.classList.remove('active');
+		document.body.style.overflow = 'visible';
 	})
 
 	function addBoxToCard() {
@@ -181,6 +182,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				infoBox.innerHTML = htmlText;
 				while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 				lightBox.appendChild(infoBox);
+				document.body.style.overflow = 'hidden';
 			});
 		});
 	}
