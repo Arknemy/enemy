@@ -533,4 +533,14 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterChildren();
 		addBoxToCard();
 	});
+	
+	$("#bclear").click(function() {
+		for(var i = 0; i < filterArr.length; i++) { filterArr[i] = -1; }
+		var elem = document.getElementsByClassName('cboxButton');
+		for(var j = 0; j < elem.length; j++) { elem[j].checked = false; }
+		deleteChildren(document.querySelector('#enemyWidget'));
+		deleteChildren(document.querySelector('#enemyWidget_CN'));
+		filterChildren();
+		addBoxToCard();
+	});
 });
