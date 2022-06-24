@@ -1,0 +1,190 @@
+.nav-pills > li > a.active {
+    background-color: #000000 !important;
+    align-items: center;
+    display: flex;
+}
+
+.nav-item {
+    align-items: center;
+    margin-top: 10px;
+    display: flex;
+}
+
+.nav-item > a {
+    color: #ffffff !important;
+}
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.filterWidget {
+    width: 95%;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+    margin-bottom: 30px;
+    background-color: #f2eeed;
+    box-shadow: 5px 10px 5px;
+    border-radius: 5px;
+}
+
+.enemyWidget {
+    width: 95%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    justify-content: space-between;
+    grid-gap: 10px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.enemyWidget_CN {
+    width: 95%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    justify-content: space-between;
+    grid-gap: 10px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+.enemyCard {
+    width: 80px;
+    height: 80px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.enemyCard:hover {
+    box-shadow: 0 0 5px #000000;
+}
+
+.enemyWidget::after {
+    content: "";
+    flex: auto;
+}
+
+figcaption {
+    background-color: #1f1e1e;
+    color: white;
+    font-size: 12px;
+    display: block;
+    float: left;
+    position: absolute;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    top: 0;
+}
+
+figure {
+  position: relative;
+  float: left;
+}
+
+button {
+    box-shadow: 1px 1px 2px;
+}
+
+input.cboxButton {
+  display: none;
+  user-select: none;
+}
+
+input.cboxButton + label {
+  border: 1px solid grey;
+  background: ghoswhite;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  user-select: none;
+}
+
+input.cboxButton:not(:checked) + label:hover {
+  box-shadow: 0px 1px 3px;
+}
+
+input.cboxButton + label:active,
+input.cboxButton:checked + label {
+  /*box-shadow: 0px 0px 3px inset;*/
+  background: #6c757d;
+  color: white;
+  user-select: none;
+}
+
+#lightBox {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow-y: auto;
+    display: none;
+}
+
+#lightBox.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#infoBox {
+    width: 65%;
+    height: auto;
+    max-height: 90%;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f2eeed;
+    box-shadow: 0px 0px 5px;
+    overflow-y: auto;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+  /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
