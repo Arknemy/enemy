@@ -99,11 +99,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 						<table class="table table-sm table-bordered" style="text-align: center; table-layout: fixed;">
 							<thead class="thead-light">
 								<tr style="background-color: #dbdbdb;">
-									<th scope="col">HP</th>
-									<th scope="col">Attack</th>
-									<th scope="col">Defense</th>
-									<th scope="col">Resistance</th>
-									<th scope="col">HP Seals</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Attack</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Defense</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Resistance</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP Seals</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -117,11 +117,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 							</tbody>
 							<thead class="thead-light">
 								<tr style="background-color: #dbdbdb;">
-									<th scope="col">ATK Interval</th>
-									<th scope="col">ATK Radius</th>
-									<th scope="col">Speed</th>
-									<th scope="col">Weight</th>
-									<th scope="col">HP Regen</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Interval</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Radius</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Speed</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Weight</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP Regen</th>
 								</tr>
 							</thead>
 							<tbody>
