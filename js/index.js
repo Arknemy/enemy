@@ -49,6 +49,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 				infoBox.id = 'infoBox';
 				htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
+					<span id="closeBox" class="display-6 closeBox" style="font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
 					<hr/>
 					<div style="display:flex; align-items:center;">
 						<figure style="margin-right: 20px;">
@@ -543,5 +544,10 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		deleteChildren(document.querySelector('#enemyWidget_CN'));
 		filterChildren();
 		addBoxToCard();
+	});
+	
+	$(document).on('click','#closeBox', function(e){
+		lightBox.classList.remove('active');
+		document.body.style.overflow = 'visible';
 	});
 });
