@@ -118,7 +118,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 							<thead class="thead-light">
 								<tr style="background-color: #dbdbdb;">
 									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Interval</th>
-									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Radius</th>
+									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Range</th>
 									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Speed</th>
 									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Weight</th>
 									<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP Regen</th>
