@@ -15,7 +15,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		name = eJson[i].name;
 		source = eJson[i].address;
 		caption = eJson[i].index;
-		img = `<div class="enemyCard" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
+		img = `<div class="enemyCard" name="${name}"><figure><img loading="lazy" src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
 		if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 		else { cnDiv.insertAdjacentHTML('beforeend', img); }
 	}
