@@ -14,6 +14,10 @@
     color: #ffffff !important;
 }
 
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #4E4E4E;
+}
+
 .btn:focus, .btn:active {
     outline: none !important;
     box-shadow: none !important;
