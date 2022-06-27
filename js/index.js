@@ -437,7 +437,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				name = eJson[i].name;
 				source = eJson[i].address;
 				caption = eJson[i].index;
-				img = `<div class="enemyCard" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
+				img = `<a href="#${eJson[i].code}"><div class="enemyCard" id="#${eJson[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
 				if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 				else { cnDiv.insertAdjacentHTML('beforeend', img); }
 			}
@@ -456,7 +456,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				name = filteredList[i].name;
 				source = filteredList[i].address;
 				caption = filteredList[i].index;
-				img = `<div class="enemyCard" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
+				img = `<a href="#${filteredList[i].code}"><div class="enemyCard" id="#${filteredList[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
 				if(filteredList[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 				else { cnDiv.insertAdjacentHTML('beforeend', img); }
 			}
