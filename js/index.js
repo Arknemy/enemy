@@ -8,6 +8,18 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	var searchVal = '';
 	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 	// normal elite boss inf drone sark poss seamons creat melee ranged doesn'tatk phys arts healing
+	
+	var scrollButton = document.getElementById('scrollTop');
+	$(window).on('scroll', function() {
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+			$('#scrollTop').addClass('active')
+		} 
+		else { $('#scrollTop').removeClass('active') }
+	});
+
+	$("#scrollTop").click(function() {
+		$("html, body").animate({ scrollTop: 0 }, 0);
+	});
 
 	for(var i = 0; i < eJson.length; i++) {
 		const enDiv = document.getElementById("enemyWidget");
