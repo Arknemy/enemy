@@ -721,9 +721,5 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterChildren();
 		addBoxToCard();
 	});
-	
-	$(document).on('click','#closeBox', function(e){
-		lightBox.classList.remove('active');
-		document.body.style.overflow = 'visible';
-	});
+
 });
