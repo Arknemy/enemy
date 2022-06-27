@@ -15,7 +15,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		name = eJson[i].name;
 		source = eJson[i].address;
 		caption = eJson[i].index;
-		img = `<div class="enemyCard" name="${name}"><figure><img loading="lazy" src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div>`;
+		img = `<a href="#${eJson[i].code}"><div class="enemyCard" id="#${eJson[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
 		if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 		else { cnDiv.insertAdjacentHTML('beforeend', img); }
 	}
@@ -249,6 +249,162 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 
 		return filtered;
+	}
+	
+	window.onload = function(){
+		var hash = (window.location.hash).replace('#', '');
+		if (hash.length != 0) {
+			for(var i = 0; i < eJson.length; i++) {
+				if(eJson[i].code == hash) {
+					lightBox.classList.add('active');
+					const infoBox = document.createElement('div');
+					var tempData;
+
+					tempData = eJson[i];
+
+					infoBox.id = 'infoBox';
+
+					htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
+						<span id="closeBox" class="display-6 closeBox" style="display:font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
+						<hr/>
+						<div style="display:flex; align-items:center;">
+							<figure style="margin-right: 20px;">
+								<img src="${tempData.address}" style="width: 100px; height: 100px;">
+								<figcaption>${tempData.index}</figcaption>
+							</figure>`;
+
+					if(tempData.race == '') {
+						htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>${tempData.atkattri}</p></div>`);
+					}
+					else {
+						htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Race: </strong>${tempData.race}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>${tempData.atkattri}</p></div>`);
+					}
+
+					htmlText = htmlText.concat(`
+						<div style="display:flex; align-items:center; justify-content:left; gap:20px; margin-bottom: 18px;">
+							<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
+								<img src="/static/assets/hp.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+								<h3 style="margin-top:18px;">${tempData.endure}</h3>
+							</div>
+							<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
+								<img src="/static/assets/atk.png" style="width: 21px; hheight: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+								<h3 style="margin-top:18px;">${tempData.attack}</h3>
+							</div>
+							<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
+								<img src="/static/assets/defense.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+								<h3 style="margin-top:18px;">${tempData.defence}</h3>
+							</div>
+							<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
+								<img src="/static/assets/resistance.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
+								<h3 style="margin-top:18px;">${tempData.resistance}</h3>
+							</div>
+						</div>
+						<span class="display-6" style="font-size:25px;">Description</span>
+						<hr style="margin-bottom:5px; margin-top:5px;"/>
+						<p>${tempData.description}</p>
+						<span class="display-6" style="font-size:25px;">Ability</span>
+						<hr style="margin-bottom:5px; margin-top:5px;"/>
+						<p>${tempData.ability}</p>`)
+
+					for(var i = 0; i < tempData.statlevels; i++) {
+						var level = "Level ";
+						level = level.concat(i.toString());
+
+						htmlText = htmlText.concat(`
+							<span class="display-6" style="font-size:25px;">${level}</span>
+							<hr style="margin-bottom:5px; margin-top:5px;"/>
+							<table class="table table-sm table-bordered" style="text-align: center; table-layout: fixed;">
+								<thead class="thead-light">
+									<tr style="background-color: #dbdbdb;">
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Attack</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Defense</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Resistance</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP Seals</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>${tempData.lhp[i]}</td>
+										<td>${tempData.latk[i]}</td>
+										<td>${tempData.ldef[i]}</td>
+										<td>${tempData.lres[i]}</td>
+										<td>${tempData.lseal[i]}</td>
+									</tr>
+								</tbody>
+								<thead class="thead-light">
+									<tr style="background-color: #dbdbdb;">
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Interval</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">ATK Radius</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Speed</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">Weight</th>
+										<th scope="col" style="text-overflow: ellipsis; overflow: hidden;">HP Regen</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>${tempData.latkint[i]}</td>
+										<td>${tempData.lrange[i]}</td>
+										<td>${tempData.lmvspd[i]}</td>
+										<td>${tempData.lweight[i]}</td>
+										<td>${tempData.lregen[i]}</td>
+									</tr>
+								</tbody>
+							</table>
+						`)
+					}
+
+					htmlText = htmlText.concat(`
+						<span class="display-6" style="font-size:25px;">Immunity</span>
+						<hr style="margin-bottom:5px; margin-top:5px;"/>
+						<p>${tempData.immunity}</p>
+						<span class="display-6" style="font-size:25px;">Talents</span>
+						<hr style="margin-bottom:5px; margin-top:5px;"/>
+						<p>${tempData.talent}</p>
+						<span class="display-6" style="font-size:25px;">Skills</span>
+						<hr style="margin-bottom:5px; margin-top:5px;"/>`)
+
+					if(tempData.skill == 'None') {
+						htmlText = htmlText.concat(`<p>None</p>`);
+					}
+					else {
+						htmlText = htmlText.concat(`
+							<table class="table table-sm table-bordered" style="text-align: center;">
+								<thead class="thead-light">
+									<tr style="background-color: #dbdbdb;">
+										<th scope="col">Name</th>
+										<th scope="col">Initial</th>
+										<th scope="col">Cost</th>
+										<th scope="col">Type</th>
+										<th scope="col">Effect</th>
+									</tr>
+								</thead>`);
+
+						for(var j = 0; j < tempData.skillnum; j++) {
+							htmlText = htmlText.concat(`
+								<tbody>
+									<tr>
+										<td>${tempData.skill[j].name}</td>
+										<td>${tempData.skill[j].initial}</td>
+										<td>${tempData.skill[j].cost}</td>
+										<td>${tempData.skill[j].type}</td>
+										<td>${tempData.skill[j].effect}</td>
+									</tr>
+								</tbody>`);
+
+						}
+
+						htmlText = htmlText.concat(`</table>`);
+					}
+
+					infoBox.innerHTML = htmlText;
+					while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
+					lightBox.appendChild(infoBox);
+					document.body.style.overflow = 'hidden';
+					break;
+				}
+			}
+		}
 	}
 
 	function filterSearch(data) {
