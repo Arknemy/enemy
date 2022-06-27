@@ -48,6 +48,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				}
 
 				infoBox.id = 'infoBox';
+				$('meta[name=description]').attr('content', tempData.name);
+				
 				htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
 					<span id="closeBox" class="display-6 closeBox" style="font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
 					<hr/>
@@ -263,6 +265,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					tempData = eJson[i];
 
 					infoBox.id = 'infoBox';
+					$('meta[name=description]').attr('content', tempData.name);
 
 					htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
 						<span id="closeBox" class="display-6 closeBox" style="display:font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
