@@ -56,7 +56,7 @@
     justify-content: space-between;
     grid-gap: 10px;
     margin: 0 auto;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
 }
 
 .enemyCard {
@@ -155,42 +155,34 @@ input.cboxButton:checked + label {
     overflow-y: auto;
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-  
-  /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    bottom: 100%;
+#scrollTop {
+    position: fixed;
+    bottom: 20px;
+    height: 50px;
+    width: 30%;
     left: 50%;
-    margin-left: -60px;
+    transform: translate(-50%, 0);
+    z-index: 999;
+    font-size: 25px;
+    background-color: #f2eeed;
+    color: black;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: auto;
+    padding-bottom: 4px;
+    margin-bottom: -12rem;
+    border-radius: 10px;
+    transition: margin-bottom 0.2s;
+    box-shadow: 0 0 0px black;
 }
 
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+#scrollTop:hover {
+    background-color: #b8b3b2;
 }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
+#scrollTop.active {
+    margin-bottom: 0;
 }
 
 @media (max-width: 700px) {
