@@ -15,7 +15,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		name = eJson[i].name;
 		source = eJson[i].address;
 		caption = eJson[i].index;
-		img = `<a href="#${eJson[i].code}"><div class="enemyCard" id="#${eJson[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
+		ref = eJson[i].name.replaceAll(' ', '_');
+		img = `<a href="#${ref}"><div class="enemyCard" id="#${eJson[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
 		if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 		else { cnDiv.insertAdjacentHTML('beforeend', img); }
 	}
@@ -258,8 +259,9 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	$(document).ready(function(e) {
 		var hash = (window.location.hash).replace('#', '');
 		if (hash.length != 0) {
+			hash = hash.replaceAll('_', ' ');
 			for(var i = 0; i < eJson.length; i++) {
-				if(eJson[i].code == hash) {
+				if(eJson[i].name == hash) {
 					lightBox.classList.add('active');
 					const infoBox = document.createElement('div');
 					var tempData;
@@ -444,7 +446,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				name = eJson[i].name;
 				source = eJson[i].address;
 				caption = eJson[i].index;
-				img = `<a href="#${eJson[i].code}"><div class="enemyCard" id="#${eJson[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
+				ref = eJson[i].name.replaceAll(' ', '_');
+				img = `<a href="#${ref}"><div class="enemyCard" id="#${eJson[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
 				if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 				else { cnDiv.insertAdjacentHTML('beforeend', img); }
 			}
@@ -463,7 +466,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				name = filteredList[i].name;
 				source = filteredList[i].address;
 				caption = filteredList[i].index;
-				img = `<a href="#${filteredList[i].code}"><div class="enemyCard" id="#${filteredList[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
+				ref = filteredList[i].name.replaceAll(' ', '_');
+				img = `<a href="#${ref}"><div class="enemyCard" id="#${filteredList[i].code}" name="${name}"><figure><img src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></div></a>`;
 				if(filteredList[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 				else { cnDiv.insertAdjacentHTML('beforeend', img); }
 			}
