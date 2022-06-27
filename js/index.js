@@ -251,7 +251,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		return filtered;
 	}
 	
-	window.onload = function(){
+	$(document).ready(function(e) {
 		var hash = (window.location.hash).replace('#', '');
 		if (hash.length != 0) {
 			for(var i = 0; i < eJson.length; i++) {
@@ -405,7 +405,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				}
 			}
 		}
-	}
+	});
 
 	function filterSearch(data) {
 		tempName = data.name.toLowerCase();
