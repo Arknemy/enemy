@@ -11,10 +11,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	
 	var scrollButton = document.getElementById('scrollTop');
 	$(window).on('scroll', function() {
-		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-			$('#scrollTop').addClass('active')
-		} 
-		else { $('#scrollTop').removeClass('active') }
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { $('#scrollTop').addClass('active'); } 
+		else { $('#scrollTop').removeClass('active'); }
 	});
 
 	$("#scrollTop").click(function() {
@@ -40,9 +38,16 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 	lightBox.addEventListener('click', e => {
 		if(e.target != e.currentTarget) return;
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { $('#scrollTop').addClass('active'); }
 		lightBox.classList.remove('active');
 		document.body.style.overflow = 'visible';
 	})
+	
+	$(document).on('click','#closeBox', function(e){
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { $('#scrollTop').addClass('active'); } 
+		lightBox.classList.remove('active');
+		document.body.style.overflow = 'visible';
+	});
 
 	function addBoxToCard() {
 		const enemySelect = document.querySelectorAll(".enemyCard");
@@ -60,6 +65,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				}
 
 				infoBox.id = 'infoBox';
+				$('#scrollTop').removeClass('active')
 				
 				htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
 					<span id="closeBox" class="display-6 closeBox" style="font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
@@ -276,6 +282,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					tempData = eJson[i];
 
 					infoBox.id = 'infoBox';
+					$('#scrollTop').removeClass('active')
 
 					htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
 						<span id="closeBox" class="display-6 closeBox" style="display:font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
