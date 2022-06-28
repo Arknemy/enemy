@@ -38,6 +38,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 	lightBox.addEventListener('click', e => {
 		if(e.target != e.currentTarget) return;
+		infoBox.classList.remove('active');
 		lightBox.classList.remove('active');
 		window.location.hash = '/';
 		document.body.style.overflow = 'visible';
@@ -47,6 +48,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	});
 
 	$(document).on('click','#closeBox', function(e){
+		infoBox.classList.remove('active');
 		lightBox.classList.remove('active');
 		window.location.hash = '/';
 		document.body.style.overflow = 'visible';
