@@ -8,6 +8,7 @@
     align-items: center;
     margin-top: 10px;
     display: flex;
+    margin-left: 10px;
 }
 
 .nav-item > a {
@@ -33,7 +34,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #b7b7b7; 
+    background: #b7b7b7;
     border-radius: 5px;
 }
 
@@ -152,14 +153,44 @@ input.cboxButton:checked + label {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     overflow-y: auto;
-    display: none;
+    justify-content: center;
+    align-items: center;
+    /*display: none;*/
+    display: flex;
+    height: 0%;
+    opacity: 0;
+/*    -webkit-transition: opacity 0.2s ease-in-out, height 0.2s linear;
+    -moz-transition: opacity 0.2s ease-in-out, height 0.2s linear;
+    -ms-transition: opacity 0.2s ease-in-out, height 0.2s linear;
+    -o-transition: opacity 0.2s ease-in-out, height 0.2s linear;
+    transition: opacity 0.2s ease-in-out, height 0.2s linear;*/
+    -webkit-transition: opacity 0.2s ease-in-out, height 0s linear 0.2s;
+    -moz-transition: opacity 0.2s ease-in-out, height 0s linear 0.2s;
+    -ms-transition: opacity 0.2s ease-in-out, height 0s linear 0.2s;
+    -o-transition: opacity 0.2s ease-in-out, height 0s linear 0.2s;
+    transition: opacity 0.2s ease-in-out, height 0s linear 0.2s;
+    
+/*    animation: fadeout 0.1s;
+    animation-fill-mode: forwards;
+    -webkit-animation: fadeout 0.1s;
+    -webkit-animation-fill-mode: forwards;*/
 }
 
 #lightBox.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*display: flex;*/
+    opacity: 1;
+    height: 100%;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -ms-transition: opacity 0.2s ease-in-out;
+    -o-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 
+
+/*    animation: fade 0.1s;
+    animation-fill-mode: forwards;
+    -webkit-animation: fade 0.1s;
+    -webkit-animation-fill-mode: forwards;*/
 }
 
 #infoBox {
@@ -191,7 +222,7 @@ input.cboxButton:checked + label {
     margin-bottom: -12rem;
     border-radius: 10px;
     transition: margin-bottom 0.2s;
-    box-shadow: 0 0 4px black;
+    box-shadow: 0 0 5px #292828;
 }
 
 #scrollTop:hover {
@@ -206,4 +237,76 @@ input.cboxButton:checked + label {
     #infoBox {
         width: 90%;
     }
+}
+
+/*———————————————————————————————————————————————————————————————————————————————————————————————————————*/
+
+.stageCard {
+    width: 95%;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+    margin-bottom: 30px;
+    background-color: #f2eeed;
+    box-shadow: 5px 10px 5px;
+    border-radius: 5px;
+}
+
+/*.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}*/
+
+/*———————————————————————————————————————————————————————————————————————————————————————————————————————*/
+
+.calculator {
+    outline: 1px solid #c00;
+    height: 500px;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, 250px);
+    justify-content: center;
+    display: flex;
+}
+
+.calcWidget {
+    width: 250px;
+    height: 500px;
+    background-color: #f2eeed;
+    box-shadow: 5px 10px 5px;
+    border-radius: 5px;
+    margin: 20px;
 }
