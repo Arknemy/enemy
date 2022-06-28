@@ -164,10 +164,14 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	}
 
 	function filterSearch(data) {
-		tempName = data.name.toLowerCase();
-		tempIndex = data.index.toLowerCase()
-		tempVal = searchVal.toLowerCase();
-		return (tempName.includes(tempVal) || tempIndex.includes(tempVal));
+		var tempName = data.name.toLowerCase();
+		var tempIndex = data.index.toLowerCase()
+		var tempVal = searchVal.toLowerCase();
+		var tempStage = false;
+		for(var i = 0; i < data.appearances.length; i++) {
+			if(data.appearances[i].toLowerCase().includes(tempVal)) { tempStage = true; }
+		}
+		return (tempName.includes(tempVal) || tempIndex.includes(tempVal) || tempStage);
 	}
 
 	function handleSearch(e) {
