@@ -38,15 +38,23 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 	lightBox.addEventListener('click', e => {
 		if(e.target != e.currentTarget) return;
-		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { $('#scrollTop').addClass('active'); }
 		lightBox.classList.remove('active');
-		document.body.style.overflow = 'visible';
-	})
-	
+		setTimeout(function() {
+			document.body.style.overflow = 'visible';
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				$('#scrollTop').addClass('active');
+			} 
+		}, 200);
+	});
+
 	$(document).on('click','#closeBox', function(e){
-		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { $('#scrollTop').addClass('active'); } 
 		lightBox.classList.remove('active');
-		document.body.style.overflow = 'visible';
+		setTimeout(function() {
+			document.body.style.overflow = 'visible';
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				$('#scrollTop').addClass('active');
+			} 
+		}, 200);
 	});
 
 	function addBoxToCard() {
