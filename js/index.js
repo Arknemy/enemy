@@ -78,6 +78,9 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				infoBox.innerHTML = htmlText;
 				while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 				lightBox.appendChild(infoBox);
+				setTimeout(function() {
+					infoBox.classList.add('active');
+				}, 1);
 				document.body.style.overflow = 'hidden';
 			});
 		});
@@ -101,6 +104,9 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					infoBox.innerHTML = htmlText;
 					while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 					lightBox.appendChild(infoBox);
+					setTimeout(function() {
+						infoBox.classList.add('active');
+					}, 1);
 					document.body.style.overflow = 'hidden';
 					break;
 				}
