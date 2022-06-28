@@ -195,13 +195,23 @@ input.cboxButton:checked + label {
 
 #infoBox {
     width: 65%;
-    height: auto;
-    max-height: 90%;
+    height: 0%;
+    /*max-height: 0%;*/
     border-radius: 5px;
     padding: 20px;
     background-color: #f2eeed;
     box-shadow: 0px 0px 5px;
     overflow-y: auto;
+    /*margin-bottom: 100vh;*/
+    -webkit-transition: height 0.2s ease;
+    -moz-transition: height 0.2s ease;
+    -ms-transition: height 0.2s ease;
+    -o-transition: height 0.2s ease;
+    transition: height 0.2s ease;
+}
+
+#infoBox.active {
+    height: 90%;
 }
 
 #scrollTop {
