@@ -568,7 +568,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 		else {
 			htmlText = htmlText.concat(`
-				<table class="table table-sm table-bordered" style="text-align: center;">
+				<table class="table table-sm table-bordered" style="text-align: center; vertical-align: middle;">
 					<thead class="thead-light">
 						<tr style="background-color: #dbdbdb;">
 							<th scope="col">Name</th>
