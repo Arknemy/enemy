@@ -591,6 +591,13 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 			htmlText = htmlText.concat(`</table>`);
 		}
+		htmlText = htmlText.concat(`<span class="display-6" style="font-size:25px;">Appearances</span><hr style="margin-bottom:5px; margin-top:5px;"/><p>`);
+		for(var i = 0; i < tempData.appearances.length; i++) {
+			htmlText = htmlText.concat(tempData.appearances[i]);
+			if(i < tempData.appearances.length - 1) { htmlText = htmlText.concat(', '); }
+			if(i == tempData.appearances.length - 1) { htmlText = htmlText.concat('.'); }
+		}
+		htmlText = htmlText.concat(`</p>`);
 
 		return htmlText;
 	}
