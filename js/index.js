@@ -567,40 +567,48 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			`)
 		}
 
-		var silence = 'False';
-		var stun = 'False';
-		var sleep = 'False';
-		var freeze = 'False';
-		var airborne = 'False'; 
-		if(tempData.immunity.includes('Silence')) { silence = '<strong>True</strong>'; }
-		if(tempData.immunity.includes('Stun')) { stun = '<strong>True</strong>'; }
-		if(tempData.immunity.includes('Sleep')) { sleep = '<strong>True</strong>'; }
-		if(tempData.immunity.includes('Freeze')) { freeze = '<strong>True</strong>'; }
-		if(tempData.immunity.includes('Airborne')) { airborne = '<strong>True</strong>'; }
+		if(tempData.immunity != null) {
+			var silence = 'False';
+			var stun = 'False';
+			var sleep = 'False';
+			var freeze = 'False';
+			var airborne = 'False'; 
+			if(tempData.immunity.includes('Silence')) { silence = '<strong>True</strong>'; }
+			if(tempData.immunity.includes('Stun')) { stun = '<strong>True</strong>'; }
+			if(tempData.immunity.includes('Sleep')) { sleep = '<strong>True</strong>'; }
+			if(tempData.immunity.includes('Freeze')) { freeze = '<strong>True</strong>'; }
+			if(tempData.immunity.includes('Airborne')) { airborne = '<strong>True</strong>'; }
 
-		htmlText = htmlText.concat(`
-			<span class="display-6" style="font-size:25px;">Immunity</span>
-			<hr style="margin-bottom:5px; margin-top:5px;"/>
-			<table class="table table-sm table-bordered" style="text-align: center; vertical-align: middle; table-layout: fixed;">
-				<thead class="thead-light">
-					<tr style="background-color: #dbdbdb; text-decoration: underline;">
-						<th scope="col" class="hovertooltip" data-tooltip="Disables certain skills and talents.">Silence</th>
-						<th scope="col" class="hovertooltip" data-tooltip="Cannot move, block, attack, or use skills.">Stun</th>
-						<th scope="col"  class="hovertooltip" data-tooltip="Invulnerable. Cannot move, block, attack, or use skills.">Sleep</th>
-						<th scope="col" class="hovertooltip" data-tooltip="Cannot attack or use skills, -15 RES.">Freeze</th>
-						<th scope="col" class="hovertooltip" data-tooltip="Regarded as aerial unit. Cannot move, attack, or use skills. Duration halved when weight > 3.">Yasuo Q3</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>${silence}</td>
-						<td>${stun}</td>
-						<td>${sleep}</td>
-						<td>${freeze}</td>
-						<td>${airborne}</td>
-					</tr>
-				</tbody>
-			</table>`);
+			htmlText = htmlText.concat(`
+				<span class="display-6" style="font-size:25px;">Immunity</span>
+				<hr style="margin-bottom:5px; margin-top:5px;"/>
+				<table class="table table-sm table-bordered" style="text-align: center; vertical-align: middle; table-layout: fixed;">
+					<thead class="thead-light">
+						<tr style="background-color: #dbdbdb; text-decoration: underline;">
+							<th scope="col" class="hovertooltip" data-tooltip="Disables certain skills and talents.">Silence</th>
+							<th scope="col" class="hovertooltip" data-tooltip="Cannot move, block, attack, or use skills.">Stun</th>
+							<th scope="col"  class="hovertooltip" data-tooltip="Invulnerable. Cannot move, block, attack, or use skills.">Sleep</th>
+							<th scope="col" class="hovertooltip" data-tooltip="Cannot attack or use skills, -15 RES.">Freeze</th>
+							<th scope="col" class="hovertooltip" data-tooltip="Regarded as aerial unit. Cannot move, attack, or use skills. Duration halved when weight > 3.">Yasuo Q3</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>${silence}</td>
+							<td>${stun}</td>
+							<td>${sleep}</td>
+							<td>${freeze}</td>
+							<td>${airborne}</td>
+						</tr>
+					</tbody>
+				</table>`);
+		}
+		else {
+			htmlText = htmlText.concat(`
+				<span class="display-6" style="font-size:25px;">Immunity</span>
+				<hr style="margin-bottom:5px; margin-top:5px;"/>
+				<p>undefined</p>`);
+		}
 
 		htmlText = htmlText.concat(`
 			<span class="display-6" style="font-size:25px;">Talents</span>
