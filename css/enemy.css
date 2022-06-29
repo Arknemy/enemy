@@ -125,6 +125,7 @@ input.cboxButton {
 
 input.cboxButton + label {
   border: 1px solid grey;
+  max-height: 32px;
   background: ghoswhite;
   padding: 5px 8px;
   cursor: pointer;
@@ -142,6 +143,10 @@ input.cboxButton:checked + label {
   background: #6c757d;
   color: white;
   user-select: none;
+}
+
+.buttonpara {
+	line-height: auto;
 }
 
 #lightBox {
@@ -290,12 +295,15 @@ input.cboxButton:checked + label {
 	transform-origin: top center;
 }
 
-@media (max-width: 700px) {
-    #infoBox {
-        width: 90%;
-    }
-}
+@media (max-width: 991px) {
+	#infoBox {
+		width: 90%;
+	}
 
+	.buttonpara {
+		line-height: 46px;
+	}
+}
 /*———————————————————————————————————————————————————————————————————————————————————————————————————————*/
 
 .stageCard {
