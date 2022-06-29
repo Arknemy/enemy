@@ -243,6 +243,53 @@ input.cboxButton:checked + label {
     margin-bottom: 0;
 }
 
+.hovertooltip {
+	position: relative;
+}
+
+.hovertooltip::before, .hovertooltip::after {
+	--scale: 0;
+	--arrow-size: 20px;
+	--tooltip-color: #c9c9c9;
+
+	position: absolute;
+	top: -.25rem;
+	left: 50%;
+	transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+	transition: 150ms transform;
+	transform-origin: bottom center;
+}
+
+.hovertooltip::before {
+	--translate-y: calc(-100% - var(--arrow-size));
+
+	content: attr(data-tooltip);
+	color: black;
+	font-weight: normal !important;
+	font-size: 15px;
+	padding: .5rem;
+	border-radius: .3rem;
+	text-align: center;
+	width: max-content;
+	min-width: 140px;
+	max-width: 100%;
+	background: var(--tooltip-color);
+}
+
+.hovertooltip:hover::before,
+.hovertooltip:hover::after {
+	--scale: 1;
+}
+
+.hovertooltip::after {
+	--translate-y: calc(-1 * var(--arrow-size));
+
+	content: '';
+	border: var(--arrow-size) solid transparent;
+	border-top-color: var(--tooltip-color);
+	transform-origin: top center;
+}
+
 @media (max-width: 700px) {
     #infoBox {
         width: 90%;
