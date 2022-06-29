@@ -114,35 +114,37 @@ figure {
   float: left;
 }
 
-button {
-    box-shadow: 1px 1px 2px;
-}
-
 input.cboxButton {
-  display: none;
-  user-select: none;
+	display: none;
+	user-select: none;
 }
 
 input.cboxButton + label {
-  border: 1px solid grey;
-  max-height: 32px;
-  background: ghoswhite;
-  padding: 5px 8px;
-  cursor: pointer;
-  border-radius: 5px;
-  user-select: none;
+	position: relative;
+	border: 1px solid grey;
+	max-height: 32px;
+	background: ghoswhite;
+	padding: 5px 8px;
+	cursor: pointer;
+	border-radius: 5px;
+	user-select: none;
+	box-shadow: 0px 1px 2px dimgrey;
+	top: 0px;
 }
 
 input.cboxButton:not(:checked) + label:hover {
-  box-shadow: 0px 1px 3px;
+	top: 1px;
+	box-shadow: none;
 }
 
 input.cboxButton + label:active,
 input.cboxButton:checked + label {
-  /*box-shadow: 0px 0px 3px inset;*/
-  background: #6c757d;
-  color: white;
-  user-select: none;
+	/*box-shadow: 0px 0px 3px inset;*/
+	top: 1px;
+	background: #6c757d;
+	color: white;
+	user-select: none;
+	box-shadow: none;
 }
 
 .buttonpara {
