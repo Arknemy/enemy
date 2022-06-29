@@ -78,12 +78,66 @@
     margin-bottom: 30px;
 }
 
+.subheader {
+	position: relative;
+	opacity: 0;
+	top: 30px;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
 .enemyCard {
-    width: 80px;
-    height: 80px;
-    aspect-ratio: 1 / 1;
-    margin-bottom: 10px;
-    cursor: pointer;
+	width: 80px;
+	height: 80px;
+	position: relative;
+	aspect-ratio: 1 / 1;
+	margin-bottom: 10px;
+	cursor: pointer;
+	opacity: 0;
+	top: 30px;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes fadein {
+	0% { opacity: 0; top: 100px; }
+	100% { opacity: 1; top: 0px; }
+}
+
+@-moz-keyframes fadein {
+	0% { opacity: 0; top: 100px; }
+	100% { opacity: 1; top: 0px; }
+}
+
+@-ms-keyframes fadein {
+	0% { opacity: 0; top: 100px; }
+	100% { opacity: 1; top: 0px; }
+}
+
+@-o-keyframes fadein {
+	0% { opacity: 0; top: 100px; }
+	100% { opacity: 1; top: 0px; }
+}
+
+@keyframes fadein {
+	0% { opacity: 0; top: 100px; }
+	100% { opacity: 1; top: 0px; }
 }
 
 .enemyCard:hover {
