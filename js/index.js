@@ -2,16 +2,18 @@ var eJson;
 fetch('/enemy/static/data/enemy_alldata.json')
 	.then(response => response.json())
 	.then(data => {
-		eJson = data;
-	
+	eJson = data;
+		
 	let enemyInput = document.querySelector('input');
 	var searchVal = '';
 	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 	// normal elite boss inf drone sark poss seamons creat melee ranged doesn'tatk phys arts healing
-	
+
 	var scrollButton = document.getElementById('scrollTop');
 	$(window).on('scroll', function() {
-		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) { $('#scrollTop').addClass('active'); } 
+		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+			$('#scrollTop').addClass('active');
+		} 
 		else { $('#scrollTop').removeClass('active'); }
 	});
 
@@ -25,7 +27,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		name = eJson[i].name;
 		source = eJson[i].address;
 		caption = eJson[i].index;
-		img = `<div class="enemyCard" id="#${eJson[i].code}" name="${name}"><a href="#${eJson[i].code}"><figure><img loading="lazy" src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
+		img = `<div class="enemyCard" id="#${eJson[i].code}" name="${name}"><a href="#${eJson[i].code}"><figure><img loading="lazy" src=${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
 		if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 		else { cnDiv.insertAdjacentHTML('beforeend', img); }
 	}
@@ -70,13 +72,10 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				}
 
 				$('#scrollTop').removeClass('active')
-
-
 				lightBox.classList.add('active');
 				const infoBox = document.createElement('div');
 				infoBox.id = 'infoBox';
-
-				var htmlText = getHTMLText(tempData);				
+				var htmlText = getHTMLText(tempData);
 				infoBox.innerHTML = htmlText;
 				while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 				lightBox.appendChild(infoBox);
@@ -89,7 +88,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	}
 
 	addBoxToCard();
-	
+
 	$(document).ready(function(e) {
 		var hash = (window.location.hash).replace('#', '');
 		if (hash.length != 0) {
@@ -101,8 +100,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					lightBox.classList.add('active');
 					const infoBox = document.createElement('div');
 					infoBox.id = 'infoBox';
-
-					htmlText = getHTMLText(tempData);
+					var htmlText = getHTMLText(tempData);				
 					infoBox.innerHTML = htmlText;
 					while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 					lightBox.appendChild(infoBox);
@@ -190,10 +188,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 	function handleSearch(e) {
 		searchVal = e.target.value;
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	}
 
 	function filterChildren() {
@@ -205,16 +200,12 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 
 		if(checkVal == true) {
-			for(var i = 0; i < eJson.length; i++) {
-				const enDiv = document.getElementById("enemyWidget");
-				const cnDiv = document.getElementById("enemyWidget_CN");
-				name = eJson[i].name;
-				source = eJson[i].address;
-				caption = eJson[i].index;
-				img = `<div class="enemyCard" id="#${eJson[i].code}" name="${name}"><a href="#${eJson[i].code}"><figure><img loading="lazy" src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
-				if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
-				else { cnDiv.insertAdjacentHTML('beforeend', img); }
-			}
+			const enemySelect = document.querySelectorAll(".enemyCard");
+			enemySelect.forEach(card => {
+				card.classList.remove('disable');
+				var newCard = card.cloneNode(true);
+				card.parentNode.replaceChild(newCard, card);
+			});
 		}
 		else {
 			var filteredList = eJson.filter(filterData);
@@ -224,19 +215,19 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				else { filteredList = filteredList.filter(filterSearch); }
 			}
 
-			for(var i = 0; i < filteredList.length; i++) {
-				const enDiv = document.getElementById("enemyWidget");
-				const cnDiv = document.getElementById("enemyWidget_CN");
-				name = filteredList[i].name;
-				source = filteredList[i].address;
-				caption = filteredList[i].index;
-				img = `<div class="enemyCard" id="#${filteredList[i].code}" name="${name}"><a href="#${filteredList[i].code}"><figure><img loading="lazy" src= ${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
-				if(filteredList[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
-				else { cnDiv.insertAdjacentHTML('beforeend', img); }
-			}
+			const enemySelect = document.querySelectorAll(".enemyCard");
+			enemySelect.forEach(card => {
+				for(var i = 0; i < filteredList.length; i++) {
+					if(filteredList[i].name == card.getAttribute('name')) {
+						card.classList.remove('disable');
+						var newCard = card.cloneNode(true);
+						card.parentNode.replaceChild(newCard, card);
+					}
+				}
+			});
 		}
 	}
-	
+
 	$("#bnormal").click(function() {
 		filterArr[0] *= -1;
 		filterArr[1] = -1;
@@ -245,10 +236,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[0] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#belite").click(function() {
@@ -259,10 +247,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[1] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bboss").click(function() {
@@ -273,10 +258,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[2] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#binfcrea").click(function() {
@@ -290,10 +272,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[3] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bdrone").click(function() {
@@ -307,10 +286,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[4] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bsarkaz").click(function() {
@@ -324,10 +300,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[5] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bpossessed").click(function() {
@@ -341,10 +314,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[6] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bseamon").click(function() {
@@ -358,10 +328,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[7] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bartscrea").click(function() {
@@ -375,10 +342,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[8] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bmelee").click(function() {
@@ -388,10 +352,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[9] == 1) {
 			elem.checked = false;
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#branged").click(function() {
@@ -401,10 +362,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[10] == 1) {
 			elem.checked = false;
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bnoatk").click(function() {
@@ -417,10 +375,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			elem1.checked = false;
 			elem2.checked = false;
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bphys").click(function() {
@@ -431,10 +386,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[12] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#barts").click(function() {
@@ -445,10 +397,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[13] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
 
 	$("#bheal").click(function() {
@@ -459,23 +408,25 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[14] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
-		filterChildren();
-		addBoxToCard();
+		selectedFilter();
 	});
-	
+
 	$("#bclear").click(function() {
 		for(var i = 0; i < filterArr.length; i++) { filterArr[i] = -1; }
-		
 		var elem = document.getElementsByClassName('cboxButton');
 		for(var j = 0; j < elem.length; j++) { elem[j].checked = false; }
-		deleteChildren(document.querySelector('#enemyWidget'));
-		deleteChildren(document.querySelector('#enemyWidget_CN'));
+		selectedFilter();
+	});
+
+	function selectedFilter() {
+		const enemySelect = document.querySelectorAll(".enemyCard");
+		enemySelect.forEach(card => {
+			card.classList.add('disable');
+		});
 		filterChildren();
 		addBoxToCard();
-	});
-	
+	}
+
 	function getHTMLText(tempData) {
 		htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
 			<span id="closeBox" class="display-6 closeBox" style="display:font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
@@ -646,10 +597,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					</tbody>`);
 
 			}
-
 			htmlText = htmlText.concat(`</table>`);
 		}
-		htmlText = htmlText.concat(`<span class="display-6" style="font-size:25px;">Appearances</span><hr style="margin-bottom:5px; margin-top:5px;"/><p>`);
+
+		htmlText = htmlText.concat(`<span class="display-6" style="font-size:25px;">Appearances</span>
+			<hr style="margin-bottom:5px; margin-top:5px;"/><p>`);
 		for(var i = 0; i < tempData.appearances.length; i++) {
 			htmlText = htmlText.concat(tempData.appearances[i]);
 			if(i < tempData.appearances.length - 1) { htmlText = htmlText.concat(', '); }
@@ -659,5 +611,4 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 		return htmlText;
 	}
-
 });
