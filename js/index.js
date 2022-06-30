@@ -1,7 +1,7 @@
 var eJson;
 fetch('/enemy/static/data/enemy_alldata.json')
-	.then(response => response.json())
-	.then(data => {
+.then(response => response.json())
+.then(data => {
 	eJson = data;
 		
 	let enemyInput = document.querySelector('input');
@@ -27,10 +27,24 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		name = eJson[i].name;
 		source = eJson[i].address;
 		caption = eJson[i].index;
-		img = `<div class="enemyCard" id="#${eJson[i].code}" name="${name}"><a href="#${eJson[i].code}"><figure><img loading="lazy" src=${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
+		img = `<div class="enemyCard hidden" id="#${eJson[i].code}" name="${name}"><a href="#${eJson[i].code}"><figure><img loading="lazy" src=${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
 		if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 		else { cnDiv.insertAdjacentHTML('beforeend', img); }
 	}
+
+	const enemyCards = document.querySelectorAll(".enemyCard");
+	const observer = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if(entry.isIntersecting) {
+				entry.target.classList.remove('hidden');
+				entry.target.classList.add('active');
+				observer.unobserve(entry.target);
+			}
+		});
+	}, {
+		rootMargin: "30px",
+	});
+	enemyCards.forEach(card => { observer.observe(card); });
 
 	enemyInput.oninput = handleSearch;
 
@@ -203,8 +217,10 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			const enemySelect = document.querySelectorAll(".enemyCard");
 			enemySelect.forEach(card => {
 				card.classList.remove('disable');
+				card.classList.add('hidden');
 				var newCard = card.cloneNode(true);
 				card.parentNode.replaceChild(newCard, card);
+				observer.observe(newCard);
 			});
 		}
 		else {
@@ -220,8 +236,10 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				for(var i = 0; i < filteredList.length; i++) {
 					if(filteredList[i].name == card.getAttribute('name')) {
 						card.classList.remove('disable');
+						card.classList.add('hidden');
 						var newCard = card.cloneNode(true);
 						card.parentNode.replaceChild(newCard, card);
+						observer.observe(newCard);
 					}
 				}
 			});
@@ -421,6 +439,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	function selectedFilter() {
 		const enemySelect = document.querySelectorAll(".enemyCard");
 		enemySelect.forEach(card => {
+			card.classList.remove('hidden');
+			card.classList.remove('active');
 			card.classList.add('disable');
 		});
 		filterChildren();
@@ -539,7 +559,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 							<th scope="col" class="hovertooltip" data-tooltip="Disables certain skills and talents.">Silence</th>
 							<th scope="col" class="hovertooltip" data-tooltip="Cannot move, block, attack, or use skills.">Stun</th>
 							<th scope="col"  class="hovertooltip" data-tooltip="Invulnerable. Cannot move, block, attack, or use skills.">Sleep</th>
-							<th scope="col" class="hovertooltip" data-tooltip="Cannot move, attack, or use skills, -15 RES.">Freeze</th>
+							<th scope="col" class="hovertooltip" data-tooltip="Cannot attack or use skills, -15 RES.">Freeze</th>
 							<th scope="col" class="hovertooltip" data-tooltip="Regarded as aerial unit. Cannot move, attack, or use skills. Duration halved when weight > 3.">Yasuo Q3</th>
 						</tr>
 					</thead>
