@@ -449,7 +449,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 	function getHTMLText(tempData) {
 		htmlText = `<span class="display-6" style="font-size:35px;">${tempData.name}</span>
-			<span id="closeBox" class="display-6 closeBox" style="display:font-size:35px; float:right; position:sticky; position: -webkit-sticky; top:0; cursor: pointer;">×</span>
+			<span id="closeBox" class="display-6 closeBox" style="display:font-size:35px; float:right; position:relative; position: -webkit-relative; top:-15px; cursor: pointer;">×</span>
 			<hr/>
 			<div style="display:flex; align-items:center;">
 				<figure style="margin-right: 20px;">
