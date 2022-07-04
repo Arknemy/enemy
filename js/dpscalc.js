@@ -498,6 +498,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 	$(document).on('change','.cwDropdown', function(e){
 		var cw = this.id.slice(0, 11);
+		var targetWidget = cw;
 		var cwName = document.getElementById(cw + 'Name');
 		for(var i = 0; i < dpsData.length; i++) {
 			if(cwName.innerHTML == dpsData[i].name) {
