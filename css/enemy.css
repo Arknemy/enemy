@@ -26,6 +26,7 @@
 
 ::-webkit-scrollbar {
 	width: 8px;
+	height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -154,6 +155,31 @@
 @keyframes fadein {
 	0% { opacity: 0; top: 70px; }
 	100% { opacity: 1; top: 0px; }
+}
+
+@-webkit-keyframes fadeout {
+	0% { opacity: 1; top: 0px; }
+	100% { opacity: 0; top: -70px; }
+}
+
+@-moz-keyframes fadeout {
+	0% { opacity: 1; top: 0px; }
+	100% { opacity: 0; top: -70px; }
+}
+
+@-ms-keyframes fadeout {
+	0% { opacity: 1; top: 0px; }
+	100% { opacity: 0; top: -70px; }
+}
+
+@-o-keyframes fadeout {
+	0% { opacity: 1; top: 0px; }
+	100% { opacity: 0; top: -70px; }
+}
+
+@keyframes fadeout {
+	0% { opacity: 1; top: 0px; }
+	100% { opacity: 0; top: -70px; }
 }
 
 .enemyCard:hover {
@@ -383,42 +409,188 @@ input.cboxButton:checked + label {
 
 /*———————————————————————————————————————————————————————————————————————————————————————————————————————*/
 
-.calculator {
+.outline {
 	outline: 1px solid #c00;
+}
 
+.orundum {
+	left:  50px;
+}
+
+.hhbuttons {
 	display: grid;
-	height: 600px;
+	height: 52px;
+	width: 100%;
+	grid-template-columns: 174px 174px 174px 174px;
+	gap: 135px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	justify-content: center;
+}
+
+.hhbutton {
+	box-shadow: 4px 6px 5px;
+	position: relative;
+	cursor: pointer;
+}
+
+.hhbutton:hover {
+	filter: brightness(0.7);
+	box-shadow: none;
+	top: 1px;
+}
+
+.calculator {
+	display: grid;
+	height: auto;
 	width: 100%;
 	grid-template-columns: repeat(auto-fill, 280px);
 	gap: 30px;
+	margin-bottom: 30px;
 	justify-content: center;
 }
 
 .calcWidget {
 	width: 280px;
-	height: auto;
+	height: 0px;
+	position: relative;
 	background-color: #f2eeed;
 	box-shadow: 5px 10px 5px;
 	border-radius: 5px;
-	padding: 10px 20px;
-
+	padding: 10px 18px;
+	top: 70px;
+	opacity: 0;
 
 }
 
+.calcWidget.active {
+	height: auto;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+.calcWidget.disable {
+	-webkit-animation: fadeout 0.5s;
+	-moz-animation: fadeout 0.5s;
+	-ms-animation: fadeout 0.5s;
+	-o-animation: fadeout 0.5s;
+	animation: fadeout 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+.cwName {
+	font-size: 30px;
+}
+
+.cwImg {
+	margin-top: 5px;
+	margin-right: 2px;
+	width: 70px;
+	height: 70px;
+	box-shadow: 0px 0px 3px;
+}
+
+.cwDropdown {
+	background-color: #dbdbdb;
+	border-radius: 5px;
+	padding: 3px;
+	font-size: 18px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+}
+
+.cwDropdownContent {
+	padding: 3px;
+	font-size: 18px;
+}
+
+.cwDropdownContent:hover {
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*———————————————————————————————————————————————————————————————————————————————————————————————————————*/
+
 @media (max-width: 1399px) {
 	.calcWidget.c4 {
-		display: none;
+		width: 0px;
+	}
+
+	#hhb4 {
+		width: 0px;
+	}
+
+	.orundum {
+		left: 117px;
+	}
+
+	.hhbuttons {
+		grid-template-columns: 174px 174px 174px;
+	}
+}
+
+@media (max-width: 1199px) {
+	.orundum {
+		left: 27px;
 	}
 }
 
 @media (max-width: 991px) {
 	.calcWidget.c3 {
-		display: none;
+		width: 0px;
+	}
+
+	#hhb3 {
+		width: 0px;
+	}
+
+	.orundum {
+		left: 60px;
+	}
+
+	.hhbuttons {
+		grid-template-columns: 174px 174px;
 	}
 }
 
 @media (max-width: 767px) {
 	.calcWidget.c2 {
-		display: none;
+		width: 0px;
+	}
+
+	#hhb2 {
+		width: 0px;
+	}
+
+	.orundum {
+		left: 130px;
+	}
+
+	.hhbuttons {
+		grid-template-columns: 174px;
 	}
 }
