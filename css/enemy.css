@@ -432,6 +432,7 @@ input.cboxButton:checked + label {
 	box-shadow: 4px 6px 5px;
 	position: relative;
 	cursor: pointer;
+	opacity: 0;
 }
 
 .hhbutton:hover {
@@ -440,19 +441,80 @@ input.cboxButton:checked + label {
 	top: 1px;
 }
 
+#hhb1 {
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+#hhb2 {
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	animation-delay: 0.2s
+}
+
+#hhb3 {
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	animation-delay: 0.4s
+}
+
+#hhb4 {
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	animation-delay: 0.6s
+}
+
 .calculator {
 	display: grid;
 	height: auto;
 	width: 100%;
 	grid-template-columns: repeat(auto-fill, 280px);
 	gap: 30px;
-	margin-bottom: 30px;
+	margin-bottom: 230px; /*GET RID OF THIS LATER*/
 	justify-content: center;
+}
+
+.cwContainer {
+	width: 280px;
+	height: auto;
 }
 
 .calcWidget {
 	width: 280px;
-	height: 0px;
+	height: 100%;
+	display: none;
 	position: relative;
 	background-color: #f2eeed;
 	box-shadow: 5px 10px 5px;
@@ -460,11 +522,10 @@ input.cboxButton:checked + label {
 	padding: 10px 18px;
 	top: 70px;
 	opacity: 0;
-
 }
 
 .calcWidget.active {
-	height: auto;
+	display: block;
 	-webkit-animation: fadein 0.5s;
 	-moz-animation: fadein 0.5s;
 	-ms-animation: fadein 0.5s;
@@ -536,8 +597,18 @@ input.cboxButton:checked + label {
 /*———————————————————————————————————————————————————————————————————————————————————————————————————————*/
 
 @media (max-width: 1399px) {
-	.calcWidget.c4 {
+	.calculator {
+		grid-template-columns: 280px, 280px, 280px;
+	}
+
+	.cwContainer.cc4 {
+		height: 0px;
 		width: 0px;
+	}
+
+	.calcWidget.c4 {
+		/*width: 0px;*/
+		display: none;
 	}
 
 	#hhb4 {
@@ -560,8 +631,18 @@ input.cboxButton:checked + label {
 }
 
 @media (max-width: 991px) {
-	.calcWidget.c3 {
+	.calculator {
+		grid-template-columns: 280px, 280px;
+	}
+
+	.cwContainer.cc3 {
+		height: 0px;
 		width: 0px;
+	}
+
+	.calcWidget.c3 {
+		/*width: 0px;*/
+		display: none;
 	}
 
 	#hhb3 {
@@ -578,8 +659,19 @@ input.cboxButton:checked + label {
 }
 
 @media (max-width: 767px) {
-	.calcWidget.c2 {
+
+	.calculator {
+		grid-template-columns: 280px;
+	}
+
+	.cwContainer.cc2 {
+		height: 0px;
 		width: 0px;
+	}
+
+	.calcWidget.c2 {
+		/*width: 0px;*/
+		display: none;
 	}
 
 	#hhb2 {
