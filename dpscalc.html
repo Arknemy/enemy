@@ -1,0 +1,218 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="A website to look up Arknights enemy data."/>
+	<meta property="og:image" content="https://arknemy.github.io/enemy/static/assets/icon.png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+	<link rel="icon" type="image/x-icon" href="/enemy/static/assets/favicon.ico">
+	<title>Arknemy</title>
+	<link rel="stylesheet" href="/enemy/css/enemy.css">
+	<script type="text/javascript" src="/enemy/js/dpscalc.js"></script>
+</head>
+<body style="background-color: #363535; padding-left: calc(100vw - 100%);">
+	<div class="container">
+		<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+		<a href="/enemy/" class="d-flex align-items-center me-md-auto text-dark text-decoration-none">
+			<img src="/enemy/static/assets/icon.png" style="width: 60px; margin-right:.5em" >
+			<span class="display-5" style="color: white;">Arknemy</span>
+		</a>
+		<ul class="nav nav-pills">
+			<li class="nav-item"><a href="/enemy/" class="nav-link active">Enemies</a></li>
+      <li class="nav-item"><a href="/dpscalc/" class="nav-link active">DPS Calculator</a></li>
+		</ul>
+		</header>
+	</div>
+
+	<div class="container" id="mainDiv">
+		<span class="display-3" style="color: white;">UNDER CONSTRUCTION</span><br>
+    <span class="display-6" style="color: white;">Proof of concept/demo, lots of stuff don't work</span>
+    <div style="height: 40px;"></div>
+
+    <div class="" style="margin-bottom: 20px; height: 65px; width: 50%;">
+      <div class="orundum" style="position: relative;">
+        <div class="" id="orundumbg" style="background-color: #1e1d1d; box-shadow: 3px 3px 5px; height: 36px; width: 151px; position: absolute; top: 31px; left: -5px;"></div>
+        <img class="" src="/static/assets/icons/orundum.png" style="height: 65px; width: 65px; position: absolute; bottom: top: 0;">
+        <!-- <span class="display-6" style="color:white; position: absolute; top: 29px; left: 68px; font-size: 30px;">×</span> -->
+        <span class="display-6" id="orundumCount" style="color:white; position: absolute; top: 29px; left: 73px; font-size: 30px;">6000</span>
+      </div>
+    </div>
+
+    <div class="hhbuttons">
+      <img src="/static/assets/headhunt.png" id="hhb1" class="hhbutton">
+      <img src="/static/assets/headhunt.png" id="hhb2" class="hhbutton">
+      <img src="/static/assets/headhunt.png" id="hhb3" class="hhbutton">
+      <img src="/static/assets/headhunt.png" id="hhb4" class="hhbutton">
+    </div>
+
+    <div class="calculator">
+      <div class="calcWidget c1" id="calcWidget1">
+        <span class="display-6 cw1Option cwName" id="calcWidget1Name" style="font-size: 30px;"></span>
+        <div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
+          <img class="cwImg" id="calcWidget1Img">
+          <div style="align-content: center; margin: auto;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 15px;">Elite</span>
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 53px;">Level</span>
+            <div class="" style="width: 170px; display: flex; justify-content: flex-end; margin-top: 0px;">
+              <select class="cw1Option cwDropdown display-6" id="calcWidget1Promotion" style="width: 40%;"></select>
+              <select class="cw1Option cwDropdown display-6" id="calcWidget1Level" style="width: 40%; margin-left: 20px;"></select>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Potential</span>
+            <select class="cw1Option cwDropdown display-6" id="calcWidget1Potential" style="width: 100%;"></select>
+          </div>
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Trust</span>
+            <select class="cw1Option cwDropdown display-6" id="calcWidget1Trust" style="width: 100%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw1Option cwDropdown display-6" id="calcWidget1Module" style="width: 75%;"></select>
+            <select class="cw1Option cwDropdown display-6" id="calcWidget1ModuleLevel" style="width: 20%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw1Option cwDropdown display-6" id="calcWidget1Skill" style="width: 75%;"></select>
+            <select class="cw1Option cwDropdown display-6" id="calcWidget1SkillRank" style="width: 20%;"></select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="calcWidget c2" id="calcWidget2">
+        <span class="display-6 cw2Option cwName" id="calcWidget2Name" style="font-size: 30px;"></span>
+        <div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
+          <img class="cwImg" id="calcWidget2Img">
+          <div style="align-content: center; margin: auto;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 15px;">Elite</span>
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 53px;">Level</span>
+            <div class="" style="width: 170px; display: flex; justify-content: flex-end; margin-top: 0px;">
+              <select class="cw2Option cwDropdown display-6" id="calcWidget2Promotion" style="width: 40%;"></select>
+              <select class="cw2Option cwDropdown display-6" id="calcWidget2Level" style="width: 40%; margin-left: 20px;"></select>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Potential</span>
+            <select class="cw2Option cwDropdown display-6" id="calcWidget2Potential" style="width: 100%;"></select>
+          </div>
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Trust</span>
+            <select class="cw2Option cwDropdown display-6" id="calcWidget2Trust" style="width: 100%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw2Option cwDropdown display-6" id="calcWidget2Module" style="width: 75%;"></select>
+            <select class="cw2Option cwDropdown display-6" id="calcWidget2ModuleLevel" style="width: 20%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw2Option cwDropdown display-6" id="calcWidget2Skill" style="width: 75%;"></select>
+            <select class="cw2Option cwDropdown display-6" id="calcWidget2SkillRank" style="width: 20%;"></select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="calcWidget c3" id="calcWidget3">
+        <span class="display-6 cw3Option cwName" id="calcWidget3Name" style="font-size: 30px;"></span>
+        <div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
+          <img class="cwImg" id="calcWidget3Img">
+          <div style="align-content: center; margin: auto;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 15px;">Elite</span>
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 53px;">Level</span>
+            <div class="" style="width: 170px; display: flex; justify-content: flex-end; margin-top: 0px;">
+              <select class="cw3Option cwDropdown display-6" id="calcWidget3Promotion" style="width: 40%;"></select>
+              <select class="cw3Option cwDropdown display-6" id="calcWidget3Level" style="width: 40%; margin-left: 20px;"></select>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Potential</span>
+            <select class="cw3Option cwDropdown display-6" id="calcWidget3Potential" style="width: 100%;"></select>
+          </div>
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Trust</span>
+            <select class="cw3Option cwDropdown display-6" id="calcWidget3Trust" style="width: 100%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw3Option cwDropdown display-6" id="calcWidget3Module" style="width: 75%;"></select>
+            <select class="cw3Option cwDropdown display-6" id="calcWidget3ModuleLevel" style="width: 20%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw3Option cwDropdown display-6" id="calcWidget3Skill" style="width: 75%;"></select>
+            <select class="cw3Option cwDropdown display-6" id="calcWidget3SkillRank" style="width: 20%;"></select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="calcWidget c4" id="calcWidget4">
+        <span class="display-6 cw4Option cwName" id="calcWidget4Name" style="font-size: 30px;"></span>
+        <div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
+          <img class="cwImg" id="calcWidget4Img">
+          <div style="align-content: center; margin: auto;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 15px;">Elite</span>
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 53px;">Level</span>
+            <div class="" style="width: 170px; display: flex; justify-content: flex-end; margin-top: 0px;">
+              <select class="cw4Option cwDropdown display-6" id="calcWidget4Promotion" style="width: 40%;"></select>
+              <select class="cw4Option cwDropdown display-6" id="calcWidget4Level" style="width: 40%; margin-left: 20px;"></select>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Potential</span>
+            <select class="cw4Option cwDropdown display-6" id="calcWidget4Potential" style="width: 100%;"></select>
+          </div>
+          <div class="" style="display: flex; flex-direction: column; width: 45%;">
+            <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Trust</span>
+            <select class="cw4Option cwDropdown display-6" id="calcWidget4Trust" style="width: 100%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw4Option cwDropdown display-6" id="calcWidget4Module" style="width: 75%;"></select>
+            <select class="cw4Option cwDropdown display-6" id="calcWidget4ModuleLevel" style="width: 20%;"></select>
+          </div>
+        </div>
+        <div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
+          <span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill</span>
+          <div class="" style="display: flex; justify-content: space-between; width: 100%;">
+            <select class="cw4Option cwDropdown display-6" id="calcWidget4Skill" style="width: 75%;"></select>
+            <select class="cw4Option cwDropdown display-6" id="calcWidget4SkillRank" style="width: 20%;"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+</body>
+</html>
