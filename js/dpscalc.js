@@ -444,7 +444,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		averageDps = Math.round(averageDps);
 
 		htmlText = htmlText.concat(`
-			<div class="outline" style="bottom: 0px;">
+			<div class="" style="bottom: 0px;">
 				<hr/>
 				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
 					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk Damage:</span>
