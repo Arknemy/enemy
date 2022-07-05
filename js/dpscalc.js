@@ -444,32 +444,34 @@ fetch('/enemy/static/data/dps_alldata.json')
 		averageDps = Math.round(averageDps);
 
 		htmlText = htmlText.concat(`
-			<hr/>
-			<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk Damage:</span>
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${normalAtk}</span>
+			<div class="outline" style="bottom: 0px;">
+				<hr/>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk Damage:</span>
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${normalAtk}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk DPS:</span>
+					<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${normalDps}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Atk Damage:</span>
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillAtk}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Total Damage:</span>
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillTotalDamage}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill DPS:</span>
+					<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${skillDps}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Average DPS:</span>
+					<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${averageDps}</span>
+				</div>
 			</div>
-			<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk DPS:</span>
-				<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${normalDps}</span>
-			</div>
-			<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Atk Damage:</span>
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillAtk}</span>
-			</div>
-			<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Total Damage:</span>
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillTotalDamage}</span>
-			</div>
-			<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill DPS:</span>
-				<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${skillDps}</span>
-			</div>
-			<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-				<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Average DPS:</span>
-				<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${averageDps}</span>
-			</div>
-			`);
+		`);
 
 
 		const dpsStats = document.createElement('div');
