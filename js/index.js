@@ -447,6 +447,12 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		selectedFilter();
 	});
 
+	function removeDelay() {
+		document.querySelectorAll(".enemyCard").forEach(card => {
+			card.classList.remove('delay');
+		});
+	}
+
 	function selectedFilter() {
 		const enemySelect = document.querySelectorAll(".enemyCard");
 		enemySelect.forEach(card => {
@@ -454,6 +460,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			card.classList.remove('active');
 			card.classList.add('disable');
 		});
+		removeDelay();
 		filterChildren();
 		addBoxToCard();
 	}
