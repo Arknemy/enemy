@@ -45,6 +45,17 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		rootMargin: "30px",
 	});
 	enemyCards.forEach(card => { observer.observe(card); });
+	
+	const loadObserver = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if(entry.isIntersecting)
+				entry.target.classList.add('delay');
+			loadObserver.unobserve(entry.target);
+		});
+	}, {
+		rootMargin: "30px",
+	});
+	enemyCards.forEach(card => { loadObserver.observe(card); });
 
 	enemyInput.oninput = handleSearch;
 
