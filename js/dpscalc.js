@@ -106,8 +106,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 				cwImg = document.getElementById(targetWidget + 'Img');
 				if(operator.name == 'Amiya') cwImg.src = `/enemy/static/assets/operators/amiya3.png`;
-				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name}2.png`;
-				else cwImg.src = `/enemy/static/assets/operators/${operator.name}1.png`;
+				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.nametoLowerCase()}2.png`;
+				else cwImg.src = `/enemy/static/assets/operators/${operator.name.toLowerCase()}1.png`;
 
 
 				cwPromo = document.getElementById(targetWidget + 'Promotion');
