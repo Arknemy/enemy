@@ -506,7 +506,7 @@ input.cboxButton:checked + label {
 	width: 100%;
 	grid-template-columns: repeat(auto-fill, 280px);
 	gap: 30px;
-	margin-bottom: 230px; /*GET RID OF THIS LATER*/
+	margin-bottom: 20px; /*GET RID OF THIS LATER*/
 	justify-content: center;
 }
 
@@ -589,7 +589,32 @@ input.cboxButton:checked + label {
 	cursor: pointer;
 }
 
-
+.additionalStats {
+	position: relative;
+	opacity: 0;
+	width: 80%;
+	min-width: 500px;
+	height: auto;
+	margin: auto;
+	background-color: #dbdbdb;
+	border-radius: 5px;
+	padding: 15px 20px;
+	margin-bottom: 40px;
+	border: none;
+	outline: none;
+	box-shadow: 5px 10px 5px;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	animation-delay: 0.7s
+}
 
 
 
