@@ -27,30 +27,30 @@
 	</div>
 
 	<div class="container" id="mainDiv">
-		<span class="display-3" style="color: white;">UNDER CONSTRUCTION</span><br>
-   		 <span class="display-6" style="color: white;">Proof of concept/demo, lots of stuff don't work</span>
-    		<div style="height: 40px;"></div>
+	<span class="display-3" style="color: white;">UNDER CONSTRUCTION</span><br>
+	<span class="display-6" style="color: white;">Proof of concept/demo, lots of stuff don't work</span>
+	<div style="height: 40px;"></div>
 
-    <div class="" style="margin-bottom: 20px; height: 65px; width: 50%;">
-      <div class="orundum" style="position: relative;">
-        <div class="" id="orundumbg" style="background-color: #1e1d1d; box-shadow: 3px 3px 5px; height: 36px; width: 151px; position: absolute; top: 31px; left: -5px;"></div>
-        <img class="" src="/enemy/static/assets/icons/orundum.png" style="height: 65px; width: 65px; position: absolute; bottom: top: 0;">
-        <!-- <span class="display-6" style="color:white; position: absolute; top: 29px; left: 68px; font-size: 30px;">×</span> -->
-        <span class="display-6" id="orundumCount" style="color:white; position: absolute; top: 29px; left: 73px; font-size: 30px;">6000</span>
-      </div>
-    </div>
+	<div class="" style="margin-bottom: 20px; height: 65px; width: 50%;">
+		<div class="orundum" style="position: relative;">
+			<div class="" id="orundumbg" style="background-color: #1e1d1d; box-shadow: 3px 3px 5px; height: 36px; width: 151px; position: absolute; top: 31px; left: -5px;"></div>
+			<img class="" src="/static/assets/icons/orundum.png" style="height: 65px; width: 65px; position: absolute; bottom: top: 0;">
+			<!-- <span class="display-6" style="color:white; position: absolute; top: 29px; left: 68px; font-size: 30px;">×</span> -->
+			<span class="display-6" id="orundumCount" style="color:white; position: absolute; top: 29px; left: 73px; font-size: 30px;">6000</span>
+		</div>
+	</div>
 
-    <div class="hhbuttons">
-      <img src="/enemy/static/assets/headhunt.png" id="hhb1" class="hhbutton">
-      <img src="/enemy/static/assets/headhunt.png" id="hhb2" class="hhbutton">
-      <img src="/enemy/static/assets/headhunt.png" id="hhb3" class="hhbutton">
-      <img src="/enemy/static/assets/headhunt.png" id="hhb4" class="hhbutton">
-    </div>
+	<div class="hhbuttons">
+		<img src="/static/assets/headhunt.png" id="hhb1" class="hhbutton">
+		<img src="/static/assets/headhunt.png" id="hhb2" class="hhbutton">
+		<img src="/static/assets/headhunt.png" id="hhb3" class="hhbutton">
+		<img src="/static/assets/headhunt.png" id="hhb4" class="hhbutton">
+	</div>
 
-    <div class="calculator">
+	<div class="calculator">
 		<div class="cwContainer cc1">
 			<div class="calcWidget c1" id="calcWidget1">
-				<div class="">
+				<div class="" id="calcWidget1Selectables">
 					<span class="display-6 cw1Option cwName" id="calcWidget1Name" style="font-size: 30px;"></span>
 					<div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
 						<img class="cwImg" id="calcWidget1Img">
@@ -76,8 +76,7 @@
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
 						<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
 						<div class="" style="display: flex; justify-content: space-between; width: 100%;">
-							<select class="cw1Option cwDropdown display-6" id="calcWidget1Module" style="width: 75%;"></select>
-							<select class="cw1Option cwDropdown display-6" id="calcWidget1ModuleLevel" style="width: 20%;"></select>
+							<select class="cw1Option cwDropdown display-6" id="calcWidget1Module" style="width: 100%;"></select>
 						</div>
 					</div>
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
@@ -87,13 +86,14 @@
 							<select class="cw1Option cwDropdown display-6" id="calcWidget1SkillRank" style="width: 20%;"></select>
 						</div>
 					</div>
+					<div id="calcWidget1Checkbox" style="margin-top: 10px;"></div>
 				</div>
 			</div>
 		</div>
 
 		<div class="cwContainer cc2">
 			<div class="calcWidget c2" id="calcWidget2">
-				<div>
+				<div id="calcWidget2Selectables">
 					<span class="display-6 cw2Option cwName" id="calcWidget2Name" style="font-size: 30px;"></span>
 					<div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
 						<img class="cwImg" id="calcWidget2Img">
@@ -119,8 +119,7 @@
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
 						<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
 						<div class="" style="display: flex; justify-content: space-between; width: 100%;">
-							<select class="cw2Option cwDropdown display-6" id="calcWidget2Module" style="width: 75%;"></select>
-							<select class="cw2Option cwDropdown display-6" id="calcWidget2ModuleLevel" style="width: 20%;"></select>
+							<select class="cw2Option cwDropdown display-6" id="calcWidget2Module" style="width: 100%;"></select>
 						</div>
 					</div>
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
@@ -130,13 +129,14 @@
 							<select class="cw2Option cwDropdown display-6" id="calcWidget2SkillRank" style="width: 20%;"></select>
 						</div>
 					</div>
+					<div id="calcWidget2Checkbox" style="margin-top: 10px;"></div>
 				</div>
 			</div>
 		</div>
 
 		<div class="cwContainer cc3">
 			<div class="calcWidget c3" id="calcWidget3">
-				<div>
+				<div id="calcWidget3Selectables">
 					<span class="display-6 cw3Option cwName" id="calcWidget3Name" style="font-size: 30px;"></span>
 					<div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
 						<img class="cwImg" id="calcWidget3Img">
@@ -162,8 +162,7 @@
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
 						<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
 						<div class="" style="display: flex; justify-content: space-between; width: 100%;">
-							<select class="cw3Option cwDropdown display-6" id="calcWidget3Module" style="width: 75%;"></select>
-							<select class="cw3Option cwDropdown display-6" id="calcWidget3ModuleLevel" style="width: 20%;"></select>
+							<select class="cw3Option cwDropdown display-6" id="calcWidget3Module" style="width: 100%;"></select>
 						</div>
 					</div>
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
@@ -173,13 +172,14 @@
 							<select class="cw3Option cwDropdown display-6" id="calcWidget3SkillRank" style="width: 20%;"></select>
 						</div>
 					</div>
+					<div id="calcWidget3Checkbox" style="margin-top: 10px;"></div>
 				</div>
 			</div>
 		</div>
 
 		<div class="cwContainer cc4">
 			<div class="calcWidget c4" id="calcWidget4">
-					<div>
+				<div id="calcWidget4Selectables">
 					<span class="display-6 cw4Option cwName" id="calcWidget4Name" style="font-size: 30px;"></span>
 					<div class="" style="display: flex; align-content: center; margin-top: 5px; margin-right: 2px; margin-bottom: 10px;">
 						<img class="cwImg" id="calcWidget4Img">
@@ -205,8 +205,7 @@
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
 						<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Module</span>
 						<div class="" style="display: flex; justify-content: space-between; width: 100%;">
-							<select class="cw4Option cwDropdown display-6" id="calcWidget4Module" style="width: 75%;"></select>
-							<select class="cw4Option cwDropdown display-6" id="calcWidget4ModuleLevel" style="width: 20%;"></select>
+							<select class="cw4Option cwDropdown display-6" id="calcWidget4Module" style="width: 100%;"></select>
 						</div>
 					</div>
 					<div class="" style="display: flex; flex-direction: column; width: 100%; margin-bottom: 10px;">
@@ -216,7 +215,52 @@
 							<select class="cw4Option cwDropdown display-6" id="calcWidget4SkillRank" style="width: 20%;"></select>
 						</div>
 					</div>
+					<div id="calcWidget4Checkbox" style="margin-top: 10px;"></div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="additionalStats" id="additionalStats">
+		<span class="display-6" style="font-size: 24px;">Enemy Stats</span>
+		<hr style="margin-top: 5px; margin-bottom: 5px;">
+		<div style="display: flex; justify-content: space-between; gap: 20px;">
+			<div>
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">Defense</span>
+				<input class="cwInput" type="number" id="enemyDef" name="enemyDef" value="0" maxlength="8" min="0" style="width: 100%;">
+			</div>
+			<div>
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">Resistance</span>
+				<input class="cwInput" type="number" id="enemyRes" name="enemyRes" value="0" maxlength="8" min="0" style="width: 100%;">
+			</div>
+			<div>
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">Amount</span>
+				<input class="cwInput" type="number" id="enemyNum" name="enemyNum" value="1" maxlength="8" min="1" style="width: 100%;">
+			</div>
+		</div>
+		<hr style="margin-top: 25px; margin-bottom: 15px; opacity: 1;">
+		<span class="display-6" style="font-size: 24px;">Ally Buffs</span>
+		<hr style="margin-top: 5px; margin-bottom: 5px;">
+		<div class="" style="display: flex; justify-content: space-between; gap: 20px;">
+			<div class="">
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">+Flat Atk</span>
+				<input class="cwInput" type="number" id="flatAtkBuff" name="flatAtkBuff" value="0" maxlength="8" min="0" style="width: 100%;">
+			</div>
+			<div class="">
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">+% Atk</span>
+				<input class="cwInput" type="number" id="percentAtkBuff" name="percentAtkBuff" value="0" maxlength="8" min="0" style="width: 100%;">
+			</div>
+			<div class="">
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">+% Dmg Scale</span>
+				<input class="cwInput" type="number" id="dmgScaleBuff" name="dmgScaleBuff" value="0" maxlength="8" min="0" style="width: 100%;">
+			</div>
+			<div class="">
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">+Aspd</span>
+				<input class="cwInput" type="number" id="aspdBuff" name="aspdBuff" value="0" maxlength="8" min="0" style="width: 100%;">
+			</div>
+			<div class="">
+				<span class="display-6" style="display: flex; flex-direction: column; font-size: 18px;">+SP Recharge</span>
+				<input class="cwInput" type="number" id="spRechargeBuff" name="spRechargeBuff" value="0" maxlength="8" min="0" style="width: 100%;">
 			</div>
 		</div>
 	</div>
