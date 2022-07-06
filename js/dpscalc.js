@@ -103,10 +103,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 				cwName = document.getElementById(targetWidget + 'Name');
 				cwName.innerHTML = operator.name;
 
+
 				cwImg = document.getElementById(targetWidget + 'Img');
 				if(operator.name == 'Amiya') cwImg.src = `/enemy/static/assets/operators/amiya3.png`;
-				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name.toLowerCase()}2.png`;
-				else cwImg.src = `/static/assets/operators/${operator.name.toLowerCase()}1.png`;
+				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name}2.png`;
+				else cwImg.src = `/enemy/static/assets/operators/${operator.name}1.png`;
+
 
 				cwPromo = document.getElementById(targetWidget + 'Promotion');
 				opHTML = '';
@@ -116,6 +118,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 				}
 				cwPromo.innerHTML = opHTML;
 
+
 				cwLevel = document.getElementById(targetWidget + 'Level');
 				opHTML = '';
 				for(var j = 0; j < operator.promoStats[operator.promoLevels].maxLevel; j++) {
@@ -123,6 +126,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 					else opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}" selected="selected">${j + 1}</option>`);
 				}
 				cwLevel.innerHTML = opHTML;
+
 
 				cwPotential = document.getElementById(targetWidget + 'Potential');
 				if(operator.potential.length == 0) {
@@ -139,23 +143,42 @@ fetch('/enemy/static/data/dps_alldata.json')
 					cwPotential.innerHTML = opHTML;
 				}
 
+
 				cwTrust = document.getElementById(targetWidget + 'Trust');
-				opHTML = ''
+				opHTML = '';
 				for(var j = 0; j < 100; j++) {
 					if(j < 99) opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}">${j + 1}</option>`);
 					else opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}" selected="selected">${j + 1}</option>`);
 				}
 				cwTrust.innerHTML = opHTML;
 
-				document.getElementById(targetWidget + 'Module').disabled = true;
-				document.getElementById(targetWidget + 'ModuleLevel').disabled = true;
 
-				// stuff with mods go here
-				// stuff with mods go here
-				// stuff with mods go here
-				// stuff with mods go here
-				// stuff with mods go here
-				// stuff with mods go here
+				// document.getElementById(targetWidget + 'Module').disabled = true;
+				// document.getElementById(targetWidget + 'ModuleLevel').disabled = true;
+
+
+				if(operator.module.length != 0) {
+					document.getElementById(targetWidget + 'Module').disabled = false;
+					cwModule = document.getElementById(targetWidget + 'Module');
+					opHTML = '';
+					for(var j = 0; j < operator.moduleName.length; j++) {
+						if(j == 0) {
+							opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="basicMod">${operator.moduleName[j]}</option>`);
+						}
+						else {
+							opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j - 1}0">${operator.moduleName[j]} Lv.1</option>
+								<option class="cwDropdownContent display-6" value="${j - 1}1">${operator.moduleName[j]} Lv.2</option>
+								<option class="cwDropdownContent display-6" value="${j - 1}2" selected="selected">${operator.moduleName[j]} Lv.3</option>`);
+						}
+					}
+					cwModule.innerHTML = opHTML;
+				}
+				else {
+					cwModule = document.getElementById(targetWidget + 'Module');
+					cwModule.innerHTML = '';
+					document.getElementById(targetWidget + 'Module').disabled = true;
+				}
+
 
 				cwSkill = document.getElementById(targetWidget + 'Skill');
 				opHTML = '';
@@ -164,6 +187,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 					else opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${operator.skills[j].levels[0].name}" selected="selected">${operator.skills[j].levels[0].name}</option>`);
 				}
 				cwSkill.innerHTML = opHTML;
+
 
 				cwSkillRank = document.getElementById(targetWidget + 'SkillRank');
 				opHTML = '';
@@ -175,6 +199,35 @@ fetch('/enemy/static/data/dps_alldata.json')
 				}
 				cwSkillRank.innerHTML = opHTML;
 
+
+				cwCheckbox = document.getElementById(targetWidget + 'Checkbox');
+				cwCheckbox.innerHTML = ''
+				opHTML = `<input class="cwInput" type="checkbox" id="${targetWidget}Buffs" value="${targetWidget}Buffs" style="margin-left: 2px;"><label for="${targetWidget}Buffs" class="display-6" style="font-size: 15px; margin-left: 4px;" >Disregard buffs</label><br>`;
+
+				if(operator.subclass == 'lord') {
+					opHTML = opHTML.concat(`
+						<input class="cwInput" type="checkbox" id="${targetWidget}Lord" value="${targetWidget}Lord" style="margin-left: 2px;"><label for="${targetWidget}Lord" class="display-6" style="font-size: 15px; margin-left: 4px;">Range Penalty</label><br>`);
+				}
+
+				for(var j = 0; j < operator.skills.length; j++) {
+					if((operator.skills[j].levels[0].spData.spType == 2 && operator.skills[j].levels[6].spData.spCost > 4) || operator.skills[j].levels[0].spData.spType == 4) {
+						if(operator.name != 'Ch\'en') {
+							opHTML = opHTML.concat(`
+								<input class="cwInput" type="checkbox" id="${targetWidget}Scolding" value="${targetWidget}Scolding" style="margin-left: 2px;"><label for="${targetWidget}Scolding" class="display-6" style="font-size: 15px; margin-left: 4px;">Trigger Scolding</label><br>`);
+							break;
+						}
+					}
+				}
+
+				for(var j = 0; j < operator.skills.length; j++) {
+					if(operator.skills[j].levels[0].spData.spType == 2 && operator.skills[j].levels[0].spData.spCost > 4 && operator.class == 'SNIPER') {
+						opHTML = opHTML.concat(`
+							<input class="cwInput" type="checkbox" id="${targetWidget}Landen" value="${targetWidget}Landen"  style="margin-left: 2px;"><label for="${targetWidget}Landen" class="display-6" style="font-size: 15px; margin-left: 4px;">Trigger Landen Tactics</label><br>`);
+						break;
+					}
+				}
+
+				cwCheckbox.innerHTML = opHTML;
 				calculateDps(operator, targetWidget);
 				break;
 			}
@@ -182,6 +235,38 @@ fetch('/enemy/static/data/dps_alldata.json')
 	}
 
  // elite = -1, level = -1, pot = -1, trust = -1, skill = -1, skillrank = -1
+
+ 	function atkRecoverySim(normalAtkFrames, spCost, chenBonus, chenSp, archettoBonus) {
+ 		var frames = 0;
+ 		var sp = 0;
+ 		var spReduced = 0;
+ 		var chenFrames = chenBonus * 30;
+ 		var archettoFrames = archettoBonus * 30;
+
+ 		while(true) {
+ 			frames += 1;
+
+ 			if(frames % normalAtkFrames == 0) {
+ 				sp += 1;
+ 				if(sp == spCost) frames -= normalAtkFrames / 2;
+ 			}
+ 			
+ 			if(chenFrames != 0) {
+ 				if(frames % chenFrames == 0) sp += chenSp;
+ 			}
+
+ 			if(archettoFrames != 0) {
+ 				if(frames % archettoFrames == 0) sp += 1;
+ 			}
+
+ 			if(sp >= spCost) break;
+ 		}
+
+ 		// console.log('normal atk frames', normalAtkFrames);
+ 		// console.log('frames', frames);
+ 		// console.log('calc', frames / 30);
+ 		return frames / 30;
+ 	}
 
 	function calculateDps(operator, targetWidget) {
 		var baseAtk;
@@ -192,8 +277,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var baseDefFlatPen = 0;
 		var baseResPen = 1;
 		var baseResFlatPen = 0;
-		var baseDefIgnore = 0;
-		var baseResIgnore = 0;
+		var baseDefIgnore = 1;
+		var baseResIgnore = 1;
 		var baseDefFlatIgnore = 0;
 		var baseResFlatIgnore = 0;
 		var baseBlock;
@@ -203,22 +288,27 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var skillDps;
 		var skillTotalDamage = 0;
 
-		var enemycount = 1;
-		var enemyDef = 0;
-		var enemyRes = 0;
+		var enemyDef = document.getElementById('enemyDef').value;
+		var enemyRes = document.getElementById('enemyRes').value;
+		var enemyCount = document.getElementById('enemyNum').value;
 
-		var flatAtkBuff = 0;
-		var percentAtkBuff = 0;
-		var damageBuff = 1;
-		var spRechargeBuff = 0;
+		var flatAtkBuff = document.getElementById('flatAtkBuff').value;
+		var percentAtkBuff = document.getElementById('percentAtkBuff').value;
+		var aspdBuff = document.getElementById('aspdBuff').value;
+		var damageScaleBuff = document.getElementById('dmgScaleBuff').value;
+		var spRechargeBuff = document.getElementById('spRechargeBuff').value;
 
 		var elite = document.getElementById(targetWidget + 'Promotion').value;
 		var level = document.getElementById(targetWidget + 'Level').value;
 		var pot = document.getElementById(targetWidget + 'Potential').value;
 		var trust = document.getElementById(targetWidget + 'Trust').value;
+		var mod = document.getElementById(targetWidget + 'Module').value;
 		var skill = document.getElementById(targetWidget + 'Skill').value;
 		var skillRank = document.getElementById(targetWidget + 'SkillRank').value;
-		
+
+		//-----------------------------------------------------------------------------------------
+		// actual calculations below
+
 		var atkTrustGrowth = operator.trustStats[1].data.atk / 100;
 		var defTrustGrowth = operator.trustStats[1].data.def / 100;
 		var hpTrustGrowth = operator.trustStats[1].data.maxHp / 100;
@@ -235,8 +325,10 @@ fetch('/enemy/static/data/dps_alldata.json')
 		baseDef = baseDef + Math.round(defStatGrowth * (level - 1)) + defTrustBonus;
 
 		baseAtkInterval = operator.promoStats[elite].attributesKeyFrames[0].data.baseAttackTime;
+		if(operator.subclass == 'fighter') baseAtkInterval = 0.767;
 		baseBlock = operator.promoStats[elite].attributesKeyFrames[0].data.blockCnt;
 
+		// calculate potential stats increase
 		for(var i = 0; i < pot - 1; i++) {
 			if(operator.potential.length != 0) {
 				if(operator.potential[i].type == 0) {
@@ -251,6 +343,23 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
+		// module flat stat increase
+		if(operator.module.length != 0 && mod != 'basicMod') {
+			var modNum = mod[0];
+			var modLevel = mod[1];
+			var modBlackboard = operator.modStats[modNum].phases[modLevel].attributeBlackboard;
+
+			for(var i = 0; i < modBlackboard.length; i++) {
+				if(modBlackboard[i].key == 'atk')
+					baseAtk += modBlackboard[i].value;
+				if(modBlackboard[i].key == 'attack_speed')
+					baseAspd += modBlackboard[i].value / 100;
+				if(modBlackboard[i].key == 'def')
+					baseDef += modBlackboard[i].value;
+			}
+		}
+
+		// load correct talent
 		var talentKey = operator.talents.length;
 		var talentArr = [];
 
@@ -267,16 +376,19 @@ fetch('/enemy/static/data/dps_alldata.json')
 			talentArr.push(tempTalentArr);
 		}
 
+		// calculate skill settings
 		var skillDuration;
 		var skillInfinite = false;
 		var skillCost;
 		var skillRecoveryType = 'natural'
 		var skillArr = [];
 		var selectedSkill;
+		var skillId;
 
 		for(var i = 0; i < operator.skills.length; i++) {
 			if(operator.skills[i].levels[0].name == skill) {
 				selectedSkill =  operator.skills[i].levels[skillRank - 1];
+				skillId = operator.skills[i].skillId;
 				skillDuration = selectedSkill.duration;
 				if(skillDuration == 0);
 				if(skillDuration == -1) skillInfinite = true;
@@ -291,9 +403,17 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
-		// Naughty list
-		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra'];
 
+		// HARD CODE-----------------------
+
+		if(skillId == 'skchr_chen_2') skillDuration = 1.3333;
+		if(skillId == 'skchr_chen_3') skillDuration = 3.4;
+
+
+		// END HARD CODE-------------------
+
+		
+		var normalDamageType = 'physical';
 		var atkUp = 1;
 		var defUp = 1;
 		var atkScale = 1;
@@ -303,6 +423,10 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var atkUpArr = ['atk', 'phenxi_t_1[peak_2].peak_performance.atk', 'peak_performance.atk'];
 		var atkScaleArr = ['atk_scale'];
 		var aspdArr = ['min_attack_speed', 'attack_speed'];
+		var talentProb;
+
+		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman'))
+			normalDamageType = 'arts';
 
 		for(var i = 0; i < talentArr.length; i++) {
 			for(var j = 0; j < talentArr[i].length; j++) {
@@ -322,21 +446,60 @@ fetch('/enemy/static/data/dps_alldata.json')
 					baseDefIgnore -= 1 - talentArr[i][j][1];
 				else if(talentArr[i][j][0] == 'def_penetrate_fixed')
 					baseDefFlatIgnore += talentArr[i][j][1];
+				else if(talentArr[i][j][0] == 'magic_resist_penetrate_fixed')
+					baseResFlatIgnore += talentArr[i][j][1];
+				else if(talentArr[i][j][0] == 'prob')
+					talentProb = talentArr[i][j][1];
 			}
 		}
 
-		if(talentExceptions.includes(operator.name)) {
+		if(operator.name == 'Mountain') atkUp = 1;
 
+
+		var baseNormalAtk = baseAtk * atkUp;
+		var normalAtk;
+
+		var normalAtkInterval;
+		var normalAtkFrames;
+		var normalDps;
+
+		// Naughty list
+		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra'];
+		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe'];
+
+		//calculate talent effects on normal attacks
+		if(talentExceptions.includes(operator.name)) {
+			if(crits.includes(operator.name)) {
+				normalAtk = baseAtk - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				critAtk = baseAtk * atkUp * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+
+				if(operator.name == 'Bagpipe' && enemyCount > 1) critAtk *= 2;
+
+				normalAtk = (normalAtk * (1 - talentProb) + critAtk * (talentProb));
+				normalAtkInterval = atkInterval / aspd;
+				normalAtkFrames = Math.round(30 * normalAtkInterval);
+				normalDps = Math.round(((normalAtk * damageScale) / normalAtkFrames) * 30);
+			}
 		}
 		else {
-			var normalAtk = baseAtk * atkUp * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
-			var normalAtkInterval = atkInterval / aspd;
-			var normalAtkFrames = Math.round(30 * normalAtkInterval);
-			var normalDps = Math.round(((normalAtk * damageScale) / normalAtkFrames) * 30);
+			if(normalDamageType == 'physical')
+				normalAtk = baseNormalAtk * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+			else if(normalDamageType == 'arts')
+				normalAtk = baseNormalAtk * atkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+			else
+				normalAtk = baseNormalAtk * atkScale;
+
+			if(normalAtk < (baseNormalAtk * atkScale) * 0.05) normalAtk = (baseNormalAtk * atkScale) * 0.05;
+
+			normalAtkInterval = atkInterval / aspd;
+			normalAtkFrames = Math.round(30 * normalAtkInterval);
+			normalDps = Math.round(((normalAtk * damageScale) / normalAtkFrames) * 30);
 		}
 
 		if(operator.subclass == 'sword') normalDps *= 2;
 
+
+		// calculate offtime
 		var skillOfftime;
 		if(skillDuration == 0) skillDuration = atkInterval;
 		if(skillRecoveryType == 'natural')
@@ -346,10 +509,30 @@ fetch('/enemy/static/data/dps_alldata.json')
 		else if(skillRecoveryType == 'defense')
 			skillOfftime = skillCost / 0.75;
 
-		var skillAtkUp = atkUp;
-		var skillDefUp = defUp;
-		var skillAtkScale = atkScale;
-		var skillDamageScale = damageScale;
+		// HARD CODE---------------------
+
+			// function atkRecoverySim(normalAtkFrames, spCost, chenBonus, chenSp, archettoBonus)
+
+		if(operator.name == 'Ch\'en' && elite == 1 && mod == 'basicMod')
+			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 5, 1, 0);
+
+		if((operator.name == 'Ch\'en' && elite == 2 && mod == 'basicMod') || (operator.name == 'Ch\'en' && elite == 2 && modNum == 0 && modLevel == 0))
+			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 4, 1, 0);
+
+		if(operator.name == 'Ch\'en' && modNum == 0 && modLevel == 1)
+			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 3, 1, 0);
+
+		if(operator.name == 'Ch\'en' && modNum == 0 && modLevel == 2)
+			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 3, 2, 0);
+
+
+		// END HARD CODE-----------------
+
+		var skillDamageType = 'physical';
+		var skillAtkUp = 1;
+		var skillDefUp = 1;
+		var skillAtkScale = 1;
+		var skillDamageScale = 1;
 		var skillAspd = aspd;
 		var skillAtkInterval = atkInterval;
 		var skillHitNum = 1;
@@ -371,8 +554,10 @@ fetch('/enemy/static/data/dps_alldata.json')
 				skillDefUp += skillBlackboard[i].value;
 			else if(aspdArr.includes(skillBlackboard[i].key))
 				skillAspd += skillBlackboard[i].value / 100;
-			else if(atkIntervalArr.includes(skillBlackboard[i].key))
-				skillAtkInterval += skillBlackboard[i].value;
+			else if(atkIntervalArr.includes(skillBlackboard[i].key)) {
+				if(skillId == 'skchr_shwaz_3') skillAtkInterval += 0.4;
+				else skillAtkInterval *=  1 + skillBlackboard[i].value;
+			}
 			else if(atkScaleArr.includes(skillBlackboard[i].key))
 				skillAtkScale *= skillBlackboard[i].value;
 			else if(skillBlackboard[i].key == 'damage_scale')
@@ -392,44 +577,106 @@ fetch('/enemy/static/data/dps_alldata.json')
 		if(skillExceptions.includes(operator.name)) {
 		}
 		else {
-			var skillAtk = baseAtk * skillAtkUp * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+			var baseSkillAtk = baseAtk * (atkUp + (skillAtkUp - 1));
+			var skillAtk;
+
+			console.log('base skill atk', atkUp, skillAtkUp);
+
+			if(skillDamageType == 'physical')
+				skillAtk = baseSkillAtk * atkScale * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+			else if(skillDamageType == 'arts')
+				skillAtk = baseSkillAtk * atkScale * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+			else
+				skillAtk = baseSkillAtk * atkScale * skillAtkScale;
+
+			if(skillAtk < baseSkillAtk * atkScale * skillAtkScale * 0.05) skillAtk = baseSkillAtk * atkScale * skillAtkScale * 0.05;
+
+
+			// HARD CODE---------------------
+
+			if(skillId == 'skchr_chen_2') 
+				skillAtk += baseAtk * atkScale * skillAtkUp * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+
+
+
+			var swordXmod1 = ['Ch\'en', 'Tachanka', 'Bibeak'];
+
+			if(swordXmod1.includes(operator.name) && modNum == 0) skillAtk *= 1.1;
+
+
+
+			// END HARD CODE-----------------
+
+
 			skillAtkInterval = skillAtkInterval / skillAspd;
 			var skillAtkFrames = Math.round(30 * skillAtkInterval);
 			var skillTotalFrames = skillDuration * 30;
-			var skillHits = Math.round(skillTotalFrames / skillAtkFrames);
-			if(skillHits == 0) skillHits = 1;
-			var skillTotalDamage = skillHits * skillAtk;
+			var skillHits = Math.max(Math.round(skillTotalFrames / skillAtkFrames) * skillHitNum, 1);
+
+			// HARD CODE---------------------
+
+			if(skillId == 'skchr_chen_3') skillHits = 10;
+			if(operator.name == 'Elysium' || operator.name == 'Myrtle' || operator.name == 'Saileach') skillHits = 0;
+			if(skillId == 'skchr_sleach_3') skillHits = 1;
+			if(skillId == 'skchr_bpipe_2') skillHits *= 2;
+			if(skillId == 'skchr_bpipe_3') skillHits *= 3;
+			if(skillId == 'skchr_f12yin_3') skillHits *= 2;
+
+			// END HARD CODE-----------------
+
+			var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
+
+			if(crits.includes(operator.name)) {
+				var critHits = skillHits * talentProb;
+				skillHits -= critHits;
+				var tempAtk = baseAtk * skillAtkUp * skillAtkScale  - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				var tempCrit = baseAtk * atkUp * skillAtkUp * skillAtkScale * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				if(operator.name == 'Bagpipe' && enemyCount > 1) tempCrit *= 2;
+				skillTotalDamage = critHits * tempCrit + skillHits * tempAtk;
+			}
+
+
+
+
+
 			var skillDps = Math.round(skillTotalDamage / skillDuration);
 
 			var cycle = skillDuration + skillOfftime;
 
 			if(skillDuration == -1) {
-				skillDps = Math.round((skillTotalDamage / skillDuration) / skillAtkInterval);
+				if(skillId == 'skchr_f12yin_2') skillDuration == 1;
+				skillDps = Math.abs(Math.round((skillTotalDamage / skillDuration) / skillAtkInterval));
 				var averageDps = skillDps;
 			}
 			else {
 				var offtimeFrames = skillOfftime * 30;
 				var normalAtkOfftimeHits = Math.round(offtimeFrames / normalAtkFrames);
-				var normalAtkOfftimeDamage = normalAtkOfftimeHits * normalAtk;
+				if(operator.subclass == 'sword') normalAtkOfftimeHits *= 2;
+				var normalAtkOfftimeDamage = normalAtkOfftimeHits * normalAtk * damageScale;
 				var averageDps = Math.round((skillTotalDamage + normalAtkOfftimeDamage) / cycle);
 			}
 		}
 
+		// console.log('offtime', skillOfftime)
+		// console.log('offtime frames', offtimeFrames)
+		// console.log(normalAtkOfftimeHits);
+		// console.log(normalAtkOfftimeDamage);
+
 		// console.log(normalAtk);
 		// console.log(normalAtkFrames);
 		// console.log(skillOfftime);
-		// console.log('normal dps', normalDps);
-		// console.log('skill atk', skillAtk);
 		// console.log('Hits ', skillHits);
-		// console.log('skill dps', skillDps);
-		// console.log('cycle', cycle);
-		// console.log('average dps', averageDps);
+		console.log('cycle', cycle);
+
+		if(skillId == 'skchr_f12yin_2') skillDuration = -1;
 
 		if(skillDuration == -1)
-			outputDps(targetWidget, normalAtk, normalDps, skillAtk, '∞', skillDps, averageDps);
+			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, '∞', skillDps, averageDps);
 		else
-			outputDps(targetWidget, normalAtk, normalDps, skillAtk, skillTotalDamage, skillDps, averageDps);
+			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, skillTotalDamage, skillDps, averageDps);
 	}	
+
+
 
 	function outputDps(targetWidget, normalAtk, normalDps, skillAtk, skillTotalDamage, skillDps, averageDps) {
 		var cw = document.getElementById(targetWidget);
@@ -451,8 +698,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${normalAtk}</span>
 				</div>
 				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk DPS:</span>
-					<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${normalDps}</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Normal Atk DPS:</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${normalDps}</span>
 				</div>
 				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
 					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Atk Damage:</span>
@@ -463,16 +710,15 @@ fetch('/enemy/static/data/dps_alldata.json')
 					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillTotalDamage}</span>
 				</div>
 				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill DPS:</span>
-					<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${skillDps}</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Skill DPS:</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${skillDps}</span>
 				</div>
 				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Average DPS:</span>
-					<span class="display-6" style="font-size: 18px; font-weight: bold; margin: auto; margin-right: 0px;">${averageDps}</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Average DPS:</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${averageDps}</span>
 				</div>
 			</div>
-		`);
-
+			`);
 
 		const dpsStats = document.createElement('div');
 		dpsStats.id = targetWidget + 'dpsStats';
@@ -484,8 +730,9 @@ fetch('/enemy/static/data/dps_alldata.json')
 			cw.appendChild(dpsStats);
 		else
 			cw.replaceChild(dpsStats, oldStats);
-
 	}
+
+
 
 	function clamp(def, defpen) {
 		var result = def - defpen;
@@ -494,11 +741,14 @@ fetch('/enemy/static/data/dps_alldata.json')
 	}
 
 
+
 	$("#hhb1, #hhb2, #hhb3, #hhb4").click(function() {
 		selectOperator(this.id);
 	});
 
-	$(document).on('change','.cwDropdown', function(e){
+
+
+	$(document).on('change','.cwDropdown', function(e) {
 		var cw = this.id.slice(0, 11);
 		var targetWidget = cw;
 		var cwName = document.getElementById(cw + 'Name');
@@ -519,6 +769,48 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 				calculateDps(operator, cw);
 				break;
+			}
+		}
+	});
+
+
+
+	$(document).on('change','.cwInput', function(e) {
+		cw1Name = document.getElementById('calcWidget1Name');
+		cw2Name = document.getElementById('calcWidget2Name');
+		cw3Name = document.getElementById('calcWidget3Name');
+		cw4Name = document.getElementById('calcWidget4Name');
+
+		if(cw1Name.innerHTML != '') {
+			for(var i = 0; i < dpsData.length; i++) {
+				if(cw1Name.innerHTML == dpsData[i].name) {
+					calculateDps(dpsData[i], 'calcWidget1');
+					break;
+				}
+			}
+		}
+		if(cw2Name.innerHTML != '') {
+			for(var i = 0; i < dpsData.length; i++) {
+				if(cw2Name.innerHTML == dpsData[i].name) {
+					calculateDps(dpsData[i], 'calcWidget2');
+					break;
+				}
+			}
+		}
+		if(cw3Name.innerHTML != '') {
+			for(var i = 0; i < dpsData.length; i++) {
+				if(cw3Name.innerHTML == dpsData[i].name) {
+					calculateDps(dpsData[i], 'calcWidget3');
+					break;
+				}
+			}
+		}
+		if(cw4Name.innerHTML != '')  {
+			for(var i = 0; i < dpsData.length; i++) {
+				if(cw4Name.innerHTML == dpsData[i].name) {
+					calculateDps(dpsData[i], 'calcWidget4');
+					break;
+				}
 			}
 		}
 	});
