@@ -298,6 +298,10 @@ input.cboxButton:checked + label {
 	line-height: auto;
 }
 
+.buttonDiv {
+	margin-bottom: 15px;
+}
+
 #lightBox {
 	position: fixed;
 	z-index: 1000;
@@ -733,6 +737,14 @@ input.cboxButton:checked + label {
 
 	.hhbuttons {
 		grid-template-columns: 174px 174px;
+	}
+
+	input.cboxButton + label {
+		margin-bottom: 10px;
+	}
+
+	.buttonDiv {
+		margin-bottom: 5px;
 	}
 }
 
