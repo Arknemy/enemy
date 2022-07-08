@@ -578,7 +578,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 							<th scope="col" class="hovertooltip" data-tooltip="Cannot move, block, attack, or use skills.">Stun</th>
 							<th scope="col"  class="hovertooltip" data-tooltip="Invulnerable. Cannot move, block, attack, or use skills.">Sleep</th>
 							<th scope="col" class="hovertooltip" data-tooltip="Cannot attack or use skills, -15 RES.">Freeze</th>
-							<th scope="col" class="hovertooltip" data-tooltip="Regarded as aerial unit. Cannot move, attack, or use skills. Duration halved when weight > 3.">Levitate</th>
+							<th scope="col" class="hovertooltip" data-tooltip="Regarded as aerial unit. Cannot move, attack, or use skills. Duration halved if weight > 3.">Levitate</th>
 						</tr>
 					</thead>
 					<tbody>
