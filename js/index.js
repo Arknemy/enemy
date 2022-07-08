@@ -569,7 +569,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			if(tempData.immunity.includes('Airborne')) { airborne = '<strong>True</strong>'; }
 
 			htmlText = htmlText.concat(`
-				<span class="display-6" style="font-size:25px;">Immunity</span>
+				<span class="display-6" style="font-size:25px;">Immunities</span>
 				<hr style="margin-bottom:5px; margin-top:5px;"/>
 				<table class="table table-sm table-bordered" style="text-align: center; vertical-align: middle; table-layout: fixed;">
 					<thead class="thead-light">
