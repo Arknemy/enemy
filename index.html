@@ -27,10 +27,10 @@
 	</div>
 
 	<div class="container" id="mainDiv">
-		<input type="search" class="form-control" placeholder="Enter enemy name, enemy code, or stage code:" style="height: 32px; width: 95%; margin:auto; margin-bottom: 24px; box-shadow: 3px 3px 3px;">
+		<input type="search" class="form-control searchbar" placeholder="Enter enemy name:" id="searchfield" style="height: 32px; width: 95%; margin:auto; margin-bottom: 24px; box-shadow: 3px 3px 3px;">
 
 		<div class="filterWidget">
-			<h4 style="display:inline-block; margin-top: 3px">Filter</h4>
+			<h4 style="display:inline-block; margin-top: 3px;">Filter</h4>
 			<input type="button" id='bclear' name="bclear" class='cboxButton'/>
 			<label for='bclear' style="font-size: 14px; float: right;">Clear</label>
 			<hr style="margin-top: 5px;" />
@@ -44,7 +44,7 @@
 				<label for='bboss' style="font-size: 14px;">Boss</label>
 			</div>
 			<div style="margin-bottom: 15px;">
-				<p class="buttonpara" style="display:inline; margin-right: 20px">Enemy Race:</p>
+				<p class="buttonpara" style="display:inline; margin-right: 20px;">Enemy Race:</p>
 				<input type="radio" id='binfcrea' name="racebutton" class='cboxButton' />
 				<label for='binfcrea' style="font-size: 14px; margin-right: 6px;">Infected Creature</label>
 				<input type="radio" id='bdrone' name="racebutton" class='cboxButton' />
@@ -59,7 +59,7 @@
 				<label for='bartscrea' style="font-size: 14px; margin-right: 6px;">Arts Creation</label>
 			</div>
 			<div style="margin-bottom: 15px;">
-				<p class="buttonpara" style="display:inline; margin-right: 23px">Attack Type:</p>
+				<p class="buttonpara" style="display:inline; margin-right: 23px;">Attack Type:</p>
 				<input type="checkbox" id='bmelee' name="bmelee" class='cboxButton' />
 				<label for='bmelee' style="font-size: 14px; margin-right: 6px;">Melee</label>
 				<input type="checkbox" id='branged' name="branged" class='cboxButton' />
@@ -68,7 +68,7 @@
 				<label for='bnoatk' style="font-size: 14px; margin-right: 6px;">Does Not Attack</label>
 			</div>
 			<div>
-				<p class="buttonpara" style="display:inline; margin-right: 8px">Damage Type:</p>
+				<p class="buttonpara" style="display:inline; margin-right: 8px;">Damage Type:</p>
 				<input type="radio" id='bphys' name="atktypebutton" class='cboxButton' />
 				<label for='bphys' style="font-size: 14px; margin-right: 6px;">Physical</label>
 				<input type="radio" id='barts' name="atktypebutton" class='cboxButton' />
@@ -78,20 +78,20 @@
 			</div>
 		</div>
 
-		<div style="width: 95%; margin: auto; margin-top: 30px;">
-		<span class="display-6" style="color: white; font-size: 30px;">Browse</span>
-		<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px; opacity: 1;" />
+		<div class="enheader" style="width: 95%; margin: auto; margin-top: 30px;">
+			<span class="display-6" style="color: white; font-size: 30px;">Browse</span>
+			<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px; opacity: 1;"/>
 		</div>
-		
+
 		<div class="enemyWidget" id="enemyWidget"></div>
 
-		<div style="width: 95%; margin: auto; margin-top: 30px;">
-		<span class="display-6 subheader" id="cnDisplay" style="color: white; font-size: 30px;">CN Exclusive</span>
-		<hr class="subheader" style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px;" />
+		<div class="subheader" style="width: 95%; margin: auto; margin-top: 30px;">
+			<span class="display-6" id="cnDisplay" style="color: white; font-size: 30px;">CN Exclusive</span>
+			<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px; opacity: 1;"/>
 		</div>
 
 		<div class="enemyWidget_CN" id="enemyWidget_CN"></div>
-		
+
 		<button id="scrollTop">▲</button>
 	</div>
 
