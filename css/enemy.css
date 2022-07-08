@@ -43,7 +43,22 @@
 	background: #828282; 
 }
 
+.searchbar {
+	opacity: 0;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
 .filterWidget {
+	opacity: 0;
 	width: 95%;
 	height: auto;
 	padding-left: 20px;
@@ -55,6 +70,21 @@
 	background-color: #f2eeed;
 	box-shadow: 5px 10px 5px;
 	border-radius: 5px;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-delay: 0.1s;
+	-moz-animation-delay: 0.1s;
+	-ms-animation-delay: 0.1s;
+	-o-animation-delay: 0.1s;
+	animation-delay: 0.1s;
 }
 
 .enemyWidget {
@@ -79,10 +109,28 @@
 	margin-bottom: 30px;
 }
 
+.enheader {
+	opacity: 0;
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-delay: 0.2s;
+	-moz-animation-delay: 0.2s;
+	-ms-animation-delay: 0.2s;
+	-o-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
 .subheader {
 	position: relative;
 	opacity: 0;
-	top: 30px;
 	-webkit-animation: fadein 0.5s;
 	-moz-animation: fadein 0.5s;
 	-ms-animation: fadein 0.5s;
@@ -108,7 +156,6 @@
 	margin-bottom: 10px;
 	cursor: pointer;
 	opacity: 0;
-	top: 70px;
 }
 
 .enemyCard.disable {
@@ -133,57 +180,57 @@
 }
 
 .enemyCard.delay {
-	animation-delay: 0.3s
+	animation-delay: 0.1s
 }
 
 @-webkit-keyframes fadein {
-	0% { opacity: 0; top: 70px; }
-	100% { opacity: 1; top: 0px; }
+	0% { opacity: 0; transform: translateY(70px); }
+	100% { opacity: 1; transform: translateY(0px); }
 }
 
 @-moz-keyframes fadein {
-	0% { opacity: 0; top: 70px; }
-	100% { opacity: 1; top: 0px; }
+	0% { opacity: 0; transform: translateY(70px); }
+	100% { opacity: 1; transform: translateY(0px); }
 }
 
 @-ms-keyframes fadein {
-	0% { opacity: 0; top: 70px; }
-	100% { opacity: 1; top: 0px; }
+	0% { opacity: 0; transform: translateY(70px); }
+	100% { opacity: 1; transform: translateY(0px); }
 }
 
 @-o-keyframes fadein {
-	0% { opacity: 0; top: 70px; }
-	100% { opacity: 1; top: 0px; }
+	0% { opacity: 0; transform: translateY(70px); }
+	100% { opacity: 1; transform: translateY(0px); }
 }
 
 @keyframes fadein {
-	0% { opacity: 0; top: 70px; }
-	100% { opacity: 1; top: 0px; }
+	0% { opacity: 0; transform: translateY(70px); }
+	100% { opacity: 1; transform: translateY(0px); }
 }
 
 @-webkit-keyframes fadeout {
-	0% { opacity: 1; top: 0px; }
-	100% { opacity: 0; top: -70px; }
+	0% { opacity: 1; transform: translateY(0px); }
+	100% { opacity: 0; transform: translateY(-70px); }
 }
 
 @-moz-keyframes fadeout {
-	0% { opacity: 1; top: 0px; }
-	100% { opacity: 0; top: -70px; }
+	0% { opacity: 1; transform: translateY(0px); }
+	100% { opacity: 0; transform: translateY(-70px); }
 }
 
 @-ms-keyframes fadeout {
-	0% { opacity: 1; top: 0px; }
-	100% { opacity: 0; top: -70px; }
+	0% { opacity: 1; transform: translateY(0px); }
+	100% { opacity: 0; transform: translateY(-70px); }
 }
 
 @-o-keyframes fadeout {
-	0% { opacity: 1; top: 0px; }
-	100% { opacity: 0; top: -70px; }
+	0% { opacity: 1; transform: translateY(0px); }
+	100% { opacity: 0; transform: translateY(-70px); }
 }
 
 @keyframes fadeout {
-	0% { opacity: 1; top: 0px; }
-	100% { opacity: 0; top: -70px; }
+	0% { opacity: 1; transform: translateY(0px); }
+	100% { opacity: 0; transform: translateY(-70px); }
 }
 
 .enemyCard:hover {
@@ -526,7 +573,6 @@ input.cboxButton:checked + label {
 	box-shadow: 5px 10px 5px;
 	border-radius: 5px;
 	padding: 10px 18px;
-	top: 70px;
 	opacity: 0;
 }
 
