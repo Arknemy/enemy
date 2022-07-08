@@ -6,9 +6,9 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		
 	let enemyInput = document.querySelector('input');
 	var searchVal = '';
-	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-	// normal elite boss inf drone sark poss seamons creat melee ranged doesn'tatk phys arts healing
-
+	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+	// normal elite boss inf drone sark poss seamons creat melee ranged doesn'tatk phys arts healing silence stun sleep freeze levitate
+	
 	var scrollButton = document.getElementById('scrollTop');
 	$(window).on('scroll', function() {
 		if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -193,6 +193,31 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				}
 				if(i == 14) {
 					if(data.atkattri != 'Healing' && data.atkattri != '治疗') { filtered = false; break; }
+				}
+				if(i == 15) {
+					if(data.immunity != null) {
+						if(data.immunity.includes('Silence') == false) { filtered = false; break; }
+					}
+				}
+				if(i == 16) {
+					if(data.immunity != null)  {
+						if(data.immunity.includes('Stun') == false) { filtered = false; break; }
+					}
+				}
+				if(i == 17) {
+					if(data.immunity != null)  {
+						if(data.immunity.includes('Sleep') == false) { filtered = false; break; }
+					}
+				}
+				if(i == 18) {
+					if(data.immunity != null)  {
+						if(data.immunity.includes('Freeze') == false) { filtered = false; break; }
+					}
+				}
+				if(i == 19) {
+					if(data.immunity != null)  {
+						if(data.immunity.includes('Airborne') == false) { filtered = false; break; }
+					}
 				}
 			}
 		}
@@ -437,6 +462,35 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		if(filterArr[14] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
+		selectedFilter();
+	});
+	
+	$("#bsilence").click(function() {
+		filterArr[15] *= -1;
+		selectedFilter();
+	});
+
+
+	$("#bstun").click(function() {
+		filterArr[16] *= -1;
+		selectedFilter();
+	});
+
+
+	$("#bsleep").click(function() {
+		filterArr[17] *= -1;
+		selectedFilter();
+	});
+
+
+	$("#bfreeze").click(function() {
+		filterArr[18] *= -1;
+		selectedFilter();
+	});
+
+
+	$("#blevitate").click(function() {
+		filterArr[19] *= -1;
 		selectedFilter();
 	});
 
