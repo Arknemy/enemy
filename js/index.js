@@ -136,9 +136,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					infoBox.innerHTML = htmlText;
 					while(lightBox.firstChild) { lightBox.removeChild(lightBox.firstChild); }
 					lightBox.appendChild(infoBox);
-					setTimeout(function() {
-						infoBox.classList.add('active');
-					}, 1);
+					infoBox.classList.add('active');
 					
 					const descHover = document.querySelectorAll('.desc');
 					descHover.forEach(tool => {
