@@ -346,14 +346,12 @@ input.cboxButton:checked + label {
 	height: 90%;
 	position: relative;
 	top: calc(-100vh - 100px);
-	/*max-height: 0%;*/
 	border-radius: 5px;
 	padding: 20px;
 	background-color: #f2eeed;
 	box-shadow: 0px 0px 5px;
 	overflow-y: auto;
 	opacity: 0;
-	/*margin-bottom: 100vh;*/
 	-webkit-transition: top 0.2s cubic-bezier(1,-0.01,1,.18), opacity 0.4s linear;
 	-moz-transition: top 0.2s cubic-bezier(1,-0.01,1,.18), opacity 0.4s linear;
 	-ms-transition: top 0.2s cubic-bezier(1,-0.01,1,.18), opacity 0.4s linear;
@@ -412,13 +410,15 @@ input.cboxButton:checked + label {
 	position: absolute;
 	top: -.25rem;
 	left: 50%;
-	transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+	transform: translateX(var(--translate-x)) translateY(var(--translate-y, 0)) scale(var(--scale));
 	transition: 150ms transform;
 	transform-origin: bottom center;
+	/*transform-origin: 30% bottom;*/
 }
 
 .hovertooltip::before {
 	--translate-y: calc(-100% - var(--arrow-size));
+	--translate-x: -50%;
 	content: attr(data-tooltip);
 	color: black;
 	font-weight: normal !important;
@@ -427,7 +427,7 @@ input.cboxButton:checked + label {
 	border-radius: .3rem;
 	text-align: center;
 	width: max-content;
-	min-width: 140px;
+	min-width: 160px;
 	max-width: 100%;
 	background: var(--tooltip-color);
 }
@@ -439,9 +439,30 @@ input.cboxButton:checked + label {
 
 .hovertooltip::after {
 	--translate-y: calc(-1 * var(--arrow-size));
+	--translate-x: -50%;
 	content: '';
 	border: var(--arrow-size) solid transparent;
 	border-top-color: var(--tooltip-color);
+	transform-origin: top center;
+}
+
+.hovertooltip.right::before {
+	--translate-x: -25%;
+	transform-origin: 25% bottom;
+}
+
+.hovertooltip.right::after {
+	--translate-x: -50%;
+	transform-origin: top center;
+}
+
+.hovertooltip.left::before {
+	--translate-x: -75%;
+	transform-origin: 75% bottom;
+}
+
+.hovertooltip.left::after {
+	--translate-x: -50%;
 	transform-origin: top center;
 }
 
