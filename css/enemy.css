@@ -87,6 +87,14 @@
 	animation-delay: 0.1s;
 }
 
+
+
+
+
+
+
+
+
 .enemyWidget {
 	width: 95%;
 	height: auto;
@@ -156,6 +164,7 @@
 	margin-bottom: 10px;
 	cursor: pointer;
 	opacity: 0;
+	transition: box-shadow 0.2s;
 }
 
 .enemyCard.disable {
@@ -234,7 +243,7 @@
 }
 
 .enemyCard:hover {
-	box-shadow: 0 0 5px #000000;
+	box-shadow: 0 0 7px white;
 }
 
 .enemyWidget::after {
