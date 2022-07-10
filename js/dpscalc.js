@@ -8,6 +8,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 	lightBox.id = 'lightBox';
 	document.getElementById('mainDiv').appendChild(lightBox);
 
+
 	lightBox.addEventListener('click', e => {
 		if(e.target != e.currentTarget) return;
 		infoBox.classList.remove('active');
@@ -15,11 +16,13 @@ fetch('/enemy/static/data/dps_alldata.json')
 		document.body.style.overflow = 'visible';
 	});
 
+
 	$(document).on('click','#closeBox, .oplink', function(e){
 		infoBox.classList.remove('active');
 		lightBox.classList.remove('active');
 		document.body.style.overflow = 'visible';
 	});
+
 
 	function subtractOrundum() {
 		const orunCount = document.querySelector("#orundumCount");
@@ -30,6 +33,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var bgwidth = orunCount.offsetWidth + 90;
 		bg.style.width = bgwidth + 'px';
 	}
+
 
 	function selectOperator(caller) {
 		lightBox.classList.add('active');
@@ -96,6 +100,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		}
 	});
 
+
 	function loadOperator(targetOp, targetWidget) {
 		for(var i = 0; i < dpsData.length; i++) {
 			if(dpsData[i].code == targetOp) {
@@ -106,8 +111,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 				cwImg = document.getElementById(targetWidget + 'Img');
 				if(operator.name == 'Amiya') cwImg.src = `/enemy/static/assets/operators/amiya3.png`;
-				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name.toLowerCase()}2.png`;
-				else cwImg.src = `/enemy/static/assets/operators/${operator.name.toLowerCase()}1.png`;
+				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name}2.png`;
+				else cwImg.src = `/enemy/static/assets/operators/${operator.name}1.png`;
 
 
 				cwPromo = document.getElementById(targetWidget + 'Promotion');
@@ -251,13 +256,11 @@ fetch('/enemy/static/data/dps_alldata.json')
  				if(sp == spCost) frames -= normalAtkFrames / 2;
  			}
  			
- 			if(chenFrames != 0) {
+ 			if(chenFrames != 0)
  				if(frames % chenFrames == 0) sp += chenSp;
- 			}
 
- 			if(archettoFrames != 0) {
+ 			if(archettoFrames != 0)
  				if(frames % archettoFrames == 0) sp += 1;
- 			}
 
  			if(sp >= spCost) break;
  		}
@@ -306,8 +309,20 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var skill = document.getElementById(targetWidget + 'Skill').value;
 		var skillRank = document.getElementById(targetWidget + 'SkillRank').value;
 
+		var disregardBuffs = document.getElementById(targetWidget + 'Buffs').checked;
+		if(operator.subclass == 'lord')
+			var lordRangeDebuff = document.getElementById(targetWidget + 'Lord').checked;
+		// add more
+
 		//-----------------------------------------------------------------------------------------
 		// actual calculations below
+
+		if(operator.subclass == 'centurion') {
+			if(elite == 2) baseMaxTarget = 3;
+			else baseMaxTarget = 2;
+		}
+		if(operator.subclass == 'blastcaster' || operator.subclass == 'stalker' || operator.subclass == 'aoesniper' || operator.subclass == 'splashcaster')
+			baseMaxTarget = 999999;
 
 		var atkTrustGrowth = operator.trustStats[1].data.atk / 100;
 		var defTrustGrowth = operator.trustStats[1].data.def / 100;
@@ -376,43 +391,35 @@ fetch('/enemy/static/data/dps_alldata.json')
 			talentArr.push(tempTalentArr);
 		}
 
-		// calculate skill settings
-		var skillDuration;
-		var skillInfinite = false;
-		var skillCost;
-		var skillRecoveryType = 'natural'
-		var skillArr = [];
-		var selectedSkill;
-		var skillId;
 
-		for(var i = 0; i < operator.skills.length; i++) {
-			if(operator.skills[i].levels[0].name == skill) {
-				selectedSkill =  operator.skills[i].levels[skillRank - 1];
-				skillId = operator.skills[i].skillId;
-				skillDuration = selectedSkill.duration;
-				if(skillDuration == 0);
-				if(skillDuration == -1) skillInfinite = true;
-				skillCost = selectedSkill.spData.spCost;
-				if(selectedSkill.spData.spType == 2) skillRecoveryType = 'attack';
-				if(selectedSkill.spData.spType == 4) skillRecoveryType = 'defense';
-				if(selectedSkill.spData.spType == 8) skillRecoveryType = 'burst';
+		// add buff bonuses
+		if(disregardBuffs == true) {
+			flatAtkBuff = 0;
+			percentAtkBuff = 0;
+			aspdBuff = 0;
+			damageScaleBuff = 0;
+			spRechargeBuff = 0;
+		}
+		else {
+			flatAtkBuff = Number(flatAtkBuff);
+			percentAtkBuff = Number(percentAtkBuff);
+			aspdBuff = Number(aspdBuff);
+			damageScaleBuff = Number(damageScaleBuff);
+			spRechargeBuff = Number(spRechargeBuff);
 
-				for(var j = 0; j < selectedSkill.blackboard.length; j++)
-					skillArr.push([selectedSkill.blackboard[j].key, selectedSkill.blackboard[j].value]);
-				break;
-			}
+			if(percentAtkBuff != 0)
+				percentAtkBuff = percentAtkBuff / 100;
+			if(damageScaleBuff != 0)
+				damageScaleBuff = damageScaleBuff / 100;
+			if(aspdBuff != 0)
+				aspdBuff = aspdBuff / 100;
+			if(spRechargeBuff != 0)
+				spRechargeBuff = spRechargeBuff / 100;
 		}
 
+		// console.log(flatAtkBuff, percentAtkBuff, aspdBuff, damageScaleBuff, spRechargeBuff);
 
-		// HARD CODE-----------------------
-
-		if(skillId == 'skchr_chen_2') skillDuration = 1.3333;
-		if(skillId == 'skchr_chen_3') skillDuration = 3.4;
-
-
-		// END HARD CODE-------------------
-
-		
+		// calculate normal dps
 		var normalDamageType = 'physical';
 		var atkUp = 1;
 		var defUp = 1;
@@ -425,8 +432,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var aspdArr = ['min_attack_speed', 'attack_speed'];
 		var talentProb;
 
-		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman'))
+		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman')) {
 			normalDamageType = 'arts';
+			skillDamageType = 'arts';
+			if(operator.name == 'Tomimi') skillDamageType = 'physical';
+		}
 
 		for(var i = 0; i < talentArr.length; i++) {
 			for(var j = 0; j < talentArr[i].length; j++) {
@@ -453,29 +463,55 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
-		if(operator.name == 'Mountain') atkUp = 1;
+		// account for talent fuckeries
+		if(operator.name == 'Mountain') {
+			atkUp = 1;
+			talentProb = 0.2;
+		}
+		if(operator.subclass == 'lord') {
+			if(lordRangeDebuff == true)
+				atkScale *= 0.8;
+		}
 
+		atkUp += percentAtkBuff;
+		damageScale += damageScaleBuff;
+		aspd += aspdBuff;
 
-		var baseNormalAtk = baseAtk * atkUp;
-		var normalAtk;
-
-		var normalAtkInterval;
-		var normalAtkFrames;
-		var normalDps;
+		var baseNormalAtk = baseAtk * atkUp + flatAtkBuff;
+		var normalAtk, normalAtkInterval, normalAtkFrames, normalDps;
 
 		// Naughty list
-		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra'];
-		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe'];
+		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra', 'Kroos', 'Kroos the Keen Glint', 'Midnight'];
+		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe', 'Kroos', 'Midnight'];
 
 		//calculate talent effects on normal attacks
 		if(talentExceptions.includes(operator.name)) {
 			if(crits.includes(operator.name)) {
-				normalAtk = baseAtk - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
-				critAtk = baseAtk * atkUp * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				if(operator.subclass == 'lord' && lordRangeDebuff == true) {
+					normalAtk = ((baseAtk * (1 + percentAtkBuff))+ flatAtkBuff) * 0.8 - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+					critAtk = (baseAtk * atkUp + flatAtkBuff) * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				}
+				else if(normalDamageType == 'physical') {
+					normalAtk = (baseAtk * (1 + percentAtkBuff)) + flatAtkBuff - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+					critAtk = (baseAtk * atkUp + flatAtkBuff) * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				}
+				else if(normalDamageType == 'arts') {
+					normalAtk = ((baseAtk * (1 + percentAtkBuff)) + flatAtkBuff) * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+					critAtk = (baseAtk * atkUp + flatAtkBuff) * atkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+				}
+				else {
+					normalAtk = (baseAtk * (1 + percentAtkBuff)) + flatAtkBuff;
+					critAtk = (baseAtk * atkUp + flatAtkBuff) * atkScale;
+				}
 
 				if(operator.name == 'Bagpipe' && enemyCount > 1) critAtk *= 2;
 
+				// console.log('prob', talentProb);
+				// console.log(atkUp, atkScale);
+				// console.log(normalAtk, critAtk);
+
 				normalAtk = (normalAtk * (1 - talentProb) + critAtk * (talentProb));
+				baseNormalAtk = normalAtk;
 				normalAtkInterval = atkInterval / aspd;
 				normalAtkFrames = Math.round(30 * normalAtkInterval);
 				normalDps = Math.round(((normalAtk * damageScale) / normalAtkFrames) * 30);
@@ -498,12 +534,51 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		if(operator.subclass == 'sword') normalDps *= 2;
 
+		if(baseMaxTarget > enemyCount) normalDps *= enemyCount;
+		else if(baseMaxTarget <= enemyCount) normalDps *= baseMaxTarget;
+
+
+		// calculate skill duration settings
+		var skillDuration, skillCost, selectedSkill, skillId;
+		var skillInfinite = false;
+		var skillRecoveryType = 'natural'
+		var skillArr = [];
+
+		for(var i = 0; i < operator.skills.length; i++) {
+			if(operator.skills[i].levels[0].name == skill) {
+				selectedSkill =  operator.skills[i].levels[skillRank - 1];
+				skillId = operator.skills[i].skillId;
+				break;
+			}
+		}
+
+		skillDuration = selectedSkill.duration;
+		if(skillDuration == 0) skillDuration = atkInterval;
+		if(skillDuration == -1) skillInfinite = true;
+		skillCost = selectedSkill.spData.spCost;
+		if(selectedSkill.spData.spType == 2) skillRecoveryType = 'attack';
+		if(selectedSkill.spData.spType == 4) skillRecoveryType = 'defense';
+		if(selectedSkill.spData.spType == 8) skillRecoveryType = 'burst';
+
+		for(var j = 0; j < selectedSkill.blackboard.length; j++)
+			skillArr.push([selectedSkill.blackboard[j].key, selectedSkill.blackboard[j].value]);
+
+		if(selectedSkill.description.toLowerCase().includes('the next attack'))
+			skillDuration = atkInterval;
+
+		// HARD CODE-----------------------
+
+		if(skillId == 'skchr_chen_2') skillDuration = 1.3333;
+		if(skillId == 'skchr_chen_3') skillDuration = 3.4;
+		if(skillId == 'skchr_meteo_2') skillDuration = 1.033;
+
+		// END HARD CODE-------------------
+
 
 		// calculate offtime
 		var skillOfftime;
-		if(skillDuration == 0) skillDuration = atkInterval;
 		if(skillRecoveryType == 'natural')
-			skillOfftime = skillCost;
+			skillOfftime = skillCost / (1 + spRechargeBuff);
 		else if(skillRecoveryType == 'attack')
 			skillOfftime = (normalAtkFrames * skillCost) / 30;
 		else if(skillRecoveryType == 'defense')
@@ -528,6 +603,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		// END HARD CODE-----------------
 
+		// calculate skill damages
 		var skillDamageType = 'physical';
 		var skillAtkUp = 1;
 		var skillDefUp = 1;
@@ -539,7 +615,27 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var skillMaxTarget = 1;
 		var skillBlock = baseBlock;
 		var skillBlackboard = selectedSkill.blackboard;
+		var skillProb;
 
+		// operator class hard code
+		if(operator.subclass == 'centurion') {
+			if(elite == 2) skillMaxTarget = 3;
+			else skillMaxTarget = 2;
+			if(skillId == 'skchr_huang_3') skillMaxTarget = 999999;
+		}
+		if(operator.subclass == 'blastcaster' || operator.subclass == 'stalker' || operator.subclass == 'aoesniper' || operator.subclass == 'splashcaster')
+			skillMaxTarget = 999999;
+		if(operator.subclass == 'lord') {
+			if(lordRangeDebuff == true) {
+				// get skills that still suffer range penalty
+				var rangedSkillPenalty = ['skchr_midn_1', 'skcom_atk_up[3]', 'skchr_whitew_1', 'skchr_frostl_2', 'skchr_thorns_2', 'skchr_spikes_1']
+				if(rangedSkillPenalty.includes(skillId) == false)
+					atkScale *= 1.25;
+			}
+		}
+		if(operator.name == 'Midnight') skillDamageType = 'arts';
+
+		// get scaling from skill
 		atkUpArr = ['atk'];
 		atkScaleArr = ['atk_scale', 'attack@atk_scale','attack@surtr_s_2[critical].atk_scale'];
 		aspdArr = ['min_attack_speed', 'attack_speed'];
@@ -570,105 +666,149 @@ fetch('/enemy/static/data/dps_alldata.json')
 				baseDefIgnore -= 1 - skillBlackboard[i].value;
 			else if(skillBlackboard[i].key == 'def_penetrate_fixed')
 				baseDefFlatIgnore += skillBlackboard[i].value;
+			else if(maxTargetArr.includes(skillBlackboard[i].key))
+				skillMaxTarget = skillBlackboard[i].value;
+
+			if(skillId == 'skchr_f12yin_3' && skillBlackboard[i].key == 'talent@prob') 
+				skillProb = skillBlackboard[i].value;
+
+			if(skillId == 'skchr_huang_3' && skillBlackboard[i].key == 'damage_by_atk_scale')
+				var burstScale = skillBlackboard[i].value;
 		}
 
-		var skillExceptions = [];
+		if(skillId == 'skchr_f12yin_2' || skillId == 'skchr_whitew_2') 
+			skillMaxTarget = 2;
 
-		if(skillExceptions.includes(operator.name)) {
+		// calculate skill atk
+		var baseSkillAtk = baseAtk * (atkUp + (skillAtkUp - 1)) + flatAtkBuff, skillAtk;
+
+		if(skillDamageType == 'physical')
+			skillAtk = baseSkillAtk * atkScale * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+		else if(skillDamageType == 'arts')
+			skillAtk = baseSkillAtk * atkScale * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+		else
+			skillAtk = baseSkillAtk * atkScale * skillAtkScale;
+
+		if(skillAtk < baseSkillAtk * atkScale * skillAtkScale * 0.05) skillAtk = baseSkillAtk * atkScale * skillAtkScale * 0.05;
+
+
+		// skill exceptions
+		if(skillId == 'skchr_chen_2')
+			skillAtk += baseAtk * atkScale * skillAtkUp * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+
+		var swordXmod1 = ['Ch\'en', 'Tachanka', 'Bibeak'];
+		if(swordXmod1.includes(operator.name) && modNum == 0) skillAtk *= 1.1;
+
+
+		// skill atk interval calculations
+		skillAtkInterval = skillAtkInterval / skillAspd;
+		var skillAtkFrames = Math.round(30 * skillAtkInterval);
+		var skillTotalFrames = skillDuration * 30;
+		var skillHits = Math.max(Math.round(skillTotalFrames / skillAtkFrames) * skillHitNum, 1);
+
+		// estimate atk cancel
+		if(skillHits != 1) {
+			if(skillTotalFrames / skillAtkFrames - Math.round(skillTotalFrames / skillAtkFrames) > 0.25)
+				skillHits += 1;
 		}
-		else {
-			var baseSkillAtk = baseAtk * (atkUp + (skillAtkUp - 1));
-			var skillAtk;
 
-			console.log('base skill atk', atkUp, skillAtkUp);
+		// hard code skill hit numbers
+		if(skillId == 'skchr_chen_3') skillHits = 10;
+		if(operator.name == 'Elysium' || operator.name == 'Myrtle' || operator.name == 'Saileach') skillHits = 0;
+		if(skillId == 'skchr_sleach_3') skillHits = 1;
+		if(skillId == 'skchr_bpipe_2') skillHits *= 2;
+		if(skillId == 'skchr_bpipe_3') skillHits *= 3;
+		if(skillId == 'skchr_f12yin_3') skillHits *= 2;
 
-			if(skillDamageType == 'physical')
-				skillAtk = baseSkillAtk * atkScale * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
-			else if(skillDamageType == 'arts')
-				skillAtk = baseSkillAtk * atkScale * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
-			else
-				skillAtk = baseSkillAtk * atkScale * skillAtkScale;
+		var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
 
-			if(skillAtk < baseSkillAtk * atkScale * skillAtkScale * 0.05) skillAtk = baseSkillAtk * atkScale * skillAtkScale * 0.05;
+		console.log(skillHits);
 
+		// calculate skill crits
+		if(crits.includes(operator.name)) {
+			var critHits = skillHits * talentProb;
+			if(skillId == 'skchr_f12yin_3') critHits = skillHits * skillProb;
+			skillHits -= critHits;
+			var tempAtk, tempCrit;
 
-			// HARD CODE---------------------
-
-			if(skillId == 'skchr_chen_2') 
-				skillAtk += baseAtk * atkScale * skillAtkUp * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
-
-
-
-			var swordXmod1 = ['Ch\'en', 'Tachanka', 'Bibeak'];
-
-			if(swordXmod1.includes(operator.name) && modNum == 0) skillAtk *= 1.1;
-
-
-
-			// END HARD CODE-----------------
-
-
-			skillAtkInterval = skillAtkInterval / skillAspd;
-			var skillAtkFrames = Math.round(30 * skillAtkInterval);
-			var skillTotalFrames = skillDuration * 30;
-			var skillHits = Math.max(Math.round(skillTotalFrames / skillAtkFrames) * skillHitNum, 1);
-
-			// HARD CODE---------------------
-
-			if(skillId == 'skchr_chen_3') skillHits = 10;
-			if(operator.name == 'Elysium' || operator.name == 'Myrtle' || operator.name == 'Saileach') skillHits = 0;
-			if(skillId == 'skchr_sleach_3') skillHits = 1;
-			if(skillId == 'skchr_bpipe_2') skillHits *= 2;
-			if(skillId == 'skchr_bpipe_3') skillHits *= 3;
-			if(skillId == 'skchr_f12yin_3') skillHits *= 2;
-
-			// END HARD CODE-----------------
-
-			var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
-
-			if(crits.includes(operator.name)) {
-				var critHits = skillHits * talentProb;
-				skillHits -= critHits;
-				var tempAtk = baseAtk * skillAtkUp * skillAtkScale  - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
-				var tempCrit = baseAtk * atkUp * skillAtkUp * skillAtkScale * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
-				if(operator.name == 'Bagpipe' && enemyCount > 1) tempCrit *= 2;
-				skillTotalDamage = critHits * tempCrit + skillHits * tempAtk;
+			if(lordRangeDebuff == true) {
+				tempAtk = (baseAtk * (skillAtkUp + percentAtkBuff) + flatAtkBuff) * skillAtkScale * 0.8 * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+				tempCrit = (baseAtk * (atkUp * (skillAtkUp + percentAtkBuff)) + flatAtkBuff) * skillAtkScale * atkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
 			}
-
-
-
-
-
-			var skillDps = Math.round(skillTotalDamage / skillDuration);
-
-			var cycle = skillDuration + skillOfftime;
-
-			if(skillDuration == -1) {
-				if(skillId == 'skchr_f12yin_2') skillDuration == 1;
-				skillDps = Math.abs(Math.round((skillTotalDamage / skillDuration) / skillAtkInterval));
-				var averageDps = skillDps;
+			else if(skillDamageType == 'physical') {
+				tempAtk = (baseAtk * (skillAtkUp + percentAtkBuff) + flatAtkBuff) * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+				tempCrit = (baseAtk * (atkUp * (skillAtkUp + percentAtkBuff)) + flatAtkBuff) * skillAtkScale * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+			}
+			else if(skillDamageType == 'arts') {
+				tempAtk = (baseAtk * (skillAtkUp + percentAtkBuff) + flatAtkBuff) * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+				tempCrit = (baseAtk * (atkUp * (skillAtkUp + percentAtkBuff)) + flatAtkBuff) * skillAtkScale * atkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
 			}
 			else {
-				var offtimeFrames = skillOfftime * 30;
-				var normalAtkOfftimeHits = Math.round(offtimeFrames / normalAtkFrames);
-				if(operator.subclass == 'sword') normalAtkOfftimeHits *= 2;
-				var normalAtkOfftimeDamage = normalAtkOfftimeHits * normalAtk * damageScale;
-				var averageDps = Math.round((skillTotalDamage + normalAtkOfftimeDamage) / cycle);
+				tempAtk = (baseAtk * (skillAtkUp + percentAtkBuff) + flatAtkBuff) * skillAtkScale;
+				tempCrit = (baseAtk * (atkUp * (skillAtkUp + percentAtkBuff)) + flatAtkBuff) * skillAtkScale * atkScale;
+			}
+
+			if(operator.name == 'Bagpipe' && enemyCount > 1) tempCrit *= 2;
+			skillTotalDamage = critHits * tempCrit + skillHits * tempAtk;
+
+			// console.log('Hits ', skillHits);
+			// console.log('Crits ', critHits);
+			// console.log('Hit dmg', tempAtk);
+			// console.log('Crit dmg', tempCrit);
+		}
+
+
+		// special skill calculations
+		if(skillId == 'skchr_huang_3') {
+			var atkIncrement = (skillAtkUp - 1) / 8;
+			var blazeDmg = 0;
+
+			for(var i = 1; i < 9; i++)
+				blazeDmg += baseAtk * (1 + atkIncrement * i) - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+
+			blazeDmg += baseAtk * skillAtkUp * burstScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+
+			skillTotalDamage = blazeDmg;
+		}
+
+
+
+		if(skillMaxTarget > enemyCount) skillTotalDamage *= enemyCount;
+		else if(skillMaxTarget <= enemyCount) skillTotalDamage *= skillMaxTarget;
+
+		var skillDps = Math.round(skillTotalDamage / skillDuration);
+		var cycle = skillDuration + skillOfftime;
+
+		if(skillDuration == -1) {
+			skillDps = Math.abs(Math.round((skillTotalDamage / skillDuration) / skillAtkInterval));
+			var averageDps = skillDps;
+		}
+		else {
+			var offtimeFrames = skillOfftime * 30;
+			var normalAtkOfftimeHits = Math.round(offtimeFrames / normalAtkFrames);
+			if(operator.subclass == 'sword') normalAtkOfftimeHits *= 2;
+			var normalAtkOfftimeDamage = normalAtkOfftimeHits * normalAtk * damageScale;
+
+			if(baseMaxTarget > enemyCount) normalAtkOfftimeDamage *= enemyCount;
+			else if(baseMaxTarget <= enemyCount) normalAtkOfftimeDamage *= baseMaxTarget;
+
+			var averageDps = Math.round((skillTotalDamage + normalAtkOfftimeDamage) / cycle);
+
+			if(skillId == 'skchr_f12yin_2')  {
+				averageDps = skillDps;
+				skillDuration = -1;
 			}
 		}
 
 		// console.log('offtime', skillOfftime)
 		// console.log('offtime frames', offtimeFrames)
-		// console.log(normalAtkOfftimeHits);
-		// console.log(normalAtkOfftimeDamage);
-
+		// console.log(skillTotalDamage);
+		// console.log('normal offtime hits', normalAtkOfftimeHits);
+		// console.log('normal offtime damage', normalAtkOfftimeDamage);
 		// console.log(normalAtk);
 		// console.log(normalAtkFrames);
 		// console.log(skillOfftime);
-		// console.log('Hits ', skillHits);
-		console.log('cycle', cycle);
-
-		if(skillId == 'skchr_f12yin_2') skillDuration = -1;
+		// console.log('cycle', cycle);
 
 		if(skillDuration == -1)
 			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, '∞', skillDps, averageDps);
