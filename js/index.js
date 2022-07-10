@@ -107,6 +107,13 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				setTimeout(function() {
 					infoBox.classList.add('active');
 				}, 1);
+				
+				const descHover = document.querySelectorAll('.desc');
+				descHover.forEach(tool => {
+					if(tool.offsetLeft < 40) tool.classList.add('right');
+					else if(infoBox.offsetWidth - tool.offsetLeft < 130) tool.classList.add('left');
+				});
+				
 				document.body.style.overflow = 'hidden';
 			});
 		});
@@ -132,6 +139,13 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					setTimeout(function() {
 						infoBox.classList.add('active');
 					}, 1);
+					
+					const descHover = document.querySelectorAll('.desc');
+					descHover.forEach(tool => {
+						if(tool.offsetLeft < 40) tool.classList.add('right');
+						else if(infoBox.offsetWidth - tool.offsetLeft < 130) tool.classList.add('left');
+					});
+					
 					document.body.style.overflow = 'hidden';
 					break;
 				}
