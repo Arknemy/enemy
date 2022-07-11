@@ -35,12 +35,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #b7b7b7;
+	background: #919090;
 	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #828282; 
+	background: #696969; 
 }
 
 .searchbar {
@@ -357,6 +357,16 @@ input.cboxButton:checked + label {
 	-ms-transition: top 0.2s cubic-bezier(1,-0.01,1,.18), opacity 0.4s linear;
 	-o-transition: top 0.2s cubic-bezier(1,-0.01,1,.18), opacity 0.4s linear;
 	transition: top 0.2s cubic-bezier(1,-0.01,1,.18), opacity 0.4s linear;
+}
+
+#infoBox.active {
+	top: 0;
+	opacity: 1;
+	-webkit-transition: top 0.2s cubic-bezier(0,.78,0,.99);
+	-moz-transition: top 0.2s cubic-bezier(0,.78,0,.99);
+	-ms-transition: top 0.2s cubic-bezier(0,.78,0,.99);
+	-o-transition: top 0.2s cubic-bezier(0,.78,0,.99);
+	transition: top 0.2s cubic-bezier(0,.78,0,.99);
 }
 
 #infoBox.active {
