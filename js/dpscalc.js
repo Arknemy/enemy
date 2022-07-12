@@ -434,7 +434,6 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman')) {
 			normalDamageType = 'arts';
-			skillDamageType = 'arts';
 			if(operator.name == 'Tomimi') skillDamageType = 'physical';
 		}
 
@@ -481,8 +480,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var normalAtk, normalAtkInterval, normalAtkFrames, normalDps;
 
 		// Naughty list
-		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra', 'Kroos', 'Kroos the Keen Glint', 'Midnight'];
-		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe', 'Kroos', 'Midnight'];
+		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra', 'Kroos', 'Kroos the Keen Glint', 'Midnight', 'GreyThroat'];
+		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe', 'Kroos', 'Midnight', 'GreyThroat'];
 
 		//calculate talent effects on normal attacks
 		if(talentExceptions.includes(operator.name)) {
@@ -536,6 +535,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		if(baseMaxTarget > enemyCount) normalDps *= enemyCount;
 		else if(baseMaxTarget <= enemyCount) normalDps *= baseMaxTarget;
+
+
 
 
 		// calculate skill duration settings
@@ -603,6 +604,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		// END HARD CODE-----------------
 
+
+
 		// calculate skill damages
 		var skillDamageType = 'physical';
 		var skillAtkUp = 1;
@@ -633,7 +636,15 @@ fetch('/enemy/static/data/dps_alldata.json')
 					atkScale *= 1.25;
 			}
 		}
-		if(operator.name == 'Midnight') skillDamageType = 'arts';
+
+		if(operator.name == 'Midnight' || operator.name == 'Indra') 
+			skillDamageType = 'arts';
+
+		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman')) {
+			skillDamageType = 'arts';
+			if(operator.name == 'Tomimi') skillDamageType = 'physical';
+		}
+
 
 		// get scaling from skill
 		atkUpArr = ['atk'];
@@ -719,10 +730,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 		if(skillId == 'skchr_bpipe_2') skillHits *= 2;
 		if(skillId == 'skchr_bpipe_3') skillHits *= 3;
 		if(skillId == 'skchr_f12yin_3') skillHits *= 2;
+		if(skillId == 'skchr_swllow_1') skillHits *= 2;
+		if(skillId == 'skchr_swllow_2') skillHits *= 3;
 
 		var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
 
-		console.log(skillHits);
+		console.log(normalDamageType, skillDamageType);
 
 		// calculate skill crits
 		if(crits.includes(operator.name)) {
@@ -751,10 +764,10 @@ fetch('/enemy/static/data/dps_alldata.json')
 			if(operator.name == 'Bagpipe' && enemyCount > 1) tempCrit *= 2;
 			skillTotalDamage = critHits * tempCrit + skillHits * tempAtk;
 
-			// console.log('Hits ', skillHits);
-			// console.log('Crits ', critHits);
-			// console.log('Hit dmg', tempAtk);
-			// console.log('Crit dmg', tempCrit);
+			console.log('Hits ', skillHits);
+			console.log('Crits ', critHits);
+			console.log('Hit dmg', tempAtk);
+			console.log('Crit dmg', tempCrit);
 		}
 
 
