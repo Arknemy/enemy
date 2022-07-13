@@ -94,7 +94,7 @@
 		
 		<div class="sortEvent">
 			<div class="input-group-prepend">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by Event</button>
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 300px;">Sort by Event</button>
 				<div id= "dropMenu" class="dropdown-menu" aria-labelledby="dropdown" style="width: 50%; min-width: 300px; height: 500px; overflow-y: scroll;">
 					<h6 class="dropdown-header">Maintheme</h6>
 					<a class="dropdown-item" id="main_6">Episode 06: Partial Necrosis</a>
@@ -130,19 +130,20 @@
 					<a class="dropdown-item" id="le">Lingering Echoes</a>
 					<a class="dropdown-item" id="dv">Dorothy's Vision</a>
 				</div>
-				<input type="button" id='beventclear' value="Clear" />
+				<input class="oneclick" type="button" id='beventclear' value="Clear" />
 			</div>
+			<input type="search" class="form-control searchbar" placeholder="Enter enemy name:" id="searchfield" style="position: relative; top: 1px; height: 36px; width: 50%; box-shadow: 3px 3px 3px;">
 		</div>
-		
-		
-		<div class="enheader" style="width: 95%; margin: auto; margin-top: 30px;">
+
+
+		<div class="enheader" id="enheader" style="width: 95%; margin: auto; margin-top: 30px;">
 			<span class="display-6" style="color: white; font-size: 30px;">Browse</span>
 			<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px; opacity: 1;"/>
 		</div>
 
 		<div class="enemyWidget" id="enemyWidget"></div>
 
-		<div class="subheader" style="width: 95%; margin: auto; margin-top: 30px;">
+		<div class="subheader" id="subheader">
 			<span class="display-6" id="cnDisplay" style="color: white; font-size: 30px;">CN Exclusive</span>
 			<hr style="color: white; margin: auto; margin-bottom: 30px; margin-top: 20px; opacity: 1;"/>
 		</div>
