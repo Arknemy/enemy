@@ -845,9 +845,65 @@ fetch('/enemy/static/data/dps_alldata.json')
 		else
 			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, skillTotalDamage, skillDps, averageDps);
 	}
+	
+	
+	
+	function outputDps(targetWidget, normalAtk, normalDps, skillAtk, skillTotalDamage, skillDps, averageDps) {
+		var cw = document.getElementById(targetWidget);
+		var htmlText = '';
+
+		normalAtk = Math.round(normalAtk);
+		normalDps = Math.round(normalDps);
+		skillAtk = Math.round(skillAtk);
+		if(skillTotalDamage != '∞')
+			skillTotalDamage = Math.round(skillTotalDamage);
+		skillDps = Math.round(skillDps);
+		averageDps = Math.round(averageDps);
+
+		htmlText = htmlText.concat(`
+			<div class="" style="bottom: 0px;">
+				<hr/>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk Damage:</span>
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${normalAtk}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Normal Atk DPS:</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${normalDps}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Atk Damage:</span>
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillAtk}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Total Damage:</span>
+					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillTotalDamage}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Skill DPS:</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${skillDps}</span>
+				</div>
+				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Average DPS:</span>
+					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${averageDps}</span>
+				</div>
+			</div>
+			`);
+
+		const dpsStats = document.createElement('div');
+		dpsStats.id = targetWidget + 'dpsStats';
+		dpsStats.innerHTML = htmlText;
+
+		const oldStats = document.getElementById(targetWidget + 'dpsStats');
+
+		if(oldStats == null)
+			cw.appendChild(dpsStats);
+		else
+			cw.replaceChild(dpsStats, oldStats);
+	}
 
 
-
+	
 	function clamp(def, defpen) {
 		var result = def - defpen;
 		if(result < 0) result = 0;
