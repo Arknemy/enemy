@@ -271,6 +271,8 @@ fetch('/enemy/static/data/dps_alldata.json')
  		return frames / 30;
  	}
 
+	
+	
 	function calculateDps(operator, targetWidget) {
 		var baseAtk;
 		var baseDef;
@@ -573,6 +575,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 		if(skillId == 'skchr_chen_3') skillDuration = 3.4;
 		if(skillId == 'skchr_meteo_2') skillDuration = 1.033;
 
+		// check for other infinite duration skills
+		if(skillId == 'skchr_f12yin_2') skillDuration = -1;
+		if(skillId == 'skchr_flameb_2') skillDuration = -1;
+
+
+
 		// END HARD CODE-------------------
 
 
@@ -620,6 +628,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var skillBlackboard = selectedSkill.blackboard;
 		var skillProb;
 
+
 		// operator class hard code
 		if(operator.subclass == 'centurion') {
 			if(elite == 2) skillMaxTarget = 3;
@@ -628,6 +637,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 		}
 		if(operator.subclass == 'blastcaster' || operator.subclass == 'stalker' || operator.subclass == 'aoesniper' || operator.subclass == 'splashcaster')
 			skillMaxTarget = 999999;
+		if(skillId == 'skchr_ayer_2') skillMaxTarget = 999999;
+
 		if(operator.subclass == 'lord') {
 			if(lordRangeDebuff == true) {
 				// get skills that still suffer range penalty
@@ -785,10 +796,20 @@ fetch('/enemy/static/data/dps_alldata.json')
 		}
 
 
-
 		if(skillMaxTarget > enemyCount) skillTotalDamage *= enemyCount;
 		else if(skillMaxTarget <= enemyCount) skillTotalDamage *= skillMaxTarget;
 
+
+		// more special skill calculations
+		if(skillId == 'skchr_ayer_2') {
+			if(lordRangeDebuff == true)
+				skillTotalDamage += skillHits * normalAtk * 1.25 * damageScale;
+			else
+				skillTotalDamage += skillHits * normalAtk * damageScale;
+		}
+
+
+		// calculate average dps
 		var skillDps = Math.round(skillTotalDamage / skillDuration);
 		var cycle = skillDuration + skillOfftime;
 
@@ -806,11 +827,6 @@ fetch('/enemy/static/data/dps_alldata.json')
 			else if(baseMaxTarget <= enemyCount) normalAtkOfftimeDamage *= baseMaxTarget;
 
 			var averageDps = Math.round((skillTotalDamage + normalAtkOfftimeDamage) / cycle);
-
-			if(skillId == 'skchr_f12yin_2')  {
-				averageDps = skillDps;
-				skillDuration = -1;
-			}
 		}
 
 		// console.log('offtime', skillOfftime)
@@ -822,67 +838,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 		// console.log(normalAtkFrames);
 		// console.log(skillOfftime);
 		// console.log('cycle', cycle);
+		// console.log(skillMaxTarget);
 
 		if(skillDuration == -1)
 			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, '∞', skillDps, averageDps);
 		else
 			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, skillTotalDamage, skillDps, averageDps);
-	}	
-
-
-
-	function outputDps(targetWidget, normalAtk, normalDps, skillAtk, skillTotalDamage, skillDps, averageDps) {
-		var cw = document.getElementById(targetWidget);
-		var htmlText = '';
-
-		normalAtk = Math.round(normalAtk);
-		normalDps = Math.round(normalDps);
-		skillAtk = Math.round(skillAtk);
-		if(skillTotalDamage != '∞')
-			skillTotalDamage = Math.round(skillTotalDamage);
-		skillDps = Math.round(skillDps);
-		averageDps = Math.round(averageDps);
-
-		htmlText = htmlText.concat(`
-			<div class="" style="bottom: 0px;">
-				<hr/>
-				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Normal Atk Damage:</span>
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${normalAtk}</span>
-				</div>
-				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Normal Atk DPS:</span>
-					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${normalDps}</span>
-				</div>
-				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Atk Damage:</span>
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillAtk}</span>
-				</div>
-				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-left: 0px;">Skill Total Damage:</span>
-					<span class="display-6" style="font-size: 18px; margin: auto; margin-right: 0px;">${skillTotalDamage}</span>
-				</div>
-				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Skill DPS:</span>
-					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${skillDps}</span>
-				</div>
-				<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-left: 0px;">Average DPS:</span>
-					<span class="display-6" style="font-size: 18px; color: #d14b3a; margin: auto; margin-right: 0px;">${averageDps}</span>
-				</div>
-			</div>
-			`);
-
-		const dpsStats = document.createElement('div');
-		dpsStats.id = targetWidget + 'dpsStats';
-		dpsStats.innerHTML = htmlText;
-
-		const oldStats = document.getElementById(targetWidget + 'dpsStats');
-
-		if(oldStats == null)
-			cw.appendChild(dpsStats);
-		else
-			cw.replaceChild(dpsStats, oldStats);
 	}
 
 
