@@ -87,12 +87,64 @@
 	animation-delay: 0.1s;
 }
 
+.sortEvent {
+	z-index: 5000;
+	opacity: 0;
+	width: 95%;
+	position: relative;
+	height: auto;
+	margin: auto;
+	/*display: inline;*/
 
+	-webkit-animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s;
+	-ms-animation: fadein 0.5s;
+	-o-animation: fadein 0.5s;
+	animation: fadein 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-ms-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-animation-delay: 0.1s;
+	-moz-animation-delay: 0.1s;
+	-ms-animation-delay: 0.1s;
+	-o-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
 
+#dropdownButton {
+	box-shadow: 1px 1px 4px;
+	width: 30%;
+	background-color: #f2eeed !important;
+	color: black;
+}
 
+#dropdownButton:hover {
+	background-color: #bdb6b5 !important;
+}
 
+#beventclear {
+	position: relative;
+	margin-left: 5px;
+	top: 1px;
+	height: 37px;
+	font-size: 14px;
 
+	background-color: #f2eeed;
+	border: 1px solid grey;
+	border-radius: 5px;
+	box-shadow: 1px 1px 4px;
+	transition: background-color 0.2s;
+}
 
+#beventclear:hover {
+	background-color: #bdb6b5
+}
+
+#beventclear:active {
+	background: #6c757d;
+}
 
 
 .enemyWidget {
@@ -114,7 +166,7 @@
 	justify-content: space-between;
 	grid-gap: 10px;
 	margin: 0 auto;
-	margin-bottom: 30px;
+	margin-bottom: 100px;
 }
 
 .enheader {
@@ -286,6 +338,7 @@ input.cboxButton + label {
 	user-select: none;
 	box-shadow: 0px 1px 2px dimgrey;
 	top: 0px;
+
 }
 
 input.cboxButton:not(:checked) + label:hover {
