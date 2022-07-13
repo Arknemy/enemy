@@ -4,7 +4,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 .then(data => {
 	eJson = data;
 		
-	let enemyInput = document.querySelector('input');
+	let enemyInput = document.querySelector('#searchfield');
 	var searchVal = '';
 	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 	var eventFilter = '';
@@ -285,10 +285,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		var searchCheck = true;
 		for(var j = 0; j < filterArr.length; j++) {
 			if(filterArr[j] != -1 || searchVal != '' || eventFilter != '') { checkVal = false; }
-			if(filterArr[j] != -1) { searchCheck = false; }
+			if(filterArr[j] != -1 || eventFilter != '') { searchCheck = false; }
 		}
-
-		// console.log(checkVal);
 
 		if(checkVal == true) {
 			const enemySelect = document.querySelectorAll(".enemyCard");
@@ -302,8 +300,6 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 		else {
 			var filteredList = eJson.filter(filterData);
-
-			// console.log(filteredList);
 
 			if(searchVal != '') {
 				if(searchCheck == true) { filteredList = eJson.filter(filterSearch); }
@@ -323,6 +319,35 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				}
 			});
 		}
+
+		const enWidget = document.getElementById('enheader');
+		const cnWidget = document.getElementById('subheader');
+		const enHead = document.querySelectorAll('.enemyWidget .enemyCard');
+		const cnHead = document.querySelectorAll('.enemyWidget_CN .enemyCard');
+		var enHidden = true, cnHidden = true;
+
+		enHead.forEach(card => {
+			console.log(card);
+			if(!(card.classList.contains('disable'))) enHidden = false;
+		});
+
+		cnHead.forEach(card => {
+			if(!(card.classList.contains('disable'))) cnHidden = false;
+		});
+
+		console.log(enHidden);
+
+		if(enHidden == true) {
+			enWidget.classList.add('disable');
+			cnWidget.classList.add('moveup');
+		}
+		else {
+			enWidget.classList.remove('disable');
+			cnWidget.classList.remove('moveup');
+		}
+
+		if(cnHidden == true) cnWidget.classList.add('disable');
+		else cnWidget.classList.remove('disable');
 	}
 
 	$("#bnormal").click(function() {
