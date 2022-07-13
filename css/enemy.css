@@ -139,11 +139,16 @@
 }
 
 #beventclear:hover {
-	background-color: #bdb6b5
+	top: 2px;
+	background-color: #bdb6b5;
+	box-shadow: 0px 0px;
+
 }
 
 #beventclear:active {
 	background: #6c757d;
+	color: white;
+	box-shadow: 0px 0px;
 }
 
 
