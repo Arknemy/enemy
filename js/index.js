@@ -7,7 +7,25 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	let enemyInput = document.querySelector('input');
 	var searchVal = '';
 	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+	var eventFilter = '';
 	// normal elite boss inf drone sark poss seamons creat melee ranged doesn'tatk phys arts healing silence stun sleep freeze levitate
+
+
+	$("#main_6, #main_7, #main_8, #main_9, #main_10, #iscs, #dm, #wd, #ut, #sn, #gt, #hosf, #cb, #tw, #ggc, #mn, #mb, #wr, #od, #dh, #nl, #bi, #iw, #ga, #le, #dv").click(function() {
+		var sourceId = $(this).attr('id');
+		document.querySelector("#dropdownButton").innerText = document.getElementById(sourceId).text;
+		eventFilter = sourceId;
+		console.log(eventFilter);
+		selectedFilter();
+	});
+
+
+	$("#beventclear").click(function() {
+		eventFilter = '';
+		document.querySelector("#dropdownButton").innerText = 'Sort by Event';
+		selectedFilter();
+	});
+	
 	
 	var scrollButton = document.getElementById('scrollTop');
 	$(window).on('scroll', function() {
@@ -157,81 +175,90 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 	}
 
-	function filterData(data) {
+	function filterData(fdata) {
 		var filtered = true;
 		for(var i = 0; i < filterArr.length; i++) {
 			if(filterArr[i] == 1) {
 				if(i == 0) {
-					if(data.level != 'Normal') { filtered = false; break; }
+					if(fdata.level != 'Normal') { filtered = false; break; }
 				}
 				if(i == 1) {
-					if(data.level != 'Elite') { filtered = false; break; }
+					if(fdata.level != 'Elite') { filtered = false; break; }
 				}
 				if(i == 2) {
-					if(data.level != 'Boss') { filtered = false; break; }
+					if(fdata.level != 'Boss') { filtered = false; break; }
 				}
 				if(i == 3) {
-					if(data.race != 'Infected Creature' && data.race != '感染生物') { filtered = false; break; }
+					if(fdata.race != 'Infected Creature' && fdata.race != '感染生物') { filtered = false; break; }
 				}
 				if(i == 4) {
-					if(data.race != 'Drone' && data.race != '无人机') { filtered = false; break; }
+					if(fdata.race != 'Drone' && fdata.race != '无人机') { filtered = false; break; }
 				}
 				if(i == 5) {
-					if(data.race != 'Sarkaz' && data.race != '萨卡兹') { filtered = false; break; }
+					if(fdata.race != 'Sarkaz' && fdata.race != '萨卡兹') { filtered = false; break; }
 				}
 				if(i == 6) {
-					if(data.race != 'Possessed' && data.race != '宿主') { filtered = false; break; }
+					if(fdata.race != 'Possessed' && fdata.race != '宿主') { filtered = false; break; }
 				}
 				if(i == 7) {
-					if(data.race != 'Sea Monster' && data.race != '海怪') { filtered = false; break; }
+					if(fdata.race != 'Sea Monster' && fdata.race != '海怪') { filtered = false; break; }
 				}
 				if(i == 8) {
-					if(data.race != 'Arts Creation' && data.race != '法术造物') { filtered = false; break; }
+					if(fdata.race != 'Arts Creation' && fdata.race != '法术造物') { filtered = false; break; }
 				}
 				if(i == 9) {
-					if(data.atktype.includes('Melee') != true && data.atktype.includes('近战') != true) { filtered = false; break; }
+					if(fdata.atktype.includes('Melee') != true && fdata.atktype.includes('近战') != true) { filtered = false; break; }
 				}
 				if(i == 10) {
-					if(data.atktype.includes('Ranged') != true && data.atktype.includes('远程') != true) { filtered = false; break; }
+					if(fdata.atktype.includes('Ranged') != true && fdata.atktype.includes('远程') != true) { filtered = false; break; }
 				}
 				if(i == 11) {				
-					if(data.atktype.includes('None') != true && data.atktype.includes('无') != true && data.atktype.includes('不攻击') != true) { filtered = false; break; }
+					if(fdata.atktype.includes('None') != true && fdata.atktype.includes('无') != true && fdata.atktype.includes('不攻击') != true) { filtered = false; break; }
 				}
 				if(i == 12) {
-					if(data.atkattri != 'Physical' && data.atkattri != '物理') { filtered = false; break; }
+					if(fdata.atkattri != 'Physical' && fdata.atkattri != '物理') { filtered = false; break; }
 				}
 				if(i == 13) {
-					if(data.atkattri != 'Arts' && data.atkattri != '法术') { filtered = false; break; }
+					if(fdata.atkattri != 'Arts' && fdata.atkattri != '法术') { filtered = false; break; }
 				}
 				if(i == 14) {
-					if(data.atkattri != 'Healing' && data.atkattri != '治疗') { filtered = false; break; }
+					if(fdata.atkattri != 'Healing' && fdata.atkattri != '治疗') { filtered = false; break; }
 				}
 				if(i == 15) {
-					if(data.immunity != null) {
-						if(data.immunity.includes('Silence') == false) { filtered = false; break; }
+					if(fdata.immunity != null) {
+						if(fdata.immunity.includes('Silence') == false) { filtered = false; break; }
 					}
 				}
 				if(i == 16) {
-					if(data.immunity != null)  {
-						if(data.immunity.includes('Stun') == false) { filtered = false; break; }
+					if(fdata.immunity != null)  {
+						if(fdata.immunity.includes('Stun') == false) { filtered = false; break; }
 					}
 				}
 				if(i == 17) {
-					if(data.immunity != null)  {
-						if(data.immunity.includes('Sleep') == false) { filtered = false; break; }
+					if(fdata.immunity != null)  {
+						if(fdata.immunity.includes('Sleep') == false) { filtered = false; break; }
 					}
 				}
 				if(i == 18) {
-					if(data.immunity != null)  {
-						if(data.immunity.includes('Freeze') == false) { filtered = false; break; }
+					if(fdata.immunity != null)  {
+						if(fdata.immunity.includes('Freeze') == false) { filtered = false; break; }
 					}
 				}
 				if(i == 19) {
-					if(data.immunity != null)  {
-						if(data.immunity.includes('Airborne') == false) { filtered = false; break; }
+					if(fdata.immunity != null)  {
+						if(fdata.immunity.includes('Airborne') == false) { filtered = false; break; }
 					}
 				}
 			}
+		}
+
+		if(eventFilter != '') {
+			if(fdata.hasOwnProperty('event')) {
+				if(fdata.event != eventFilter) 
+					filtered = false;
+			}
+			else 
+				filtered = false;
 		}
 
 		return filtered;
@@ -257,9 +284,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		var checkVal = true;
 		var searchCheck = true;
 		for(var j = 0; j < filterArr.length; j++) {
-			if(filterArr[j] != -1 || searchVal != '') { checkVal = false; }
+			if(filterArr[j] != -1 || searchVal != '' || eventFilter != '') { checkVal = false; }
 			if(filterArr[j] != -1) { searchCheck = false; }
 		}
+
+		// console.log(checkVal);
 
 		if(checkVal == true) {
 			const enemySelect = document.querySelectorAll(".enemyCard");
@@ -273,6 +302,8 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 		else {
 			var filteredList = eJson.filter(filterData);
+
+			// console.log(filteredList);
 
 			if(searchVal != '') {
 				if(searchCheck == true) { filteredList = eJson.filter(filterSearch); }
