@@ -111,8 +111,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 				cwImg = document.getElementById(targetWidget + 'Img');
 				if(operator.name == 'Amiya') cwImg.src = `/enemy/static/assets/operators/amiya3.png`;
-				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name.toLowerCase()}2.png`;
-				else cwImg.src = `/enemy/static/assets/operators/${operator.name.toLowerCase()}1.png`;
+				else if(operator.promoLevels == 2) cwImg.src = `/enemy/static/assets/operators/${operator.name}2.png`;
+				else cwImg.src = `/enemy/static/assets/operators/${operator.name}1.png`;
 
 
 				cwPromo = document.getElementById(targetWidget + 'Promotion');
@@ -168,12 +168,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 					opHTML = '';
 					for(var j = 0; j < operator.moduleName.length; j++) {
 						if(j == 0) {
-							opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="basicMod">${operator.moduleName[j]}</option>`);
+							opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="basicMod" selected="selected">${operator.moduleName[j]}</option>`);
 						}
 						else {
 							opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j - 1}0">${operator.moduleName[j]} Lv.1</option>
 								<option class="cwDropdownContent display-6" value="${j - 1}1">${operator.moduleName[j]} Lv.2</option>
-								<option class="cwDropdownContent display-6" value="${j - 1}2" selected="selected">${operator.moduleName[j]} Lv.3</option>`);
+								<option class="cwDropdownContent display-6" value="${j - 1}2">${operator.moduleName[j]} Lv.3</option>`);
 						}
 					}
 					cwModule.innerHTML = opHTML;
@@ -214,6 +214,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 						<input class="cwInput" type="checkbox" id="${targetWidget}Lord" value="${targetWidget}Lord" style="margin-left: 2px;"><label for="${targetWidget}Lord" class="display-6" style="font-size: 15px; margin-left: 4px;">Range Penalty</label><br>`);
 				}
 
+				if(operator.name == 'Jaye') {
+					opHTML = opHTML.concat(`
+						<input class="cwInput" type="checkbox" id="${targetWidget}Jaye" value="${targetWidget}Jaye" style="margin-left: 2px;"><label for="${targetWidget}Jaye" class="display-6" style="font-size: 15px; margin-left: 4px;">Trigger Anatomy Master</label><br>`);
+				}
+
 				for(var j = 0; j < operator.skills.length; j++) {
 					if((operator.skills[j].levels[0].spData.spType == 2 && operator.skills[j].levels[6].spData.spCost > 4) || operator.skills[j].levels[0].spData.spType == 4) {
 						if(operator.name != 'Ch\'en') {
@@ -241,12 +246,13 @@ fetch('/enemy/static/data/dps_alldata.json')
 
  // elite = -1, level = -1, pot = -1, trust = -1, skill = -1, skillrank = -1
 
- 	function atkRecoverySim(normalAtkFrames, spCost, chenBonus, chenSp, archettoBonus) {
+ 	function atkRecoverySim(normalAtkFrames, spCost, chenBonus, chenSp, archettoBonus, isCutter = false, cutterProb = 0) {
  		var frames = 0;
  		var sp = 0;
  		var spReduced = 0;
  		var chenFrames = chenBonus * 30;
  		var archettoFrames = archettoBonus * 30;
+ 		var cutterTalent = Math.round(normalAtkFrames / (cutterProb * 2));
 
  		while(true) {
  			frames += 1;
@@ -254,6 +260,10 @@ fetch('/enemy/static/data/dps_alldata.json')
  			if(frames % normalAtkFrames == 0) {
  				sp += 1;
  				if(sp == spCost) frames -= normalAtkFrames / 2;
+ 			}
+
+ 			if(isCutter) {
+ 				if(frames % cutterTalent == 0) sp += 1;
  			}
  			
  			if(chenFrames != 0)
@@ -271,8 +281,8 @@ fetch('/enemy/static/data/dps_alldata.json')
  		return frames / 30;
  	}
 
-	
-	
+ 	
+
 	function calculateDps(operator, targetWidget) {
 		var baseAtk;
 		var baseDef;
@@ -314,6 +324,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var disregardBuffs = document.getElementById(targetWidget + 'Buffs').checked;
 		if(operator.subclass == 'lord')
 			var lordRangeDebuff = document.getElementById(targetWidget + 'Lord').checked;
+		if(operator.name == 'Jaye')
+			var jayeTalent = document.getElementById(targetWidget + 'Jaye').checked;
 		// add more
 
 		//-----------------------------------------------------------------------------------------
@@ -469,10 +481,17 @@ fetch('/enemy/static/data/dps_alldata.json')
 			atkUp = 1;
 			talentProb = 0.2;
 		}
+
 		if(operator.subclass == 'lord') {
 			if(lordRangeDebuff == true)
 				atkScale *= 0.8;
 		}
+
+		if(operator.name == 'Jaye') {
+			if(jayeTalent == false)
+				atkScale = 1;
+		}
+
 
 		atkUp += percentAtkBuff;
 		damageScale += damageScaleBuff;
@@ -578,6 +597,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		// check for other infinite duration skills
 		if(skillId == 'skchr_f12yin_2') skillDuration = -1;
 		if(skillId == 'skchr_flameb_2') skillDuration = -1;
+		if(operator.name == 'Cutter') skillDuration = 1;
 
 
 
@@ -608,17 +628,13 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		if(operator.name == 'Ch\'en' && modNum == 0 && modLevel == 2)
 			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 3, 2, 0);
-		
-		if(operator.name == 'Cutter') {
-			// var hitForSp = normalAtkFrames * talentProb * 2;
-			var notProc = 1 - talentProb;
-			skillOfftime = skillCost / (normalAtkInterval + (1 - notProc * notProc));
-		}
 
+		if(operator.name == 'Cutter')
+			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 0, 0, 0, true, talentProb);
 
 		// END HARD CODE-----------------
 
-
+		// console.log(skillOfftime);
 
 		// calculate skill damages
 		var skillDamageType = 'physical';
@@ -641,9 +657,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 			else skillMaxTarget = 2;
 			if(skillId == 'skchr_huang_3') skillMaxTarget = 999999;
 		}
+
 		if(operator.subclass == 'blastcaster' || operator.subclass == 'stalker' || operator.subclass == 'aoesniper' || operator.subclass == 'splashcaster')
 			skillMaxTarget = 999999;
-		if(skillId == 'skchr_ayer_2') skillMaxTarget = 999999;
+
+		if(skillId == 'skchr_ayer_2' || skillId == 'skchr_siege_2') 
+			skillMaxTarget = 999999;
 
 		if(operator.subclass == 'lord') {
 			if(lordRangeDebuff == true) {
@@ -654,13 +673,16 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
-		if(operator.name == 'Midnight' || operator.name == 'Indra') 
+		if(operator.name == 'Midnight') 
 			skillDamageType = 'arts';
 
 		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman')) {
 			skillDamageType = 'arts';
 			if(operator.name == 'Tomimi') skillDamageType = 'physical';
 		}
+
+		if(skillId == 'skchr_tachak_1' || skillId == 'skchr_tiger_2')
+			skillDamageType == 'arts';
 
 
 		// get scaling from skill
@@ -699,9 +721,16 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 			if(skillId == 'skchr_f12yin_3' && skillBlackboard[i].key == 'talent@prob') 
 				skillProb = skillBlackboard[i].value;
-
+			if(skillId == 'skchr_tachak_2' && skillBlackboard[i].key == 'prob') 
+				skillProb = skillBlackboard[i].value;
 			if(skillId == 'skchr_huang_3' && skillBlackboard[i].key == 'damage_by_atk_scale')
 				var burstScale = skillBlackboard[i].value;
+			if(operator.name == 'Gravel' && skillBlackboard[i].key == 'duration')
+				skillDuration = skillBlackboard[i].value;
+			if(skillId == 'skchr_ethan_1' && skillBlackboard[i].key == 'attack@poison_damage') {
+				var poison = skillBlackboard[i].value;
+				var poisonDuration = skillBlackboard[i + 1].value;
+			}
 		}
 
 		if(skillId == 'skchr_f12yin_2' || skillId == 'skchr_whitew_2') 
@@ -749,6 +778,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		if(skillId == 'skchr_f12yin_3') skillHits *= 2;
 		if(skillId == 'skchr_swllow_1') skillHits *= 2;
 		if(skillId == 'skchr_swllow_2') skillHits *= 3;
+		if(skillId == 'skchr_tachak_1') skillHits *= 6;
 
 		var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
 
@@ -764,12 +794,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 			skillHits -= critHits;
 			var tempAtk, tempCrit;
 
-			console.log(skillAtkScale);
-
 			if(skillId == 'skchr_tachak_2') {
 				skillHits *= 2;
 				critHits *= 2;
 			}
+
 
 			if(lordRangeDebuff == true) {
 				tempAtk = (baseAtk * (skillAtkUp + percentAtkBuff) + flatAtkBuff) * skillAtkScale * 0.8 * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
@@ -789,6 +818,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 
 			if(operator.name == 'Bagpipe' && enemyCount > 1) tempCrit *= 2;
+			if(skillId == 'skchr_tachak_2') tempAtk /= skillAtkScale;
 			skillTotalDamage = critHits * tempCrit + skillHits * tempAtk;
 
 			console.log('Hits ', skillHits);
@@ -843,6 +873,25 @@ fetch('/enemy/static/data/dps_alldata.json')
 			else if(baseMaxTarget <= enemyCount) normalAtkOfftimeDamage *= baseMaxTarget;
 
 			var averageDps = Math.round((skillTotalDamage + normalAtkOfftimeDamage) / cycle);
+		}
+
+
+		// hard code
+		if(skillId.includes('skcom_charge_cost')) {
+			skillTotalDamage = 0;
+			skillDuration = 0;
+			skillDps = 0;
+			averageDps = normalDps;
+		}
+		if(operator.name == 'Courier' || operator.name == 'Gravel') {
+			skillDps = normalDps;
+			averageDps = normalDps;
+			skillTotalDamage = averageDps * skillDuration;
+		}
+		if(skillId == 'skchr_ethan_1') {
+			skillTotalDamage = poison * poisonDuration;
+			skillDps = poison;
+			averageDps = normalDps + poison;
 		}
 
 		// console.log('offtime', skillOfftime)
