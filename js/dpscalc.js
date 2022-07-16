@@ -749,11 +749,21 @@ fetch('/enemy/static/data/dps_alldata.json')
 		console.log(normalDamageType, skillDamageType);
 
 		// calculate skill crits
-		if(crits.includes(operator.name)) {
+		if(crits.includes(operator.name) || skillId == 'skchr_tachak_2') {
 			var critHits = skillHits * talentProb;
-			if(skillId == 'skchr_f12yin_3') critHits = skillHits * skillProb;
+
+			if(skillId == 'skchr_f12yin_3' || skillId == 'skchr_tachak_2') 
+				critHits = skillHits * skillProb;
+
 			skillHits -= critHits;
 			var tempAtk, tempCrit;
+
+			console.log(skillAtkScale);
+
+			if(skillId == 'skchr_tachak_2') {
+				skillHits *= 2;
+				critHits *= 2;
+			}
 
 			if(lordRangeDebuff == true) {
 				tempAtk = (baseAtk * (skillAtkUp + percentAtkBuff) + flatAtkBuff) * skillAtkScale * 0.8 * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
