@@ -2,6 +2,7 @@ var dpsJson;
 fetch('/enemy/static/data/dps_alldata.json')
 .then(response => response.json())
 .then(data => {
+	
 	dpsData = data;
 
 	const lightBox = document.createElement('div');
