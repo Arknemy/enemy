@@ -604,11 +604,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Race: </strong>${tempData.race}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>`);
 		}
 
-		if(tempData.atkattri == 'Physical')
+		if(tempData.atkattri == 'Physical' || tempData.atkattri == '物理')
 			htmlText = htmlText.concat(`<span style=\"color: #f56a14\">Physical</span></p></div>`);
-		else if(tempData.atkattri == 'Arts')
+		else if(tempData.atkattri == 'Arts' || tempData.atkattri == '法术')
 			htmlText = htmlText.concat(`<span style=\"color: #2467ed\">Arts</span></p></div>`);
-		else
+		else if(tempData.atkattri == 'Healing' || tempData.atkattri == '治疗')
 			htmlText = htmlText.concat(`<span style=\"color: #30B700\">Healing</span></p></div>`);
 
 		htmlText = htmlText.concat(`
