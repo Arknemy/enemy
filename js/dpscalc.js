@@ -927,14 +927,25 @@ fetch('/enemy/static/data/dps_alldata.json')
 				operator = dpsData[i];
 
 				if(this.id.includes('Promotion')) {
-					promoLevel = document.getElementById(targetWidget + 'Promotion').value;
-					cwLevel = document.getElementById(cw + 'Level');
-					opHTML = '';
+					var promoLevel = document.getElementById(targetWidget + 'Promotion').value;
+					var cwLevel = document.getElementById(cw + 'Level');
+					var opHTML = '';
 					for(var j = 0; j < operator.promoStats[promoLevel].maxLevel; j++) {
 						if(j < operator.promoStats[promoLevel].maxLevel - 1) opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}">${j + 1}</option>`);
 						else opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}" selected="selected">${j + 1}</option>`);
 					}
 					cwLevel.innerHTML = opHTML;
+
+					cwSkillRank = document.getElementById(cw + 'SkillRank');
+					opHTML = '';
+					var rank = 10;
+					if(promoLevel == 1) rank = 7;
+					if(promoLevel == 0) rank = 4;
+					for(var j = 0; j < rank; j++) {
+						if(j < rank - 1) opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}">${j + 1}</option>`);
+						else opHTML = opHTML.concat(`<option class="cwDropdownContent display-6" value="${j + 1}" selected="selected">${j + 1}</option>`);
+					}
+					cwSkillRank.innerHTML = opHTML;
 				}
 
 				calculateDps(operator, cw);
