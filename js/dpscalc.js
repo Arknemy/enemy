@@ -608,6 +608,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		if(operator.name == 'Ch\'en' && modNum == 0 && modLevel == 2)
 			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 3, 2, 0);
+		
+		if(operator.name == 'Cutter') {
+			// var hitForSp = normalAtkFrames * talentProb * 2;
+			var notProc = 1 - talentProb;
+			skillOfftime = skillCost / (normalAtkInterval + (1 - notProc * notProc));
+		}
 
 
 		// END HARD CODE-----------------
