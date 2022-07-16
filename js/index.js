@@ -598,11 +598,18 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				</figure>`;
 
 		if(tempData.race == '') {
-			htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>${tempData.atkattri}</p></div>`);
+			htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>`);
 		}
 		else {
-			htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Race: </strong>${tempData.race}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>${tempData.atkattri}</p></div>`);
+			htmlText = htmlText.concat(`<p><strong>Level: </strong>${tempData.level}<br><strong>Race: </strong>${tempData.race}<br><strong>Attack Type: </strong>${tempData.atktype}<br><strong>Damage Type: </strong>`);
 		}
+
+		if(tempData.atkattri == 'Physical')
+			htmlText = htmlText.concat(`<span style=\"color: #f56a14\">Physical</span></p></div>`);
+		else if(tempData.atkattri == 'Arts')
+			htmlText = htmlText.concat(`<span style=\"color: #2467ed\">Arts</span></p></div>`);
+		else
+			htmlText = htmlText.concat(`<span style=\"color: #30B700\">Healing</span></p></div>`);
 
 		htmlText = htmlText.concat(`
 			<div style="display:flex; align-items:center; justify-content:left; gap:20px; margin-bottom: 18px;">
