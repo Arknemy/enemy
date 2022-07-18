@@ -8,3 +8,5 @@ Information is sourced from [PRTS](https://prts.wiki/w/%E9%A6%96%E9%A1%B5) and [
 Update 07/13: added filtering by event; modified layout; added Chapter 10 enemies.
 
 Update 07/15: fixed some CSS issues.
+
+Update 07/17: added SN enemies.
