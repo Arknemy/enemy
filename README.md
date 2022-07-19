@@ -10,3 +10,5 @@ Update 07/13: added filtering by event; modified layout; added Chapter 10 enemie
 Update 07/15: fixed some CSS issues.
 
 Update 07/17: added SN enemies.
+
+Update 07/18: added LE enemies.
