@@ -476,21 +476,32 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
+
 		// account for talent fuckeries
 		if(operator.name == 'Mountain') {
 			atkUp = 1;
 			talentProb = 0.2;
 		}
-
 		if(operator.subclass == 'lord') {
 			if(lordRangeDebuff == true)
 				atkScale *= 0.8;
 		}
-
 		if(operator.name == 'Jaye') {
 			if(jayeTalent == false)
 				atkScale = 1;
 		}
+		if(operator.name == 'Kafka') {
+			var kafkaTal = atkUp - 1;
+			atkUp = 1;
+		}
+		if(operator.name == 'Mr.Nothing')
+			atkScale = 1;
+		if(operator.name == 'Manticore') {
+			var mantiTal = atkUp - 1;
+			atkUp = 1;
+		}
+
+		console.log(mantiTal);
 
 
 		atkUp += percentAtkBuff;
@@ -500,9 +511,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var baseNormalAtk = baseAtk * atkUp + flatAtkBuff;
 		var normalAtk, normalAtkInterval, normalAtkFrames, normalDps;
 
+
 		// Naughty list
-		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra', 'Kroos', 'Kroos the Keen Glint', 'Midnight', 'GreyThroat'];
-		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe', 'Kroos', 'Midnight', 'GreyThroat'];
+		var talentExceptions = ['Mountain', 'Bagpipe', 'Meteorite', 'Mousse', 'Irene', 'Franka', 'Indra', 'Kroos', 'Kroos the Keen Glint', 'Midnight', 'GreyThroat', 'Waai Fu'];
+		var crits = ['Meteorite', 'Indra', 'Mountain', 'Bagpipe', 'Kroos', 'Kroos the Keen Glint', 'Midnight', 'GreyThroat', 'Waai Fu'];
+
 
 		//calculate talent effects on normal attacks
 		if(talentExceptions.includes(operator.name)) {
@@ -526,9 +539,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 				if(operator.name == 'Bagpipe' && enemyCount > 1) critAtk *= 2;
 
-				// console.log('prob', talentProb);
-				// console.log(atkUp, atkScale);
-				// console.log(normalAtk, critAtk);
+
+				console.log('prob', talentProb);
+				console.log(atkUp, atkScale);
+				console.log(normalAtk, critAtk);
+
 
 				normalAtk = (normalAtk * (1 - talentProb) + critAtk * (talentProb));
 				baseNormalAtk = normalAtk;
@@ -545,19 +560,40 @@ fetch('/enemy/static/data/dps_alldata.json')
 			else
 				normalAtk = baseNormalAtk * atkScale;
 
-			if(normalAtk < (baseNormalAtk * atkScale) * 0.05) normalAtk = (baseNormalAtk * atkScale) * 0.05;
+
+			// hard code
+			// if(operator.name == 'Kafka') {
+			// 	baseNormalAtk = normalAtk
+			// 	normalAtk = baseAtk - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+			// }
+
+
+
+			if(normalAtk < (baseNormalAtk * atkScale) * 0.05) 
+				normalAtk = (baseNormalAtk * atkScale) * 0.05;
+
+
+			// hard code
+			if(operator.name == 'Projekt Red') {
+				normalAtk = baseNormalAtk - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+
+				if(normalAtk < baseNormalAtk * atkScale) 
+					normalAtk = baseNormalAtk * atkScale;
+			}
+			if(operator.name == 'Kafka') atkUp += kafkaTal;
+
 
 			normalAtkInterval = atkInterval / aspd;
 			normalAtkFrames = Math.round(30 * normalAtkInterval);
 			normalDps = Math.round(((normalAtk * damageScale) / normalAtkFrames) * 30);
 		}
 
+
+		// hard code
 		if(operator.subclass == 'sword') normalDps *= 2;
 
 		if(baseMaxTarget > enemyCount) normalDps *= enemyCount;
 		else if(baseMaxTarget <= enemyCount) normalDps *= baseMaxTarget;
-
-
 
 
 		// calculate skill duration settings
@@ -588,16 +624,19 @@ fetch('/enemy/static/data/dps_alldata.json')
 		if(selectedSkill.description.toLowerCase().includes('the next attack'))
 			skillDuration = atkInterval;
 
+
 		// HARD CODE-----------------------
 
 		if(skillId == 'skchr_chen_2') skillDuration = 1.3333;
 		if(skillId == 'skchr_chen_3') skillDuration = 3.4;
 		if(skillId == 'skchr_meteo_2') skillDuration = 1.033;
+		if(operator.name == 'Cliffheart') skillDuration = 1.6667;
 
-		// check for other infinite duration skills
+		// check for other skill durations
 		if(skillId == 'skchr_f12yin_2') skillDuration = -1;
 		if(skillId == 'skchr_flameb_2') skillDuration = -1;
 		if(operator.name == 'Cutter') skillDuration = 1;
+		if(skillId == 'skchr_kafka_1') skillDuration = 5;
 
 
 
@@ -636,6 +675,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		// console.log(skillOfftime);
 
+
 		// calculate skill damages
 		var skillDamageType = 'physical';
 		var skillAtkUp = 1;
@@ -651,7 +691,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var skillProb;
 
 
-		// operator class hard code
+		// get target count
 		if(operator.subclass == 'centurion') {
 			if(elite == 2) skillMaxTarget = 3;
 			else skillMaxTarget = 2;
@@ -673,7 +713,9 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
-		if(operator.name == 'Midnight') 
+
+		// get damage type
+		if(operator.name == 'Midnight' || operator.name == 'Kafka') 
 			skillDamageType = 'arts';
 
 		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman')) {
@@ -681,13 +723,13 @@ fetch('/enemy/static/data/dps_alldata.json')
 			if(operator.name == 'Tomimi') skillDamageType = 'physical';
 		}
 
-		if(skillId == 'skchr_tachak_1' || skillId == 'skchr_tiger_2')
+		if(skillId == 'skchr_tachak_1' || skillId == 'skchr_tiger_2' || skillId == 'skchr_whitew_2')
 			skillDamageType == 'arts';
 
 
 		// get scaling from skill
-		atkUpArr = ['atk'];
-		atkScaleArr = ['atk_scale', 'attack@atk_scale','attack@surtr_s_2[critical].atk_scale'];
+		atkUpArr = ['atk', 'waaifu_s_1[self].atk'];
+		atkScaleArr = ['atk_scale', 'attack@atk_scale','attack@surtr_s_2[critical].atk_scale', 'kirara_s_1.atk_scale'];
 		aspdArr = ['min_attack_speed', 'attack_speed'];
 		var atkIntervalArr = ['base_attack_time'];
 		var hitNumArr = ['attack@times', 'times'];
@@ -702,6 +744,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 				skillAspd += skillBlackboard[i].value / 100;
 			else if(atkIntervalArr.includes(skillBlackboard[i].key)) {
 				if(skillId == 'skchr_shwaz_3') skillAtkInterval += 0.4;
+				else if(skillId == 'skchr_mantic_2') skillAtkInterval += skillBlackboard[i].value;
 				else skillAtkInterval *=  1 + skillBlackboard[i].value;
 			}
 			else if(atkScaleArr.includes(skillBlackboard[i].key))
@@ -731,13 +774,20 @@ fetch('/enemy/static/data/dps_alldata.json')
 				var poison = skillBlackboard[i].value;
 				var poisonDuration = skillBlackboard[i + 1].value;
 			}
+			if(skillId == 'skchr_kafka_2' && skillBlackboard[i].key == 'duration')
+				skillDuration = skillBlackboard[i].value;
 		}
 
+
+		// hard code some stuff
 		if(skillId == 'skchr_f12yin_2' || skillId == 'skchr_whitew_2') 
 			skillMaxTarget = 2;
+		if(skillId == 'skchr_mantic_2') 
+			atkUp += mantiTal;
 
 		// calculate skill atk
-		var baseSkillAtk = baseAtk * (atkUp + (skillAtkUp - 1)) + flatAtkBuff, skillAtk;
+		var baseSkillAtk = baseAtk * (atkUp + (skillAtkUp - 1)) + flatAtkBuff;
+		var skillAtk;
 
 		if(skillDamageType == 'physical')
 			skillAtk = baseSkillAtk * atkScale * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
@@ -752,6 +802,13 @@ fetch('/enemy/static/data/dps_alldata.json')
 		// skill exceptions
 		if(skillId == 'skchr_chen_2')
 			skillAtk += baseAtk * atkScale * skillAtkUp * skillAtkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+
+		if(operator.name == 'Projekt Red') {
+			skillAtk = baseSkillAtk * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+
+			if(skillId == 'skchr_red_1' && skillAtk < baseSkillAtk * atkScale * skillAtkScale)
+				skillAtk = baseSkillAtk * atkScale * skillAtkScale;
+		}
 
 		var swordXmod1 = ['Ch\'en', 'Tachanka', 'Bibeak'];
 		if(swordXmod1.includes(operator.name) && modNum == 0) skillAtk *= 1.1;
@@ -782,7 +839,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
 
-		console.log(normalDamageType, skillDamageType);
+		// console.log(normalDamageType, skillDamageType);
 
 		// calculate skill crits
 		if(crits.includes(operator.name) || skillId == 'skchr_tachak_2') {
@@ -842,6 +899,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		}
 
 
+		// get target count damage
 		if(skillMaxTarget > enemyCount) skillTotalDamage *= enemyCount;
 		else if(skillMaxTarget <= enemyCount) skillTotalDamage *= skillMaxTarget;
 
@@ -852,6 +910,13 @@ fetch('/enemy/static/data/dps_alldata.json')
 				skillTotalDamage += skillHits * normalAtk * 1.25 * damageScale;
 			else
 				skillTotalDamage += skillHits * normalAtk * damageScale;
+		}
+
+		if(skillId == 'skchr_kafka_1')
+			skillTotalDamage = skillAtk * enemyCount;
+
+		if(skillId == 'skchr_kafka_2') {
+			skillTotalDamage = skillAtk * enemyCount + (skillAtk / skillAtkScale) * Math.round(skillDuration / skillAtkInterval);
 		}
 
 
@@ -876,7 +941,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		}
 
 
-		// hard code
+		// hard code some skill fuckeries
 		if(skillId.includes('skcom_charge_cost')) {
 			skillTotalDamage = 0;
 			skillDuration = 0;
@@ -889,10 +954,18 @@ fetch('/enemy/static/data/dps_alldata.json')
 			skillTotalDamage = averageDps * skillDuration;
 		}
 		if(skillId == 'skchr_ethan_1') {
-			skillTotalDamage = poison * poisonDuration;
-			skillDps = poison;
-			averageDps = normalDps + poison;
+			skillTotalDamage = poison * poisonDuration * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+			skillDps = poison * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+			averageDps = normalDps + poison * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
 		}
+		if(skillId == 'skchr_red_2' || skillId == 'skchr_waaifu_2')
+			skillDps = skillTotalDamage;
+		if(skillId == 'skchr_nothin_1') {
+			skillTotalDamage = 0;
+			skillDps = 0;
+			averageDps = normalDps;
+		}
+
 
 		// console.log('offtime', skillOfftime)
 		// console.log('offtime frames', offtimeFrames)
@@ -904,6 +977,9 @@ fetch('/enemy/static/data/dps_alldata.json')
 		// console.log(skillOfftime);
 		// console.log('cycle', cycle);
 		// console.log(skillMaxTarget);
+
+		// console.log(atkScale, skillAtkScale);
+		console.log(atkInterval);
 
 		if(skillDuration == -1)
 			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, '∞', skillDps, averageDps);
