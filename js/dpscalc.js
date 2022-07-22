@@ -214,6 +214,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 						<input class="cwInput" type="checkbox" id="${targetWidget}Lord" value="${targetWidget}Lord" style="margin-left: 2px;"><label for="${targetWidget}Lord" class="display-6" style="font-size: 15px; margin-left: 4px;">Range Penalty</label><br>`);
 				}
 
+				if(operator.subclass == 'dollkeeper' || operator.subclass == 'summoner' || operator.name == 'Kal\'tsit' || operator.name == 'Phantom') {
+					opHTML = opHTML.concat(`
+						<input class="cwInput" type="checkbox" id="${targetWidget}Summon" value="${targetWidget}Summon" style="margin-left: 2px;"><label for="${targetWidget}Summon" class="display-6" style="font-size: 15px; margin-left: 4px;">Calculate Summon DPS</label><br>`);
+				} 
+
 				if(operator.name == 'Jaye') {
 					opHTML = opHTML.concat(`
 						<input class="cwInput" type="checkbox" id="${targetWidget}Jaye" value="${targetWidget}Jaye" style="margin-left: 2px;"><label for="${targetWidget}Jaye" class="display-6" style="font-size: 15px; margin-left: 4px;">Trigger Anatomy Master</label><br>`);
@@ -328,15 +333,36 @@ fetch('/enemy/static/data/dps_alldata.json')
 			var jayeTalent = document.getElementById(targetWidget + 'Jaye').checked;
 		// add more
 
+		
+		// get summon stats if necessary
+		// var summon;
+		// if(document.getElementById(targetWidget + 'Summon').checked) {
+		// 	var codename = operator.code.split('_')[2];
+
+		// 	for(var i = 0; i < dpsData.length; i++) {
+		// 		if(dpsData[i].code.includes('token') && dpsData[i].code.includes(codename)) {
+		// 			summon = dpsData[i];
+		// 			break;
+		// 		}
+		// 	}
+		// }
+		// console.log(codename, summon)
+
+
 		//-----------------------------------------------------------------------------------------
 		// actual calculations below
 
+
+		// hard code target count
 		if(operator.subclass == 'centurion') {
 			if(elite == 2) baseMaxTarget = 3;
 			else baseMaxTarget = 2;
 		}
+		if(operator.subclass == 'pusher') 
+			baseMaxTarget = 2;
 		if(operator.subclass == 'blastcaster' || operator.subclass == 'stalker' || operator.subclass == 'aoesniper' || operator.subclass == 'splashcaster')
 			baseMaxTarget = 999999;
+
 
 		var atkTrustGrowth = operator.trustStats[1].data.atk / 100;
 		var defTrustGrowth = operator.trustStats[1].data.def / 100;
@@ -357,6 +383,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		if(operator.subclass == 'fighter') baseAtkInterval = 0.767;
 		baseBlock = operator.promoStats[elite].attributesKeyFrames[0].data.blockCnt;
 
+
 		// calculate potential stats increase
 		for(var i = 0; i < pot - 1; i++) {
 			if(operator.potential.length != 0) {
@@ -371,6 +398,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 				}
 			}
 		}
+
 
 		// module flat stat increase
 		if(operator.module.length != 0 && mod != 'basicMod') {
@@ -387,6 +415,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 					baseDef += modBlackboard[i].value;
 			}
 		}
+
 
 		// load correct talent
 		var talentKey = operator.talents.length;
@@ -500,10 +529,17 @@ fetch('/enemy/static/data/dps_alldata.json')
 			var mantiTal = atkUp - 1;
 			atkUp = 1;
 		}
+		if(operator.name == 'Kazemaru') {
+			var kazeTal = damageScale;
+			damageScale = 1;
+		}
+		if(operator.name == 'Specter the Unchained') {
+			var specterucTal = atkScale;
+			atkScale = 1;
+		}
 
-		console.log(mantiTal);
 
-
+		// account for buffs
 		atkUp += percentAtkBuff;
 		damageScale += damageScaleBuff;
 		aspd += aspdBuff;
@@ -561,14 +597,6 @@ fetch('/enemy/static/data/dps_alldata.json')
 				normalAtk = baseNormalAtk * atkScale;
 
 
-			// hard code
-			// if(operator.name == 'Kafka') {
-			// 	baseNormalAtk = normalAtk
-			// 	normalAtk = baseAtk - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
-			// }
-
-
-
 			if(normalAtk < (baseNormalAtk * atkScale) * 0.05) 
 				normalAtk = (baseNormalAtk * atkScale) * 0.05;
 
@@ -594,6 +622,50 @@ fetch('/enemy/static/data/dps_alldata.json')
 
 		if(baseMaxTarget > enemyCount) normalDps *= enemyCount;
 		else if(baseMaxTarget <= enemyCount) normalDps *= baseMaxTarget;
+
+
+
+
+		// calculate summon stats here 
+		if(operator.subclass == 'dollkeeper' || operator.subclass == 'summoner' || operator.name == 'Kal\'tsit' || operator.name == 'Phantom') {
+			if(document.getElementById(targetWidget + 'Summon').checked) {
+				var baseSkillAtk, skillTotalDamage, skillDps, averageDps;
+
+				if(operator.name == 'Kazemaru') {
+					normalAtk = baseNormalAtk * atkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+					baseSkillAtk = baseNormalAtk * kazeTal * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+					skillDps = baseSkillAtk;
+					skillTotalDamage = baseSkillAtk;
+					averageDps = Math.round((Math.round(20 / normalAtkInterval) * normalAtk + baseSkillAtk) / 20);
+				}
+
+				if(operator.name == 'Bena') {
+					normalAtk = baseNormalAtk * (1 + percentAtkBuff) * atkScale * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+					baseSkillAtk = 0;
+					skillTotalDamage = 0;
+					skillDps = 0;
+				}
+
+				if(operator.name == 'Specter the Unchained') {
+					atkInterval = 1;
+					normalAtk = baseNormalAtk * (1 + percentAtkBuff) * specterucTal * (1 - ((clamp((clamp(enemyRes, baseResFlatPen) * baseResPen), baseResFlatIgnore) * baseResIgnore) / 100));
+					baseSkillAtk = 0;
+					skillTotalDamage = 0;
+					skillDps = 0;
+					averageDps = normalAtk;
+				}
+
+				normalAtkInterval = atkInterval / aspd;
+				normalAtkFrames = Math.round(30 * normalAtkInterval);
+				normalDps = Math.round(((normalAtk * damageScale) / normalAtkFrames) * 30);
+
+				if(operator.name == 'Bena' || operator.name == 'Specter the Unchained')
+					averageDps = normalDps;
+
+				outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, skillTotalDamage, skillDps, averageDps);
+				return;
+			}
+		}
 
 
 		// calculate skill duration settings
@@ -625,18 +697,18 @@ fetch('/enemy/static/data/dps_alldata.json')
 			skillDuration = atkInterval;
 
 
-		// HARD CODE-----------------------
-
+		// hard code skill durations
 		if(skillId == 'skchr_chen_2') skillDuration = 1.3333;
 		if(skillId == 'skchr_chen_3') skillDuration = 3.4;
 		if(skillId == 'skchr_meteo_2') skillDuration = 1.033;
 		if(operator.name == 'Cliffheart') skillDuration = 1.6667;
-
-		// check for other skill durations
+		if(operator.name == 'FEater') skillDuration = 1.1;
+		if(operator.name == 'Enforcer') skillDuration = 1.2
 		if(skillId == 'skchr_f12yin_2') skillDuration = -1;
 		if(skillId == 'skchr_flameb_2') skillDuration = -1;
 		if(operator.name == 'Cutter') skillDuration = 1;
 		if(skillId == 'skchr_kafka_1') skillDuration = 5;
+		if(skillId == 'skchr_kazema_1') skillDuration = 1.2
 
 
 
@@ -672,8 +744,6 @@ fetch('/enemy/static/data/dps_alldata.json')
 			skillOfftime = atkRecoverySim(normalAtkFrames, skillCost, 0, 0, 0, true, talentProb);
 
 		// END HARD CODE-----------------
-
-		// console.log(skillOfftime);
 
 
 		// calculate skill damages
@@ -713,9 +783,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 		}
 
+		if(skillId == 'skchr_panda_2')
+			skillMaxTarget = 999999;
+
 
 		// get damage type
-		if(operator.name == 'Midnight' || operator.name == 'Kafka') 
+		if(operator.name == 'Midnight' || operator.name == 'Kafka' || skillId == 'skchr_kirara_2') 
 			skillDamageType = 'arts';
 
 		if(operator.class == 'CASTER' || operator.subclass == 'artsfghter' || (operator.class == 'SUPPORT' && operator.subclass != 'craftsman')) {
@@ -776,6 +849,8 @@ fetch('/enemy/static/data/dps_alldata.json')
 			}
 			if(skillId == 'skchr_kafka_2' && skillBlackboard[i].key == 'duration')
 				skillDuration = skillBlackboard[i].value;
+			if(skillId == 'skchr_rfrost_2' && skillBlackboard[i].key == 'trap_atk_scale')
+				var frostS2Scale = skillBlackboard[i].value;
 		}
 
 
@@ -784,10 +859,14 @@ fetch('/enemy/static/data/dps_alldata.json')
 			skillMaxTarget = 2;
 		if(skillId == 'skchr_mantic_2') 
 			atkUp += mantiTal;
+		if(skillId == 'skchr_kirara_2')
+			skillAtkInterval = 1;
+
 
 		// calculate skill atk
 		var baseSkillAtk = baseAtk * (atkUp + (skillAtkUp - 1)) + flatAtkBuff;
 		var skillAtk;
+
 
 		if(skillDamageType == 'physical')
 			skillAtk = baseSkillAtk * atkScale * skillAtkScale - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
@@ -810,6 +889,11 @@ fetch('/enemy/static/data/dps_alldata.json')
 				skillAtk = baseSkillAtk * atkScale * skillAtkScale;
 		}
 
+		if(skillId == 'skchr_kirara_1')
+			skillAtk += baseSkillAtk - (clamp((clamp(enemyDef, baseDefFlatPen) * baseDefPen), baseDefFlatIgnore) * baseDefIgnore);
+
+
+		// hard code mods
 		var swordXmod1 = ['Ch\'en', 'Tachanka', 'Bibeak'];
 		if(swordXmod1.includes(operator.name) && modNum == 0) skillAtk *= 1.1;
 
@@ -840,6 +924,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 		var skillTotalDamage = skillHits * skillAtk * damageScale * skillDamageScale;
 
 		// console.log(normalDamageType, skillDamageType);
+
+
+		// hard code
+		if(skillId == 'skchr_rfrost_2')
+			skillTotalDamage += baseSkillAtk * damageScale * frostS2Scale;
+
 
 		// calculate skill crits
 		if(crits.includes(operator.name) || skillId == 'skchr_tachak_2') {
@@ -965,6 +1055,12 @@ fetch('/enemy/static/data/dps_alldata.json')
 			skillDps = 0;
 			averageDps = normalDps;
 		}
+		if(skillId == 'skchr_svrash_2')
+			averageDps = skillDps;
+		if(skillId == 'skchr_panda_1')
+			averageDps = normalDps;
+		if(operator.name == 'Enforcer')
+			averageDps = normalDps;
 
 
 		// console.log('offtime', skillOfftime)
@@ -979,7 +1075,7 @@ fetch('/enemy/static/data/dps_alldata.json')
 		// console.log(skillMaxTarget);
 
 		// console.log(atkScale, skillAtkScale);
-		console.log(atkInterval);
+		// console.log(atkInterval);
 
 		if(skillDuration == -1)
 			outputDps(targetWidget, baseNormalAtk, normalDps, baseSkillAtk, '∞', skillDps, averageDps);
