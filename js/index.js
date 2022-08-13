@@ -6,11 +6,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		
 	let enemyInput = document.querySelector('#searchfield');
 	var searchVal = '';
-	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+	var filterArr = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 	var eventFilter = '';
-	// normal elite boss inf drone sark poss seamons creat appar melee ranged doesn'tatk phys arts healing silence stun sleep freeze levitate
+	// normal elite boss inf drone sark poss seamons creation apparition mechanical melee ranged doesn'tatk phys arts healing silence stun sleep freeze levitate
 
-
+	
 	$("#main_6, #main_7, #main_8, #main_9, #main_10, #iscs, #dm, #wd, #ut, #sn, #gt, #hosf, #cb, #tw, #ggc, #mn, #mb, #wr, #od, #dh, #nl, #bi, #iw, #ga, #le, #dv, #ic").click(function() {
 		var sourceId = $(this).attr('id');
 		document.querySelector("#dropdownButton").innerText = document.getElementById(sourceId).text;
@@ -210,44 +210,47 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					if(fdata.race != 'Apparition' && fdata.race != '化物') { filtered = false; break; }
 				}
 				if(i == 10) {
-					if(fdata.atktype.includes('Melee') != true && fdata.atktype.includes('近战') != true) { filtered = false; break; }
+					if(fdata.race != 'Mechanical' && fdata.race != '机械') { filtered = false; break; }
 				}
 				if(i == 11) {
+					if(fdata.atktype.includes('Melee') != true && fdata.atktype.includes('近战') != true) { filtered = false; break; }
+				}
+				if(i == 12) {
 					if(fdata.atktype.includes('Ranged') != true && fdata.atktype.includes('远程') != true) { filtered = false; break; }
 				}
-				if(i == 12) {				
+				if(i == 13) {				
 					if(fdata.atktype.includes('None') != true && fdata.atktype.includes('无') != true && fdata.atktype.includes('不攻击') != true) { filtered = false; break; }
 				}
-				if(i == 13) {
+				if(i == 14) {
 					if(fdata.atkattri != 'Physical' && fdata.atkattri != '物理') { filtered = false; break; }
 				}
-				if(i == 14) {
+				if(i == 15) {
 					if(fdata.atkattri != 'Arts' && fdata.atkattri != '法术') { filtered = false; break; }
 				}
-				if(i == 15) {
+				if(i == 16) {
 					if(fdata.atkattri != 'Healing' && fdata.atkattri != '治疗') { filtered = false; break; }
 				}
-				if(i == 16) {
+				if(i == 17) {
 					if(fdata.immunity != null) {
 						if(fdata.immunity.includes('Silence') == false) { filtered = false; break; }
 					}
 				}
-				if(i == 17) {
+				if(i == 18) {
 					if(fdata.immunity != null)  {
 						if(fdata.immunity.includes('Stun') == false) { filtered = false; break; }
 					}
 				}
-				if(i == 18) {
+				if(i == 19) {
 					if(fdata.immunity != null)  {
 						if(fdata.immunity.includes('Sleep') == false) { filtered = false; break; }
 					}
 				}
-				if(i == 19) {
+				if(i == 20) {
 					if(fdata.immunity != null)  {
 						if(fdata.immunity.includes('Freeze') == false) { filtered = false; break; }
 					}
 				}
-				if(i == 20) {
+				if(i == 21) {
 					if(fdata.immunity != null)  {
 						if(fdata.immunity.includes('Airborne') == false) { filtered = false; break; }
 					}
@@ -402,6 +405,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] = -1;
 		filterArr[8] = -1;
 		filterArr[9] = -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('binfcrea');
 		if(filterArr[3] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -418,6 +422,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] = -1;
 		filterArr[8] = -1;
 		filterArr[9] = -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('bdrone');
 		if(filterArr[4] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -434,6 +439,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] = -1;
 		filterArr[8] = -1;
 		filterArr[9] = -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('bsarkaz');
 		if(filterArr[5] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -450,6 +456,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] = -1;
 		filterArr[8] = -1;
 		filterArr[9] = -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('bpossessed');
 		if(filterArr[6] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -466,6 +473,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] *= -1;
 		filterArr[8] = -1;
 		filterArr[9] = -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('bseamon');
 		if(filterArr[7] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -482,6 +490,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] = -1;
 		filterArr[8] *= -1;
 		filterArr[9] = -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('bartscrea');
 		if(filterArr[8] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -497,6 +506,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		filterArr[7] = -1;
 		filterArr[8] = -1;
 		filterArr[9] *= -1;
+		filterArr[10] = -1;
 		var elem = document.getElementById('bapparition');
 		if(filterArr[9] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
@@ -504,21 +514,26 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		selectedFilter();
 	});
 
-
-	$("#bmelee").click(function() {
+	$("#bmechanical").click(function() {
+		filterArr[3] = -1;
+		filterArr[4] = -1;
+		filterArr[5] = -1;
+		filterArr[6] = -1;
+		filterArr[7] = -1;
+		filterArr[8] = -1;
+		filterArr[9] = -1;
 		filterArr[10] *= -1;
-		filterArr[12] = -1;
-		var elem = document.getElementById('bnoatk');
-		if(filterArr[10] == 1) {
-			elem.checked = false;
+		var elem = document.getElementById('bmechanical');
+		if(filterArr[10] == -1) {
+			if (elem.type == "radio") { elem.checked = false; }
 		}
 		selectedFilter();
 	});
 
 
-	$("#branged").click(function() {
+	$("#bmelee").click(function() {
 		filterArr[11] *= -1;
-		filterArr[12] = -1;
+		filterArr[13] = -1;
 		var elem = document.getElementById('bnoatk');
 		if(filterArr[11] == 1) {
 			elem.checked = false;
@@ -527,13 +542,24 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	});
 
 
-	$("#bnoatk").click(function() {
-		filterArr[10] = -1;
-		filterArr[11] = -1;
+	$("#branged").click(function() {
 		filterArr[12] *= -1;
+		filterArr[13] = -1;
+		var elem = document.getElementById('bnoatk');
+		if(filterArr[12] == 1) {
+			elem.checked = false;
+		}
+		selectedFilter();
+	});
+
+
+	$("#bnoatk").click(function() {
+		filterArr[11] = -1;
+		filterArr[12] = -1;
+		filterArr[13] *= -1;
 		var elem1 = document.getElementById('bmelee');
 		var elem2 = document.getElementById('branged');
-		if(filterArr[12] == 1) {
+		if(filterArr[13] == 1) {
 			elem1.checked = false;
 			elem2.checked = false;
 		}
@@ -542,22 +568,10 @@ fetch('/enemy/static/data/enemy_alldata.json')
 
 
 	$("#bphys").click(function() {
-		filterArr[13] *= -1;
-		filterArr[14] = -1;
-		filterArr[15] = -1;
-		var elem = document.getElementById('bphys');
-		if(filterArr[13] == -1) {
-			if (elem.type == "radio") { elem.checked = false; }
-		}
-		selectedFilter();
-	});
-
-
-	$("#barts").click(function() {
-		filterArr[13] = -1;
 		filterArr[14] *= -1;
 		filterArr[15] = -1;
-		var elem = document.getElementById('barts');
+		filterArr[16] = -1;
+		var elem = document.getElementById('bphys');
 		if(filterArr[14] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
@@ -565,11 +579,11 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	});
 
 
-	$("#bheal").click(function() {
-		filterArr[13] = -1;
+	$("#barts").click(function() {
 		filterArr[14] = -1;
 		filterArr[15] *= -1;
-		var elem = document.getElementById('bheal');
+		filterArr[16] = -1;
+		var elem = document.getElementById('barts');
 		if(filterArr[15] == -1) {
 			if (elem.type == "radio") { elem.checked = false; }
 		}
@@ -577,35 +591,48 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	});
 
 
-	$("#bsilence").click(function() {
+	$("#bheal").click(function() {
+		filterArr[14] = -1;
+		filterArr[15] = -1;
 		filterArr[16] *= -1;
+		var elem = document.getElementById('bheal');
+		if(filterArr[16] == -1) {
+			if (elem.type == "radio") { elem.checked = false; }
+		}
 		selectedFilter();
 	});
 
 
-	$("#bstun").click(function() {
+	$("#bsilence").click(function() {
 		filterArr[17] *= -1;
 		selectedFilter();
 	});
 
 
-	$("#bsleep").click(function() {
+	$("#bstun").click(function() {
 		filterArr[18] *= -1;
 		selectedFilter();
 	});
 
 
-	$("#bfreeze").click(function() {
+	$("#bsleep").click(function() {
 		filterArr[19] *= -1;
 		selectedFilter();
 	});
 
 
-	$("#blevitate").click(function() {
+	$("#bfreeze").click(function() {
 		filterArr[20] *= -1;
 		selectedFilter();
 	});
 
+
+	$("#blevitate").click(function() {
+		filterArr[21] *= -1;
+		selectedFilter();
+	});
+	
+	
 	$("#bclear").click(function() {
 		for(var i = 0; i < filterArr.length; i++) { filterArr[i] = -1; }
 		var elem = document.getElementsByClassName('cboxButton');
