@@ -14,3 +14,5 @@ Update 07/17: added SN enemies.
 Update 07/18: added LE and DV enemies.
 
 Update 08/11: added IC enemies.
+
+Update 10/01: added IS3 enemies.
