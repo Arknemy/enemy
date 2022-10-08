@@ -675,13 +675,14 @@ fetch('/enemy/static/data/enemy_alldata.json')
 		}
 
 		if(tempData.atkattri == 'Physical' || tempData.atkattri == '物理')
-			htmlText = htmlText.concat(`<span style=\"color: #f56a14\">Physical</span></p></div>`);
+			htmlText = htmlText.concat(`<span style=\"color: #f56a14\">Physical</span></p>`);
 		else if(tempData.atkattri == 'Arts' || tempData.atkattri == '法术')
-			htmlText = htmlText.concat(`<span style=\"color: #2467ed\">Arts</span></p></div>`);
+			htmlText = htmlText.concat(`<span style=\"color: #2467ed\">Arts</span></p>`);
 		else if(tempData.atkattri == 'Healing' || tempData.atkattri == '治疗')
-			htmlText = htmlText.concat(`<span style=\"color: #30B700\">Healing</span></p></div>`);
+			htmlText = htmlText.concat(`<span style=\"color: #30B700\">Healing</span></p>`);
 
 		htmlText = htmlText.concat(`
+			</div>
 			<div style="display:flex; align-items:center; justify-content:left; gap:20px; margin-bottom: 18px;">
 				<div style="width:70px; height:70px; border: #3e3e3e solid; text-align:center; line-height:70px; position: relative;">
 					<img src="/enemy/static/assets/icons/hp.png" style="width: 21px; height: 21px; top:0; left:0; position: absolute; border-bottom: #3e3e3e solid; border-right: #3e3e3e solid">
