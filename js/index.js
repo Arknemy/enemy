@@ -11,11 +11,10 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	// normal elite boss inf drone sark poss seamons creation apparition mechanical melee ranged doesn'tatk phys arts healing silence stun sleep freeze levitate
 
 	
-	$("#main_6, #main_7, #main_8, #main_9, #main_10, #iscs, #dm, #wd, #ut, #sn, #gt, #hosf, #cb, #tw, #ggc, #mn, #mb, #wr, #od, #dh, #nl, #bi, #iw, #ga, #le, #dv, #ic").click(function() {
+	$("#main_6, #main_7, #main_8, #main_9, #main_10, #is2, #is3, #dm, #wd, #ut, #sn, #gt, #hosf, #cb, #tw, #ggc, #mn, #mb, #wr, #od, #dh, #nl, #bi, #iw, #ga, #le, #dv, #ic").click(function() {
 		var sourceId = $(this).attr('id');
 		document.querySelector("#dropdownButton").innerText = document.getElementById(sourceId).text;
 		eventFilter = sourceId;
-		console.log(eventFilter);
 		selectedFilter();
 	});
 
