@@ -16,3 +16,5 @@ Update 07/18: added LE and DV enemies.
 Update 08/11: added IC enemies.
 
 Update 10/01: added IS3 enemies.
+
+Update 10/21: added Chapter 11 enemies.
