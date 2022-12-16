@@ -20,3 +20,5 @@ Update 10/01: added IS3 enemies.
 Update 10/21: added Chapter 11 enemies.
 
 Update 11/02: added Il Siracusano enemies
+
+Update 12/16: added What the Firelight Casts enemies
