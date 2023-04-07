@@ -5,20 +5,4 @@ Information is sourced from [PRTS](https://prts.wiki/w/%E9%A6%96%E9%A1%B5) and [
 
 
 
-Update 07/13: added filtering by event; modified layout; added Chapter 10 enemies.
-
-Update 07/15: fixed some CSS issues.
-
-Update 07/17: added SN enemies.
-
-Update 07/18: added LE and DV enemies.
-
-Update 08/11: added IC enemies.
-
-Update 10/01: added IS3 enemies.
-
-Update 10/21: added Chapter 11 enemies.
-
-Update 11/02: added Il Siracusano enemies
-
-Update 12/16: added What the Firelight Casts enemies
+Update 23apr07: updated all current enemies, removed some things no one looks at, translations will have to wait a while
