@@ -39,7 +39,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	});
 
 	for(var i = 0; i < eJson.length; i++) {
-		if(eJson[i].index != '-') {
+		//if(eJson[i].index != '-') {
 			const enDiv = document.getElementById("enemyWidget");
 			const cnDiv = document.getElementById("enemyWidget_CN");
 			name = eJson[i].name;
@@ -48,7 +48,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 			img = `<div class="enemyCard hidden ${i}" id="#${eJson[i].code}" name="${name}"><a href="#${eJson[i].code}"><figure><img loading="lazy" src=${source} style="width: 80px; height: 80px;"><figcaption>${caption}</figcaption></figure></a></div>`;
 			if(eJson[i].server == 'EN') { enDiv.insertAdjacentHTML('beforeend', img); }
 			else { cnDiv.insertAdjacentHTML('beforeend', img); }
-		}
+		//}
 	}
 
 	const enemyCards = document.querySelectorAll(".enemyCard");
