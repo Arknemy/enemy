@@ -39,7 +39,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 	});
 
 	for(var i = 0; i < eJson.length; i++) {
-		if(eJson[i].index != '-' && eJson[i].index != 'DC3') {
+		if(eJson[i].index != '-') {
 			const enDiv = document.getElementById("enemyWidget");
 			const cnDiv = document.getElementById("enemyWidget_CN");
 			name = eJson[i].name;
