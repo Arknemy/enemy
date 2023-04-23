@@ -110,7 +110,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 				var tempData;
 				for(var i = 0; i < eJson.length; i++) {
 					if(eJson[i].name == card.getAttribute('name')) {
-						if(eJson[i].index == 'DC3') { continue; }
+// 						if(eJson[i].index == 'DC3') { continue; }
 						tempData = eJson[i];
 						break;
 					}
