@@ -211,7 +211,7 @@ fetch('/enemy/static/data/enemy_alldata.json')
 					if(fdata.race != 'Apparition' && fdata.race != '化物') { filtered = false; break; }
 				}
 				if(i == 10) {
-					if(fdata.race != 'Mechanical' && fdata.race != '机械') { filtered = false; break; }
+					if(fdata.race != 'Machina' && fdata.race != '机械') { filtered = false; break; }
 				}
 				if(i == 11) {
 					if(fdata.atktype.includes('Melee') != true && fdata.atktype.includes('近战') != true) { filtered = false; break; }
